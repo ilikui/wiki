@@ -3,3 +3,16 @@ languageCode = 'zh-cn'
 title = 'My New Hugo Site'
 theme = 'Mainroad'  
 
+enableInlineShortcodes = true
+enableEmoji = true
+enableRobotsTXT = true
+hasCJKLanguage = true
+
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+
+paginate = 15 
+
+
+disableXML = true
