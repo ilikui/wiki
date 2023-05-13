@@ -1,4 +1,4 @@
-baseURL = 'https://www.likui.info/wiki'
+baseURL = 'https:lixiaomingr.github.io'
 languageCode = 'zh-cn'
 title = 'My New Hugo Site'
 theme = 'Mainroad'  
