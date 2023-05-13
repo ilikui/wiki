@@ -19,7 +19,7 @@ require (
 	github.com/clbanning/mxj/v2 v2.5.7
 	github.com/cli/safeexec v1.0.0
 	github.com/disintegration/gift v1.2.1
-	github.com/dustin/go-humanize v1.0.0
+	github.com/dustin/go-humanize v1.0.1
 	github.com/evanw/esbuild v0.17.0
 	github.com/fortytw2/leaktest v1.3.0
 	github.com/frankban/quicktest v1.14.4
@@ -56,7 +56,7 @@ require (
 	github.com/spf13/fsync v0.9.0
 	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/spf13/pflag v1.0.5
-	github.com/tdewolff/minify/v2 v2.12.4
+	github.com/tdewolff/minify/v2 v2.12.5
 	github.com/tdewolff/parse/v2 v2.6.5
 	github.com/yuin/goldmark v1.5.4
 	go.uber.org/atomic v1.10.0
