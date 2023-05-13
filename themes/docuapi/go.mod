@@ -1,9 +1,10 @@
-module github.com/bep/docuapi/v2
+module github.com/bep/docuapi
 
-go 1.16
+go 1.12
 
 require (
-	github.com/gohugoio/hugo-mod-jslibs-dist/alpinejs/v3 v3.21000.20300 // indirect
-	github.com/olivernn/lunr.js v2.3.9+incompatible // indirect
-	github.com/slatedocs/slate v2.13.1+incompatible // indirect
+	github.com/bep/empty-hugo-module v1.0.0 // indirect
+	github.com/jquery/jquery-dist v0.0.0-20190501211928-15bc73803f76 // indirect
+	github.com/olivernn/lunr.js v2.3.8+incompatible // indirect
+	github.com/slatedocs/slate v2.3.1+incompatible // indirect
 )
