@@ -1,4 +1,4 @@
-baseURL = 'https://www.likui/info/wiki/public'
+baseURL = 'https://www.likui/info/wiki'
 languageCode = 'zh-cn'
 title = 'My blog'
 theme = 'Mainroad'  

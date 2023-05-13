@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.likui/info/wiki/public/categories/</loc>
+    <loc>https://www.likui/info/wiki/categories/</loc>
   </url><url>
-    <loc>https://www.likui/info/wiki/public/</loc>
+    <loc>https://www.likui/info/wiki/</loc>
   </url><url>
-    <loc>https://www.likui/info/wiki/public/tags/</loc>
+    <loc>https://www.likui/info/wiki/tags/</loc>
   </url>
 </urlset>
