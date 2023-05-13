@@ -1,5 +1,5 @@
 baseURL = 'https://www.likui.info/wiki'
 languageCode = 'zh-cn'
 title = 'My New Hugo Site'
-theme = 'PaperMod'  
+theme = 'Mainroad'  
 
