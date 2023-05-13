@@ -1,18 +1,22 @@
-<table class="utils-table">
-<thead>
+{{ $package := (index .Params 0) }}
+{{ $listname := (index .Params 1) }}
+{{ $list := (index (index .Site.Data.docs $package) $listname) }}
+{{ $fields := after 2 .Params }}
+
+<table class="table table-bordered">
 	<tr>
-		<td class="col-title">Title</td>
-		<td class="col-author">Author</td>
-		<td class="col-date">Date</td>
+		{{ range $fields }}
+		<th>{{ . }}</th>
+		{{ end }}
 	</tr>
-</thead>
-<tbody>
-	{{ range $ind, $art := $.Site.Data.articles.article }}
+	{{ range $list }}
 	<tr>
-		<td><a href="{{$art.url}}" target="_blank">{{$art.title | markdownify }}</a></td>
-		<td>{{ $art.author | markdownify }}</td>
-		<td>{{ $art.date }}</td>
+		{{ range $k, $v := . }}
+		{{ $.Scratch.Set $k $v }}
+		{{ end }}
+		{{ range $fields }}
+			<td>{{ $.Scratch.Get . }}</td>
+		{{ end }}
 	</tr>
 	{{ end }}
-</tbody>
 </table>
