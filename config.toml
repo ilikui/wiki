@@ -1,6 +1,6 @@
-baseURL = 'https:lixiaomingr.github.io'
+baseURL = 'https://www.likui/info/wiki'
 languageCode = 'zh-cn'
-title = 'My New Hugo Site'
+title = 'My blog'
 theme = 'Mainroad'  
 
 enableInlineShortcodes = true
