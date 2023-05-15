@@ -1,207 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        <link rel="canonical" href="https://www.likui.info/wiki/site/getting-started/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Getting Started - KM</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
-        <link href="../css/extra.css" rel="stylesheet">
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
-        <script>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://www.likui.info/wiki/site/getting-started/" rel="canonical"/>
+<link href="../img/favicon.ico" rel="shortcut icon"/>
+<title>Getting Started - KM</title>
+<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+<link href="../css/font-awesome.min.css" rel="stylesheet"/>
+<link href="../css/base.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<link href="../css/extra.css" rel="stylesheet"/>
+<script defer="" src="../js/jquery-1.10.2.min.js"></script>
+<script defer="" src="../js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
+<script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'G-274394082');
-        </script> 
-    </head>
-
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">KM</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Home</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Getting Started</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../user-guide/installation/" class="dropdown-item">Install</a>
+        </script>
+</head>
+<body>
+<div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+<div class="container">
+<a class="navbar-brand" href="..">KM</a>
+<!-- Expander button -->
+<button class="navbar-toggler" data-target="#navbar-collapse" data-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<!-- Expanded navigation -->
+<div class="navbar-collapse collapse" id="navbar-collapse">
+<!-- Main navigation -->
+<ul class="nav navbar-nav">
+<li class="navitem">
+<a class="nav-link" href="..">Home</a>
 </li>
-                                    
-<li>
-    <a href="../user-guide/choosing-your-theme/" class="dropdown-item">Theme</a>
+<li class="navitem active">
+<a class="nav-link" href="./">Getting Started</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Developer Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+<li class="dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">User Guide <b class="caret"></b></a>
+<ul class="dropdown-menu">
 <li>
-    <a href="../dev-guide/api/" class="dropdown-item">API</a>
+<a class="dropdown-item" href="../user-guide/installation/">Install</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">CS <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
 <li>
-    <a href="../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/" class="dropdown-item">必学工具</a>
+<a class="dropdown-item" href="../user-guide/choosing-your-theme/">Theme</a>
 </li>
-                                    
+</ul>
+</li>
+<li class="dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Developer Guide <b class="caret"></b></a>
+<ul class="dropdown-menu">
 <li>
-    <a href="../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/" class="dropdown-item">好书推荐</a>
+<a class="dropdown-item" href="../dev-guide/api/">API</a>
 </li>
-                                    
+</ul>
+</li>
+<li class="dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">CS <b class="caret"></b></a>
+<ul class="dropdown-menu">
 <li>
-    <a href="../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="dropdown-item">数学基础</a>
+<a class="dropdown-item" href="../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/">必学工具</a>
 </li>
-                                    
 <li>
-    <a href="../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/" class="dropdown-item">数学进阶</a>
+<a class="dropdown-item" href="../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/">好书推荐</a>
 </li>
-                                    
 <li>
-    <a href="../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" class="dropdown-item">编程入门</a>
+<a class="dropdown-item" href="../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a>
 </li>
-                                    
 <li>
-    <a href="../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/" class="dropdown-item">电子基础</a>
+<a class="dropdown-item" href="../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/">数学进阶</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Read <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
 <li>
-    <a href="../read/Reading/" class="dropdown-item">Reading</a>
+<a class="dropdown-item" href="../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/">编程入门</a>
 </li>
-                                    
 <li>
-    <a href="../read/Books/" class="dropdown-item">Books</a>
+<a class="dropdown-item" href="../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/">电子基础</a>
 </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
+</ul>
+</li>
+<li class="dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Read <b class="caret"></b></a>
+<ul class="dropdown-menu">
 <li>
-    <a href="../about/about/" class="dropdown-item">About</a>
+<a class="dropdown-item" href="../read/Reading/">Reading</a>
 </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a rel="prev" href=".." class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
+<li>
+<a class="dropdown-item" href="../read/Books/">Books</a>
+</li>
+</ul>
+</li>
+<li class="dropdown">
+<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">About <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li>
+<a class="dropdown-item" href="../about/about/">About</a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="nav navbar-nav ml-auto">
+<li class="nav-item">
+<a class="nav-link" href=".." rel="prev">
+<i class="fa fa-arrow-left"></i> Previous
                                 </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../user-guide/installation/" class="nav-link">
+</li>
+<li class="nav-item">
+<a class="nav-link" href="../user-guide/installation/" rel="next">
                                     Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
-    
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#getting-started-with-mkdocs" class="nav-link">Getting Started with MkDocs</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#creating-a-new-project" class="nav-link">Creating a new project</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#adding-pages" class="nav-link">Adding pages</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#theming-our-documentation" class="nav-link">Theming our documentation</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#changing-the-favicon-icon" class="nav-link">Changing the Favicon Icon</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#building-the-site" class="nav-link">Building the site</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#other-commands-and-options" class="nav-link">Other Commands and Options</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#deploying" class="nav-link">Deploying</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#getting-help" class="nav-link">Getting help</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
-    </div>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+<div class="navbar-header">
+<button class="navbar-toggler collapsed" data-target="#toc-collapse" data-toggle="collapse" title="Table of Contents" type="button">
+<span class="fa fa-angle-down"></span>
+</button>
+</div>
+<div class="navbar-collapse collapse card bg-secondary" id="toc-collapse">
+<ul class="nav flex-column">
+<li class="nav-item" data-level="1"><a class="nav-link" href="#getting-started-with-mkdocs">Getting Started with MkDocs</a>
+<ul class="nav flex-column">
+<li class="nav-item" data-level="2"><a class="nav-link" href="#installation">Installation</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#creating-a-new-project">Creating a new project</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#adding-pages">Adding pages</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#theming-our-documentation">Theming our documentation</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#changing-the-favicon-icon">Changing the Favicon Icon</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#building-the-site">Building the site</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#other-commands-and-options">Other Commands and Options</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#deploying">Deploying</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+<li class="nav-item" data-level="2"><a class="nav-link" href="#getting-help">Getting help</a>
+<ul class="nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div></div>
-                    <div class="col-md-9" role="main">
-
+<div class="col-md-9" role="main">
 <h1 id="getting-started-with-mkdocs">Getting Started with MkDocs<a class="headerlink" href="#getting-started-with-mkdocs" title="Permanent link"></a></h1>
 <p>An introductory tutorial!</p>
-<hr />
+<hr/>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
 <p>To install MkDocs, run the following command from the command line:</p>
 <pre class="highlight"><code class="language-bash">pip install mkdocs</code></pre>
@@ -212,7 +190,7 @@ command from the command line:</p>
 <pre class="highlight"><code class="language-bash">mkdocs new my-project
 cd my-project</code></pre>
 <p>Take a moment to review the initial project that has been created for you.</p>
-<p><img alt="The initial MkDocs layout" src="../img/initial-layout.png" /></p>
+<p><img alt="The initial MkDocs layout" src="../img/initial-layout.png"/></p>
 <p>There's a single configuration file named <code>mkdocs.yml</code>, and a folder named
 <code>docs</code> that will contain your documentation source files (<code>docs</code> is
 the default value for the <a href="../user-guide/configuration/#docs_dir">docs_dir</a> configuration setting). Right now the <code>docs</code>
@@ -229,7 +207,7 @@ INFO    -  Cleaning site directory
 [I 160402 15:50:43 handlers:60] Start detecting changes</code></pre>
 <p>Open up <code>http://127.0.0.1:8000/</code> in your browser, and you'll see the default
 home page being displayed:</p>
-<p><img alt="The MkDocs live server" src="../img/screenshot.png" /></p>
+<p><img alt="The MkDocs live server" src="../img/screenshot.png"/></p>
 <p>The dev-server also supports auto-reloading, and will rebuild your documentation
 whenever anything in the configuration file, documentation directory, or theme
 directory changes.</p>
@@ -242,7 +220,7 @@ auto-reload and you should see your updated documentation immediately.</p>
 site_url: https://example.com/</code></pre>
 <p>Your browser should immediately reload, and you'll see your new site name take
 effect.</p>
-<p><img alt="The site_name setting" src="../img/site-name.png" /></p>
+<p><img alt="The site_name setting" src="../img/site-name.png"/></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
@@ -268,14 +246,14 @@ nav:
 <p>Save your changes and you'll now see a navigation bar with <code>Home</code> and <code>About</code>
 items on the left as well as <code>Search</code>, <code>Previous</code>, and <code>Next</code> items on the
 right.</p>
-<p><img alt="Screenshot" src="../img/multipage.png" /></p>
+<p><img alt="Screenshot" src="../img/multipage.png"/></p>
 <p>Try the menu items and navigate back and forth between pages. Then click on
 <code>Search</code>. A search dialog will appear, allowing you to search for any text on
 any page. Notice that the search results include every occurrence of the search
 term on the site and links directly to the section of the page in which the
 search term appears. You get all of that with no effort or configuration on your
 part!</p>
-<p><img alt="Screenshot" src="../img/search.png" /></p>
+<p><img alt="Screenshot" src="../img/search.png"/></p>
 <h2 id="theming-our-documentation">Theming our documentation<a class="headerlink" href="#theming-our-documentation" title="Permanent link"></a></h2>
 <p>Now change the configuration file to alter how the documentation is displayed by
 changing the theme. Edit the <code>mkdocs.yml</code> file and add a <a href="../user-guide/configuration/#theme"><code>theme</code></a> setting:</p>
@@ -286,7 +264,7 @@ nav:
     - About: about.md
 theme: readthedocs</code></pre>
 <p>Save your changes, and you'll see the ReadTheDocs theme being used.</p>
-<p><img alt="Screenshot" src="../img/readthedocs.png" /></p>
+<p><img alt="Screenshot" src="../img/readthedocs.png"/></p>
 <h2 id="changing-the-favicon-icon">Changing the Favicon Icon<a class="headerlink" href="#changing-the-favicon-icon" title="Permanent link"></a></h2>
 <p>By default, MkDocs uses the <a href="../img/favicon.ico">MkDocs favicon</a> icon. To use a different icon, create
 an <code>img</code> subdirectory in the <code>docs</code> directory and copy your custom <code>favicon.ico</code>
@@ -328,60 +306,58 @@ you're done. For specific instructions on a number of common hosts, see the
 <h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link"></a></h2>
 <p>See the <a href="../user-guide/">User Guide</a> for more complete documentation of all of MkDocs' features.</p>
 <p>To get help with MkDocs, please use the <a href="https://github.com/mkdocs/mkdocs/discussions">GitHub discussions</a> or <a href="https://github.com/mkdocs/mkdocs/issues">GitHub issues</a>.</p></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-                <p>Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
+</div>
+</div>
+<footer class="col-md-12">
+<hr/>
+<p>Copyright © 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
+<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+</footer>
+<script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js" defer></script>
-
-        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+<script defer="" src="../js/base.js"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"></script>
+<div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 </div>
-
-    </body>
+<div class="modal-body">
+<table class="table">
+<thead>
+<tr>
+<th style="width: 20%;">Keys</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="help shortcut"><kbd>?</kbd></td>
+<td>Open this help</td>
+</tr>
+<tr>
+<td class="next shortcut"><kbd>n</kbd></td>
+<td>Next page</td>
+</tr>
+<tr>
+<td class="prev shortcut"><kbd>p</kbd></td>
+<td>Previous page</td>
+</tr>
+<tr>
+<td class="search shortcut"><kbd>s</kbd></td>
+<td>Search</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+</body>
 </html>
