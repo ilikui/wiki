@@ -1,9 +1,7 @@
-site_name: WIKI
+site_name: 知识文档
 
-site_url: https://www.likui.info/wiki
-nav:
-    - Home: index.md
-    - About: about.md
+site_url: https://www.likui.info/wiki/site
+
 theme:
     name: mkdocs
     locale: en
