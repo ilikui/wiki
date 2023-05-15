@@ -50,6 +50,9 @@ markdown_extensions:
         user: mkdocs
         repo: mkdocs
     - mkdocs-click
-
+plugins:
+  - blogging:
+      dirs: # The directories to be included
+        - blog
 copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.
 
