@@ -4,7 +4,7 @@ site_url: https://www.likui.info/wiki/site
 
 theme:
     name: mkdocs
-    locale: en
+    locale: zh_CN
     analytics: {gtag: 'G-274394082'}
     highlightjs: true
     hljs_languages:
