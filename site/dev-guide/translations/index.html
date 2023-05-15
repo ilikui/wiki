@@ -73,19 +73,24 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Read <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../../read/Reading/" class="dropdown-item">Reading</a>
+</li>
+                                    
+<li>
+    <a href="../../read/Books/" class="dropdown-item">Books</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../../about/release-notes/" class="dropdown-item">Release Notes</a>
-</li>
-                                    
-<li>
-    <a href="../../about/contributing/" class="dropdown-item">Contributing</a>
-</li>
-                                    
-<li>
-    <a href="../../about/license/" class="dropdown-item">License</a>
+    <a href="../../about/abouts.md" class="dropdown-item">Release Notes</a>
 </li>
                                 </ul>
                             </li>
@@ -150,7 +155,7 @@
 <p>The <a href="../../user-guide/choosing-your-theme/">built-in themes</a> that are included with MkDocs provide support for
 translations. This is a guide for translators, which documents the process for
 contributing new translations and/or updating existing translations. For
-guidance on modifying the existing themes, see the <a href="../../about/contributing/#submitting-changes-to-the-builtin-themes">Contributing Guide</a>. To enable a specific translation see the documentation about the
+guidance on modifying the existing themes, see the <a href="../about/contributing.md#submitting-changes-to-the-builtin-themes">Contributing Guide</a>. To enable a specific translation see the documentation about the
 specific theme you are using in the <a href="../../user-guide/choosing-your-theme/">User Guide</a>. For
 translations of third-party themes, please see the documentation for those
 themes. For a third-party theme to make use of MkDocs' translation tools and
@@ -168,8 +173,8 @@ internationalization/localization plugin.</p>
 <p>Theme localization makes use of the <a href="https://babel.pocoo.org/en/latest/cmdline.html">babel</a> project for generation and
 compilation of localization files. You will need to be working from the
 git working tree on your local machine to make use of the translation commands.</p>
-<p>See the <a href="../../about/contributing/">Contributing Guide</a> for direction on how to <a href="../../about/contributing/#installing-for-development">Install for Development</a>
-and <a href="../../about/contributing/#submitting-pull-requests">Submit a Pull Request</a>. The instructions in this document assume that you
+<p>See the <a href="../about/contributing.md">Contributing Guide</a> for direction on how to <a href="../about/contributing.md#installing-for-development">Install for Development</a>
+and <a href="../about/contributing.md#submitting-pull-requests">Submit a Pull Request</a>. The instructions in this document assume that you
 are working from a properly configured development environment.</p>
 <p>Make sure translation requirements are installed in your environment:</p>
 <pre class="highlight"><code class="language-bash">pip install mkdocs[i18n]</code></pre>
@@ -229,7 +234,7 @@ pybabel init --input-file mkdocs/themes/readthedocs/messages.pot --output-dir mk
 translation</a> for every text placeholder in the
 localized catalog.</p>
 <h2 id="updating-a-theme-translation">Updating a theme translation<a class="headerlink" href="#updating-a-theme-translation" title="Permanent link"></a></h2>
-<p>If a theme's <code>messages.pot</code> template file has been <a href="../../about/contributing/#submitting-changes-to-the-builtin-themes">updated</a>
+<p>If a theme's <code>messages.pot</code> template file has been <a href="../about/contributing.md#submitting-changes-to-the-builtin-themes">updated</a>
 since the <code>messages.po</code> was last updated for your locale, follow the steps
 below to update the theme's <code>messages.po</code> file:</p>
 <ol>
@@ -239,7 +244,7 @@ below to update the theme's <code>messages.po</code> file:</p>
 <li><a href="#contributing-translations">Contribute your translation</a> through a Pull Request.</li>
 </ol>
 <h3 id="updating-the-translation-catalogs">Updating the translation catalogs<a class="headerlink" href="#updating-the-translation-catalogs" title="Permanent link"></a></h3>
-<p>This step should be completed after a theme template have been <a href="../../about/contributing/#submitting-changes-to-the-builtin-themes">updated</a> for each language that you are comfortable contributing a translation
+<p>This step should be completed after a theme template have been <a href="../about/contributing.md#submitting-changes-to-the-builtin-themes">updated</a> for each language that you are comfortable contributing a translation
 for.</p>
 <p>To update the <code>fr</code> translation catalog of both built-in themes, use the following commands:</p>
 <pre class="highlight"><code class="language-bash">pybabel update --ignore-obsolete --update-header-comment --input-file mkdocs/themes/mkdocs/messages.pot --output-dir mkdocs/themes/mkdocs/locales -l fr
@@ -294,7 +299,7 @@ changes.</p>
 <a href="../../user-guide/choosing-your-theme/">Choosing your theme</a>
 (<code>docs/user-guide/choosing-your-theme.md</code>), in their <strong><code>locale</code></strong> options.</p>
 <h2 id="contributing-translations">Contributing translations<a class="headerlink" href="#contributing-translations" title="Permanent link"></a></h2>
-<p>It is now time for you to <a href="../../about/contributing/">contribute</a> your nice work
+<p>It is now time for you to <a href="../about/contributing.md">contribute</a> your nice work
 to the project. Thank you!</p></div>
             </div>
         </div>

@@ -11,17 +11,7 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://www.likui.info/wiki/site/about/contributing/</loc>
-         <lastmod>2023-05-15</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://www.likui.info/wiki/site/about/license/</loc>
-         <lastmod>2023-05-15</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://www.likui.info/wiki/site/about/release-notes/</loc>
+         <loc>https://www.likui.info/wiki/site/about/about/</loc>
          <lastmod>2023-05-15</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -47,6 +37,16 @@
     </url>
     <url>
          <loc>https://www.likui.info/wiki/site/dev-guide/translations/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.likui.info/wiki/site/read/Books/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.likui.info/wiki/site/read/Reading/</loc>
          <lastmod>2023-05-15</lastmod>
          <changefreq>daily</changefreq>
     </url>

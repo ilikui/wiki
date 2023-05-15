@@ -19,11 +19,12 @@ nav:
         - Theme: user-guide/choosing-your-theme.md
     - Developer Guide: 
         - API: dev-guide/api.md
+    - Read:
+        - Reading: read/Reading.md
+        - Books: read/Books.md
     - About:
-        - Release Notes: about/release-notes.md
-        - Contributing: about/contributing.md
-        - License: about/license.md
-        
+        - Release Notes: about/abouts.md
+       
 extra_css:
     - css/extra.css
 
