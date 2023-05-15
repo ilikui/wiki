@@ -1,1 +1,1 @@
-mkdocs buid
+mkdocs build
