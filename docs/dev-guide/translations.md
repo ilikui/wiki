@@ -1,4 +1,4 @@
-# Translations
+about/contributing.md# Translations
 
 Theme localization guide.
 
@@ -22,7 +22,7 @@ combine theme localization with a third-party
 internationalization/localization plugin.
 
 [built-in themes]: ../user-guide/choosing-your-theme.md
-[update themes]: ../about/contributing.md#submitting-changes-to-the-builtin-themes
+[update themes]: ../about/about.md#submitting-changes-to-the-builtin-themes
 [configured]: themes.md#supporting-theme-localizationtranslation
 
 ## Localization tooling prerequisites
@@ -42,9 +42,9 @@ pip install mkdocs[i18n]
 ```
 
 [babel]: https://babel.pocoo.org/en/latest/cmdline.html
-[Contributing Guide]: ../about/contributing.md
-[Install for Development]: ../about/contributing.md#installing-for-development
-[Submit a Pull Request]: ../about/contributing.md#submitting-pull-requests
+[Contributing Guide]: ../about/about.md
+[Install for Development]: ../about/about.md#installing-for-development
+[Submit a Pull Request]: ../about/about.md#submitting-pull-requests
 
 ## Adding language translations to themes
 
@@ -219,5 +219,5 @@ Update the lists of supported translations for each translated theme located at
 
 ## Contributing translations
 
-It is now time for you to [contribute](../about/contributing.md) your nice work
+It is now time for you to [contribute](../about/about.md) your nice work
 to the project. Thank you!
