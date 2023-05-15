@@ -154,20 +154,18 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="getting-started-with-mkdocs">Getting Started with MkDocs</h1>
+<h1 id="getting-started-with-mkdocs">Getting Started with MkDocs<a class="headerlink" href="#getting-started-with-mkdocs" title="Permanent link"></a></h1>
 <p>An introductory tutorial!</p>
 <hr />
-<h2 id="installation">Installation</h2>
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
 <p>To install MkDocs, run the following command from the command line:</p>
-<pre><code class="language-bash">pip install mkdocs
-</code></pre>
+<pre class="highlight"><code class="language-bash">pip install mkdocs</code></pre>
 <p>For more details, see the <a href="../user-guide/installation/">Installation Guide</a>.</p>
-<h2 id="creating-a-new-project">Creating a new project</h2>
+<h2 id="creating-a-new-project">Creating a new project<a class="headerlink" href="#creating-a-new-project" title="Permanent link"></a></h2>
 <p>Getting started is super easy. To create a new project, run the following
 command from the command line:</p>
-<pre><code class="language-bash">mkdocs new my-project
-cd my-project
-</code></pre>
+<pre class="highlight"><code class="language-bash">mkdocs new my-project
+cd my-project</code></pre>
 <p>Take a moment to review the initial project that has been created for you.</p>
 <p><img alt="The initial MkDocs layout" src="../img/initial-layout.png" /></p>
 <p>There's a single configuration file named <code>mkdocs.yml</code>, and a folder named
@@ -178,13 +176,12 @@ folder just contains a single documentation page, named <code>index.md</code>.</
 as you work on it. Make sure you're in the same directory as the <code>mkdocs.yml</code>
 configuration file, and then start the server by running the <code>mkdocs serve</code>
 command:</p>
-<pre><code class="language-console">$ mkdocs serve
+<pre class="highlight"><code class="language-console">$ mkdocs serve
 INFO    -  Building documentation...
 INFO    -  Cleaning site directory
 [I 160402 15:50:43 server:271] Serving on http://127.0.0.1:8000
 [I 160402 15:50:43 handlers:58] Start watching changes
-[I 160402 15:50:43 handlers:60] Start detecting changes
-</code></pre>
+[I 160402 15:50:43 handlers:60] Start detecting changes</code></pre>
 <p>Open up <code>http://127.0.0.1:8000/</code> in your browser, and you'll see the default
 home page being displayed:</p>
 <p><img alt="The MkDocs live server" src="../img/screenshot.png" /></p>
@@ -196,33 +193,33 @@ initial heading to <code>MkLorum</code>, and save your changes. Your browser wil
 auto-reload and you should see your updated documentation immediately.</p>
 <p>Now try editing the configuration file: <code>mkdocs.yml</code>. Change the
 <a href="../user-guide/configuration/#site_name"><code>site_name</code></a> setting to <code>MkLorum</code> and save the file.</p>
-<pre><code class="language-yaml">site_name: MkLorum
-site_url: https://example.com/
-</code></pre>
+<pre class="highlight"><code class="language-yaml">site_name: MkLorum
+site_url: https://example.com/</code></pre>
 <p>Your browser should immediately reload, and you'll see your new site name take
 effect.</p>
 <p><img alt="The site_name setting" src="../img/site-name.png" /></p>
-<p>NOTE:
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
 The <a href="../user-guide/configuration/#site_name"><code>site_name</code></a> and <a href="../user-guide/configuration/#site_url"><code>site_url</code></a> configuration
 options are the only two required options in your configuration file. When
 you create a new project, the <code>site_url</code> option is assigned the placeholder
 value: <code>https://example.com</code>. If the final location is known, you can change
 the setting now to point to it. Or you may choose to leave it alone for now.
 Just be sure to edit it before you deploy your site to a production server.</p>
-<h2 id="adding-pages">Adding pages</h2>
+</div>
+<h2 id="adding-pages">Adding pages<a class="headerlink" href="#adding-pages" title="Permanent link"></a></h2>
 <p>Now add a second page to your documentation:</p>
-<pre><code class="language-bash">curl 'https://jaspervdj.be/lorem-markdownum/markdown.txt' &gt; docs/about.md
-</code></pre>
+<pre class="highlight"><code class="language-bash">curl 'https://jaspervdj.be/lorem-markdownum/markdown.txt' &gt; docs/about.md</code></pre>
 <p>As our documentation site will include some navigation headers, you may want to
 edit the configuration file and add some information about the order, title, and
 nesting of each page in the navigation header by adding a <a href="../user-guide/configuration/#nav"><code>nav</code></a>
 setting:</p>
-<pre><code class="language-yaml">site_name: MkLorum
+<pre class="highlight"><code class="language-yaml">site_name: MkLorum
 site_url: https://example.com/
 nav:
     - Home: index.md
-    - About: about.md
-</code></pre>
+    - About: about.md</code></pre>
 <p>Save your changes and you'll now see a navigation bar with <code>Home</code> and <code>About</code>
 items on the left as well as <code>Search</code>, <code>Previous</code>, and <code>Next</code> items on the
 right.</p>
@@ -234,34 +231,31 @@ term on the site and links directly to the section of the page in which the
 search term appears. You get all of that with no effort or configuration on your
 part!</p>
 <p><img alt="Screenshot" src="../img/search.png" /></p>
-<h2 id="theming-our-documentation">Theming our documentation</h2>
+<h2 id="theming-our-documentation">Theming our documentation<a class="headerlink" href="#theming-our-documentation" title="Permanent link"></a></h2>
 <p>Now change the configuration file to alter how the documentation is displayed by
 changing the theme. Edit the <code>mkdocs.yml</code> file and add a <a href="../user-guide/configuration/#theme"><code>theme</code></a> setting:</p>
-<pre><code class="language-yaml">site_name: MkLorum
+<pre class="highlight"><code class="language-yaml">site_name: MkLorum
 site_url: https://example.com/
 nav:
     - Home: index.md
     - About: about.md
-theme: readthedocs
-</code></pre>
+theme: readthedocs</code></pre>
 <p>Save your changes, and you'll see the ReadTheDocs theme being used.</p>
 <p><img alt="Screenshot" src="../img/readthedocs.png" /></p>
-<h2 id="changing-the-favicon-icon">Changing the Favicon Icon</h2>
+<h2 id="changing-the-favicon-icon">Changing the Favicon Icon<a class="headerlink" href="#changing-the-favicon-icon" title="Permanent link"></a></h2>
 <p>By default, MkDocs uses the <a href="../img/favicon.ico">MkDocs favicon</a> icon. To use a different icon, create
 an <code>img</code> subdirectory in the <code>docs</code> directory and copy your custom <code>favicon.ico</code>
 file to that directory. MkDocs will automatically detect and use that file as your
 favicon icon.</p>
-<h2 id="building-the-site">Building the site</h2>
+<h2 id="building-the-site">Building the site<a class="headerlink" href="#building-the-site" title="Permanent link"></a></h2>
 <p>That's looking good. You're ready to deploy the first pass of your <code>MkLorum</code>
 documentation. First build the documentation:</p>
-<pre><code class="language-bash">mkdocs build
-</code></pre>
+<pre class="highlight"><code class="language-bash">mkdocs build</code></pre>
 <p>This will create a new directory, named <code>site</code>. Take a look inside the
 directory:</p>
-<pre><code class="language-console">$ ls site
+<pre class="highlight"><code class="language-console">$ ls site
 about  fonts  index.html  license  search.html
-css    img    js          mkdocs   sitemap.xml
-</code></pre>
+css    img    js          mkdocs   sitemap.xml</code></pre>
 <p>Notice that your source documentation has been output as two HTML files named
 <code>index.html</code> and <code>about/index.html</code>. You also have various other media that's
 been copied into the <code>site</code> directory as part of the documentation theme. You
@@ -269,27 +263,24 @@ even have a <code>sitemap.xml</code> file and <code>mkdocs/search_index.json</co
 <p>If you're using source code control such as <code>git</code> you probably don't want to
 check your documentation builds into the repository. Add a line containing
 <code>site/</code> to your <code>.gitignore</code> file.</p>
-<pre><code class="language-bash">echo &quot;site/&quot; &gt;&gt; .gitignore
-</code></pre>
+<pre class="highlight"><code class="language-bash">echo "site/" &gt;&gt; .gitignore</code></pre>
 <p>If you're using another source code control tool you'll want to check its
 documentation on how to ignore specific directories.</p>
-<h2 id="other-commands-and-options">Other Commands and Options</h2>
+<h2 id="other-commands-and-options">Other Commands and Options<a class="headerlink" href="#other-commands-and-options" title="Permanent link"></a></h2>
 <p>There are various other commands and options available. For a complete list of
 commands, use the <code>--help</code> flag:</p>
-<pre><code class="language-bash">mkdocs --help
-</code></pre>
+<pre class="highlight"><code class="language-bash">mkdocs --help</code></pre>
 <p>To view a list of options available on a given command, use the <code>--help</code> flag
 with that command. For example, to get a list of all options available for the
 <code>build</code> command run the following:</p>
-<pre><code class="language-bash">mkdocs build --help
-</code></pre>
-<h2 id="deploying">Deploying</h2>
+<pre class="highlight"><code class="language-bash">mkdocs build --help</code></pre>
+<h2 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link"></a></h2>
 <p>The documentation site that you just built only uses static files so you'll be
 able to host it from pretty much anywhere. Simply upload the contents of the
 entire <code>site</code> directory to wherever you're hosting your website from and
 you're done. For specific instructions on a number of common hosts, see the
 <a href="../user-guide/deploying-your-docs/">Deploying your Docs</a> page.</p>
-<h2 id="getting-help">Getting help</h2>
+<h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link"></a></h2>
 <p>See the <a href="../user-guide/">User Guide</a> for more complete documentation of all of MkDocs' features.</p>
 <p>To get help with MkDocs, please use the <a href="https://github.com/mkdocs/mkdocs/discussions">GitHub discussions</a> or <a href="https://github.com/mkdocs/mkdocs/issues">GitHub issues</a>.</p></div>
             </div>
