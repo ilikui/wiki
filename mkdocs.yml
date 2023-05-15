@@ -17,8 +17,14 @@ nav:
     - User Guide: 
         - Install: user-guide/installation.md
         - Theme: user-guide/choosing-your-theme.md
+        - Localizing: user-guide/localizing-your-theme.md
+        - Configuration: user-guide/configuration.md
     - Developer Guide: 
         - API: dev-guide/api.md
+        - Plugins: dev-guide/plugins.md
+        - Themes: dev-guide/themes.md
+        - Translations: dev-guide/translations.md
+        - README: dev-guide/README.md
     - CS:
         - 必学工具: cs/必学工具.md
         - 好书推荐: cs/好书推荐.md
