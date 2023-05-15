@@ -1,4 +1,4 @@
-site_name: My Docs
+site_name: WIKI
 
 site_url: https://www.likui.info/wiki
 nav:
@@ -12,3 +12,21 @@ theme:
     hljs_languages:
         - yaml
         - django
+
+nav:
+    - Home: index.md
+    - Getting Started: getting-started.md
+    - User Guide: user-guide/
+    - Developer Guide: dev-guide/
+    - About:
+        - Release Notes: about/release-notes.md
+        - Contributing: about/contributing.md
+        - License: about/license.md
+        
+extra_css:
+    - css/extra.css
+
+
+
+copyright: Copyright &copy; 2014 <a href="https://twitter.com/starletdreaming">Tom Christie</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.
+
