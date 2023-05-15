@@ -30,7 +30,7 @@ nav:
         - Themes: dev-guide/themes.md
         - Translations: dev-guide/translations.md
         - README: dev-guide/README.md
-    - ppt:
+    - PPT:
         - ppt: ppt/matlab.md
     - CS:
         - 必学工具: cs/必学工具.md
