@@ -23,7 +23,7 @@ nav:
         - Reading: read/Reading.md
         - Books: read/Books.md
     - About:
-        - Release Notes: about/abouts.md
+        - About: about/about.md
        
 extra_css:
     - css/extra.css
