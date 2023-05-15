@@ -14,8 +14,10 @@ theme:
 nav:
     - Home: index.md
     - Getting Started: getting-started.md
-    - User Guide: user-guide/
-    - Developer Guide: dev-guide/
+    - User Guide: 
+        - Theme: user-guide/choosing-your-theme.md
+    - Developer Guide: 
+        - API: dev-guide/api.md
     - About:
         - Release Notes: about/release-notes.md
         - Contributing: about/contributing.md
