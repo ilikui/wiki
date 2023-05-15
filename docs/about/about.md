@@ -3,9 +3,16 @@
 
 > 环境测试
 
-```mermaid
-graph LR
-    hello --> world
-    world --> again
-    again --> hello
+```markmap
+# Root
+
+## Branch 1
+
+* Branchlet 1a
+* Branchlet 1b
+
+## Branch 2
+
+* Branchlet 2a
+* Branchlet 2b
 ```

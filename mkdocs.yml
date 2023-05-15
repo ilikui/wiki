@@ -17,6 +17,7 @@ nav:
     - User Guide: 
         - Install: user-guide/installation.md
         - Theme: user-guide/choosing-your-theme.md
+        - Customizing: user-guide/customizing-your-theme.md
         - Localizing: user-guide/localizing-your-theme.md
         - Configuration: user-guide/configuration.md
         - Cli: user-guide/cli.md
@@ -47,7 +48,9 @@ extra_css:
 
 extra_javascript:
     - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs
-
+    - https://unpkg.com/d3@6.7.0/dist/d3.min.js
+    - https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js
+    - https://unpkg.com/markmap-view@0.14.0/dist/index.min.js
 markdown_extensions:
     - toc:
         permalink: 
@@ -69,6 +72,7 @@ plugins:
       dirs: # The directories to be included
         - blog
   - mermaid2:
+  - markmap
   - build_plantuml:
         render: 'server' # or "local" for local rendering
         bin_path: '/usr/local/bin/plantuml' # ignored when render: server
