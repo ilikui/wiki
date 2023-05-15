@@ -1,3 +1,7 @@
 site_name: My Docs
 
 site_url: https://www.likui.info/wiki
+nav:
+    - Home: index.md
+    - About: about.md
+theme: readthedocs
