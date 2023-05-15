@@ -19,6 +19,10 @@ nav:
         - Theme: user-guide/choosing-your-theme.md
         - Localizing: user-guide/localizing-your-theme.md
         - Configuration: user-guide/configuration.md
+        - Cli: user-guide/cli.md
+        - Deploying: user-guide/deploying-your-docs.md
+        - Writing: user-guide/writing-your-docs.md
+        - README: user-guide/README.md
     - Developer Guide: 
         - API: dev-guide/api.md
         - Plugins: dev-guide/plugins.md
