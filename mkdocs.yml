@@ -1,4 +1,4 @@
-site_name: KM
+site_name: 知识文档
 
 site_url: https://www.likui.info/wiki/site
 
@@ -49,13 +49,13 @@ extra_css:
     - css/extra.css
 
 extra_javascript:
-    - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs
+    #- https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs
     - https://unpkg.com/d3@6.7.0/dist/d3.min.js
     - https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js
     - https://unpkg.com/markmap-view@0.14.0/dist/index.min.js
 markdown_extensions:
     - toc:
-        permalink: 
+        permalink: 
     - attr_list
     - def_list
     - tables
@@ -74,7 +74,7 @@ plugins:
       dirs: # The directories to be included
         - blog
   - mermaid2:
-  - markmap
+  #- markmap:
   - build_plantuml:
         render: 'server' # or "local" for local rendering
         bin_path: '/usr/local/bin/plantuml' # ignored when render: server

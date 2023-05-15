@@ -1,227 +1,261 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://www.likui.info/wiki/site/dev-guide/themes/" rel="canonical"/>
-<link href="../../img/favicon.ico" rel="shortcut icon"/>
-<title>Themes - KM</title>
-<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
-<link href="../../css/font-awesome.min.css" rel="stylesheet"/>
-<link href="../../css/base.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
-<link href="../../css/extra.css" rel="stylesheet"/>
-<script defer="" src="../../js/jquery-1.10.2.min.js"></script>
-<script defer="" src="../../js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
-<script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://www.likui.info/wiki/site/dev-guide/themes/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Themes - 知识文档</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../../css/extra.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
+        <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'G-274394082');
-        </script>
-</head>
-<body>
-<div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-<div class="container">
-<a class="navbar-brand" href="../..">KM</a>
-<!-- Expander button -->
-<button class="navbar-toggler" data-target="#navbar-collapse" data-toggle="collapse" type="button">
-<span class="navbar-toggler-icon"></span>
-</button>
-<!-- Expanded navigation -->
-<div class="navbar-collapse collapse" id="navbar-collapse">
-<!-- Main navigation -->
-<ul class="nav navbar-nav">
-<li class="navitem">
-<a class="nav-link" href="../..">主页</a>
-</li>
-<li class="navitem">
-<a class="nav-link" href="../../getting-started/">开始</a>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">用户手册 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+        </script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">知识文档</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">主页</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../getting-started/" class="nav-link">开始</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">用户手册 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/installation/">Install</a>
+    <a href="../../user-guide/installation/" class="dropdown-item">Install</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/choosing-your-theme/">Theme</a>
+    <a href="../../user-guide/choosing-your-theme/" class="dropdown-item">Theme</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/customizing-your-theme/">Customizing</a>
+    <a href="../../user-guide/customizing-your-theme/" class="dropdown-item">Customizing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/localizing-your-theme/">Localizing</a>
+    <a href="../../user-guide/localizing-your-theme/" class="dropdown-item">Localizing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/configuration/">Configuration</a>
+    <a href="../../user-guide/configuration/" class="dropdown-item">Configuration</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/cli/">Cli</a>
+    <a href="../../user-guide/cli/" class="dropdown-item">Cli</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/deploying-your-docs/">Deploying</a>
+    <a href="../../user-guide/deploying-your-docs/" class="dropdown-item">Deploying</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/writing-your-docs/">Writing</a>
+    <a href="../../user-guide/writing-your-docs/" class="dropdown-item">Writing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../user-guide/">README</a>
+    <a href="../../user-guide/" class="dropdown-item">README</a>
 </li>
-</ul>
-</li>
-<li class="dropdown active">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">开发指南 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">开发指南 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../api/">API</a>
+    <a href="../api/" class="dropdown-item">API</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../plugins/">Plugins</a>
+    <a href="../plugins/" class="dropdown-item">Plugins</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item active" href="./">Themes</a>
+    <a href="./" class="dropdown-item active">Themes</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../translations/">Translations</a>
+    <a href="../translations/" class="dropdown-item">Translations</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../">README</a>
+    <a href="../" class="dropdown-item">README</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">PPT <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">PPT <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../ppt/matlab/">ppt</a>
+    <a href="../../ppt/matlab/" class="dropdown-item">ppt</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">CS <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">CS <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/">必学工具</a>
+    <a href="../../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/" class="dropdown-item">必学工具</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/">好书推荐</a>
+    <a href="../../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/" class="dropdown-item">好书推荐</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a>
+    <a href="../../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="dropdown-item">数学基础</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/">数学进阶</a>
+    <a href="../../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/" class="dropdown-item">数学进阶</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/">编程入门</a>
+    <a href="../../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" class="dropdown-item">编程入门</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/">电子基础</a>
+    <a href="../../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/" class="dropdown-item">电子基础</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">阅读 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">阅读 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../read/Reading/">Reading</a>
+    <a href="../../read/Reading/" class="dropdown-item">Reading</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../read/Books/">Books</a>
+    <a href="../../read/Books/" class="dropdown-item">Books</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">关于 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">关于 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../about/about/">About</a>
+    <a href="../../about/about/" class="dropdown-item">About</a>
 </li>
-</ul>
-</li>
-</ul>
-<ul class="nav navbar-nav ml-auto">
-<li class="nav-item">
-<a class="nav-link" data-target="#mkdocs_search_modal" data-toggle="modal" href="#">
-<i class="fa fa-search"></i> Search
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
                             </a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="../plugins/" rel="prev">
-<i class="fa fa-arrow-left"></i> Previous
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../plugins/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
                                 </a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="../translations/" rel="next">
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../translations/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
-</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="container">
-<div class="row">
-<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-<div class="navbar-header">
-<button class="navbar-toggler collapsed" data-target="#toc-collapse" data-toggle="collapse" title="Table of Contents" type="button">
-<span class="fa fa-angle-down"></span>
-</button>
-</div>
-<div class="navbar-collapse collapse card bg-secondary" id="toc-collapse">
-<ul class="nav flex-column">
-<li class="nav-item" data-level="1"><a class="nav-link" href="#developing-themes">Developing Themes</a>
-<ul class="nav flex-column">
-<li class="nav-item" data-level="2"><a class="nav-link" href="#creating-a-custom-theme">Creating a custom theme</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#basic-theme">Basic theme</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#theme-files">Theme Files</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#template-variables">Template Variables</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#template-filters">Template Filters</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#search-and-themes">Search and themes</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#packaging-themes">Packaging Themes</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#supporting-theme-localizationtranslation">Supporting theme Localization/Translation</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#developing-themes" class="nav-link">Developing Themes</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#creating-a-custom-theme" class="nav-link">Creating a custom theme</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#basic-theme" class="nav-link">Basic theme</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#theme-files" class="nav-link">Theme Files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#template-variables" class="nav-link">Template Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#template-filters" class="nav-link">Template Filters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#search-and-themes" class="nav-link">Search and themes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#packaging-themes" class="nav-link">Packaging Themes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#supporting-theme-localizationtranslation" class="nav-link">Supporting theme Localization/Translation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-<div class="col-md-9" role="main">
-<h1 id="developing-themes">Developing Themes<a class="headerlink" href="#developing-themes" title="Permanent link"></a></h1>
+                    <div class="col-md-9" role="main">
+
+<h1 id="developing-themes">Developing Themes</h1>
 <p>A guide to creating and distributing custom themes.</p>
-<hr/>
+<hr />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>
@@ -234,7 +268,7 @@ create one from scratch or you can download the <code>mkdocs-basic-theme</code> 
 basic, yet complete, theme with all the boilerplate required. <strong>You can find
 this base theme on <a href="https://github.com/mkdocs/mkdocs-basic-theme">GitHub</a></strong>. It contains detailed comments in
 the code to describe the different features and their usage.</p>
-<h2 id="creating-a-custom-theme">Creating a custom theme<a class="headerlink" href="#creating-a-custom-theme" title="Permanent link"></a></h2>
+<h2 id="creating-a-custom-theme">Creating a custom theme</h2>
 <p>The bare minimum required for a custom theme is a <code>main.html</code> <a href="https://jinja.palletsprojects.com/">Jinja2
 template</a> file which is placed in a directory that is <em>not</em> a child of the
 <a href="../../user-guide/configuration/#docs_dir">docs_dir</a>. Within <code>mkdocs.yml</code>, set the <a href="../../user-guide/configuration/#custom_dir"><code>theme.custom_dir</code></a>
@@ -279,7 +313,7 @@ be defined in the <a href="../../user-guide/configuration/#theme">theme</a> conf
 the <code>theme.name</code> configuration option, then a <code>mkdocs_theme.yml</code> file
 is required for the theme.</p>
 </div>
-<h2 id="basic-theme">Basic theme<a class="headerlink" href="#basic-theme" title="Permanent link"></a></h2>
+<h2 id="basic-theme">Basic theme</h2>
 <p>The simplest <code>main.html</code> file is the following:</p>
 <pre class="highlight"><code class="language-django">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -309,42 +343,42 @@ required, third party template authors are encouraged to follow a similar
 pattern and may want to define the same <a href="../../user-guide/customizing-your-theme/#overriding-template-blocks">blocks</a> as are used in the built-in
 themes for consistency.</p>
 </div>
-<h2 id="theme-files">Theme Files<a class="headerlink" href="#theme-files" title="Permanent link"></a></h2>
+<h2 id="theme-files">Theme Files</h2>
 <p>There are various files which a theme treats special in some way. Any other
 files are simply copied from the theme directory to the same path in the
 <code>site_dir</code> when the site it built. For example image and CSS files have no
 special significance and are copied as-is. Note, however, that if the user
 provides a file with the same path in their <code>docs_dir</code>, then the user's file
 will replace the theme file.</p>
-<h3 id="template-files">Template Files<a class="headerlink" href="#template-files" title="Permanent link"></a></h3>
+<h3 id="template-files">Template Files</h3>
 <p>Any files with the <code>.html</code> extension are considered to be template files and are
 not copied from the theme directory or any subdirectories. Also, any files
 listed in <a href="#static_templates">static_templates</a> are treated as templates regardless of their file
 extension.</p>
-<h3 id="theme-meta-files">Theme Meta Files<a class="headerlink" href="#theme-meta-files" title="Permanent link"></a></h3>
+<h3 id="theme-meta-files">Theme Meta Files</h3>
 <p>The various files required for packaging a theme are also ignored. Specifically,
 the <code>mkdocs_theme.yml</code> configuration file and any Python files.</p>
-<h3 id="dot-files">Dot Files<a class="headerlink" href="#dot-files" title="Permanent link"></a></h3>
+<h3 id="dot-files">Dot Files</h3>
 <p>Theme authors can explicitly force MkDocs to ignore files by starting a file or
 directory name with a dot. Any of the following files would be ignored:</p>
 <pre class="highlight"><code class="language-text">.ignored.txt
 .ignored/file.txt
 foo/.ignored.txt
 foo/.ignored/file.txt</code></pre>
-<h3 id="documentation-files">Documentation Files<a class="headerlink" href="#documentation-files" title="Permanent link"></a></h3>
+<h3 id="documentation-files">Documentation Files</h3>
 <p>All documentation files are ignored. Specifically, any Markdown files (using any
 of the file extensions supported by MKDocs). Additionally, any README files
 which may exist in the theme directories are ignored.</p>
-<h2 id="template-variables">Template Variables<a class="headerlink" href="#template-variables" title="Permanent link"></a></h2>
+<h2 id="template-variables">Template Variables</h2>
 <p>Each template in a theme is built with a template context. These are the
 variables that are available to themes. The context varies depending on the
 template that is being built. At the moment templates are either built with
 the global context or with a page specific context. The global context is used
 for HTML pages that don't represent an individual Markdown document, for
 example a 404.html page or search.html.</p>
-<h3 id="global-context">Global Context<a class="headerlink" href="#global-context" title="Permanent link"></a></h3>
+<h3 id="global-context">Global Context</h3>
 <p>The following variables are available globally on any template.</p>
-<h4 id="config">config<a class="headerlink" href="#config" title="Permanent link"></a></h4>
+<h4 id="config">config</h4>
 <p>The <code>config</code> variable is an instance of MkDocs' config object generated from the
 <code>mkdocs.yml</code> config file. While you can use any config option, some commonly
 used options include:</p>
@@ -361,7 +395,7 @@ used options include:</p>
 <li><a href="../../user-guide/configuration/#copyright">config.copyright</a></li>
 <li><a href="../../user-guide/configuration/#google_analytics">config.google_analytics</a></li>
 </ul>
-<h4 id="nav">nav<a class="headerlink" href="#nav" title="Permanent link"></a></h4>
+<h4 id="nav">nav</h4>
 <p>The <code>nav</code> variable is used to create the navigation for the documentation. The
 <code>nav</code> object is an iterable of <a href="#navigation-objects">navigation objects</a> as
 defined by the <a href="../../user-guide/configuration/#nav">nav</a> configuration setting.</p>
@@ -385,7 +419,7 @@ defined by the <a href="../../user-guide/configuration/#nav">nav</a> configurati
 pages which are not included in the navigation. This list does match the list
 and order of pages used for all "next page" and "previous page" links. For a
 list of all pages, use the <a href="#pages">pages</a> template variable.</p>
-<h5 id="nav-example">Nav Example<a class="headerlink" href="#nav-example" title="Permanent link"></a></h5>
+<h5 id="nav-example">Nav Example</h5>
 <p>Following is a basic usage example which outputs the first and second level
 navigation as a nested list.</p>
 <pre class="highlight"><code class="language-django">{% if nav|length&gt;1 %}
@@ -409,23 +443,23 @@ navigation as a nested list.</p>
     {% endfor %}
     &lt;/ul&gt;
 {% endif %}</code></pre>
-<h4 id="base_url">base_url<a class="headerlink" href="#base_url" title="Permanent link"></a></h4>
+<h4 id="base_url">base_url</h4>
 <p>The <code>base_url</code> provides a relative path to the root of the MkDocs project. While
 this can be used directly by prepending it to a local relative URL, it is best
 to use the <a href="#url">url</a> template filter, which is smarter about how it applies
 <code>base_url</code>.</p>
-<h4 id="mkdocs_version">mkdocs_version<a class="headerlink" href="#mkdocs_version" title="Permanent link"></a></h4>
+<h4 id="mkdocs_version">mkdocs_version</h4>
 <p>Contains the current MkDocs version.</p>
-<h4 id="build_date_utc">build_date_utc<a class="headerlink" href="#build_date_utc" title="Permanent link"></a></h4>
+<h4 id="build_date_utc">build_date_utc</h4>
 <p>A Python datetime object that represents the date and time the documentation
 was built in UTC. This is useful for showing how recently the documentation
 was updated.</p>
-<h4 id="pages">pages<a class="headerlink" href="#pages" title="Permanent link"></a></h4>
+<h4 id="pages">pages</h4>
 <p>A flat list of <code>File</code> objects for <em>all</em> pages in the project. This list can
 contain pages not included in the global <a href="#nav">navigation</a> and may not match
 the order of pages within that navigation. The <a href="#page">page</a> object for each
 <code>File</code> can be accessed from <code>file.page</code>.</p>
-<h4 id="page">page<a class="headerlink" href="#page" title="Permanent link"></a></h4>
+<h4 id="page">page</h4>
 <p>In templates which are not rendered from a Markdown source file, the <code>page</code>
 variable is <code>None</code>. In templates which are rendered from a Markdown source file,
 the <code>page</code> variable contains a <code>page</code> object. The same <code>page</code> objects are used
@@ -546,13 +580,13 @@ on the homepage:</p>
     options:
         show_root_full_path: false
         heading_level: 5</p>
-<h4 id="anchorlink">AnchorLink<a class="headerlink" href="#anchorlink" title="Permanent link"></a></h4>
+<h4 id="anchorlink">AnchorLink</h4>
 <p>::: mkdocs.structure.toc.AnchorLink
     options:
         show_root_heading: false
         show_root_toc_entry: true
         heading_level: 5</p>
-<h3 id="navigation-objects">Navigation Objects<a class="headerlink" href="#navigation-objects" title="Permanent link"></a></h3>
+<h3 id="navigation-objects">Navigation Objects</h3>
 <p>Navigation objects contained in the <a href="#nav">nav</a> template variable may be one of
 <a href="#section">section</a> objects, <a href="#page">page</a> objects, and <a href="#link">link</a> objects.
 While section objects may contain nested navigation objects, pages and links do
@@ -560,7 +594,7 @@ not.</p>
 <p>Page objects are the full page object as used for the current <a href="#page">page</a> with
 all of the same attributes available. Section and Link objects contain a subset
 of those attributes as defined below:</p>
-<h4 id="section">Section<a class="headerlink" href="#section" title="Permanent link"></a></h4>
+<h4 id="section">Section</h4>
 <p>A <code>section</code> navigation object defines a named section in the navigation and
 contains a list of child navigation objects. Note that sections do not contain
 URLs and are not links of any kind. However, by default, MkDocs sorts index
@@ -601,7 +635,7 @@ theme chooses to do so.</p>
     options:
         show_root_full_path: false
         heading_level: 5</p>
-<h4 id="link">Link<a class="headerlink" href="#link" title="Permanent link"></a></h4>
+<h4 id="link">Link</h4>
 <p>A <code>link</code> navigation object contains a link which does not point to an internal
 MkDocs page.</p>
 <p>::: mkdocs.structure.nav.Link
@@ -643,7 +677,7 @@ MkDocs page.</p>
     options:
         show_root_full_path: false
         heading_level: 5</p>
-<h3 id="extra-context">Extra Context<a class="headerlink" href="#extra-context" title="Permanent link"></a></h3>
+<h3 id="extra-context">Extra Context</h3>
 <p>Additional variables can be passed to the template with the
 <a href="../../user-guide/configuration/#extra"><code>extra</code></a> configuration option. This is a
 set of key value pairs that can make custom templates far more flexible.</p>
@@ -666,21 +700,21 @@ following <code>extra</code> configuration:</p>
   {% endfor %}
   &lt;/ul&gt;
 {% endif %}</code></pre>
-<h2 id="template-filters">Template Filters<a class="headerlink" href="#template-filters" title="Permanent link"></a></h2>
+<h2 id="template-filters">Template Filters</h2>
 <p>In addition to <a href="https://jinja.palletsprojects.com/en/latest/templates/#builtin-filters">Jinja's default filters</a>, the following custom filters are
 available to use in MkDocs templates:</p>
-<h3 id="url">url<a class="headerlink" href="#url" title="Permanent link"></a></h3>
+<h3 id="url">url</h3>
 <p>Normalizes a URL. Absolute URLs are passed through unaltered. If the URL is
 relative and the template context includes a page object, then the URL is
 returned relative to the page object. Otherwise, the URL is returned with
 <a href="#base_url">base_url</a> prepended.</p>
 <pre class="highlight"><code class="language-django">&lt;a href="{{ page.url|url }}"&gt;{{ page.title }}&lt;/a&gt;</code></pre>
-<h3 id="tojson">tojson<a class="headerlink" href="#tojson" title="Permanent link"></a></h3>
+<h3 id="tojson">tojson</h3>
 <p>Safety convert a Python object to a value in a JavaScript script.</p>
 <pre class="highlight"><code class="language-django">&lt;script&gt;
     var mkdocs_page_name = {{ page.title|tojson|safe }};
 &lt;/script&gt;</code></pre>
-<h2 id="search-and-themes">Search and themes<a class="headerlink" href="#search-and-themes" title="Permanent link"></a></h2>
+<h2 id="search-and-themes">Search and themes</h2>
 <p>As of MkDocs version <em>0.17</em> client side search support has been added to MkDocs
 via the <code>search</code> plugin. A theme needs to provide a few things for the plugin to
 work with the theme.</p>
@@ -716,7 +750,7 @@ identified with <code>id="mkdocs-search-query"</code> and the div where the resu
 placed must be identified with <code>id="mkdocs-search-results"</code>.</p>
 <p>The plugin supports the following options being set in the <a href="#theme-configuration">theme's
 configuration file</a>, <code>mkdocs_theme.yml</code>:</p>
-<h3 id="include_search_page">include_search_page<a class="headerlink" href="#include_search_page" title="Permanent link"></a></h3>
+<h3 id="include_search_page">include_search_page</h3>
 <p>Determines whether the search plugin expects the theme to provide a dedicated
 search page via a template located at <code>search/search.html</code>.</p>
 <p>When <code>include_search_page</code> is set to <code>true</code>, the search template will be built
@@ -725,7 +759,7 @@ theme.</p>
 <p>When <code>include_search_page</code> is set to <code>false</code> or not defined, it is expected that
 the theme provide some other mechanisms for displaying search results. For
 example, the <code>mkdocs</code> theme displays results on any page via a modal.</p>
-<h3 id="search_index_only">search_index_only<a class="headerlink" href="#search_index_only" title="Permanent link"></a></h3>
+<h3 id="search_index_only">search_index_only</h3>
 <p>Determines whether the search plugin should only generate a search index or a
 complete search solution.</p>
 <p>When <code>search_index_only</code> is set to <code>false</code>, then the search plugin modifies the
@@ -754,7 +788,7 @@ performance improvements for larger sites. Note that the pre-built index is only
 created if the user explicitly enables the <a href="../../user-guide/configuration/#prebuild_index">prebuild_index</a> config option.
 Themes should expect the index to not be present, but can choose to use the
 index when it is available. The <code>index</code> object was new in MkDocs version <em>1.0</em>.</p>
-<h2 id="packaging-themes">Packaging Themes<a class="headerlink" href="#packaging-themes" title="Permanent link"></a></h2>
+<h2 id="packaging-themes">Packaging Themes</h2>
 <p>MkDocs makes use of <a href="https://packaging.python.org/en/latest/">Python packaging</a> to distribute themes. This comes with a
 few requirements.</p>
 <p>To see an example of a package containing one theme, see the <a href="https://mkdocs.github.io/mkdocs-bootstrap/">MkDocs Bootstrap
@@ -771,7 +805,7 @@ your theme, your users can more easily install it, they can rely on a default
 <a href="#theme-configuration">configuration</a> being defined, and they can then take advantage of the
 <a href="../../user-guide/configuration/#custom_dir">custom_dir</a> to make tweaks to your theme to better suit their needs.</p>
 </div>
-<h3 id="package-layout">Package Layout<a class="headerlink" href="#package-layout" title="Permanent link"></a></h3>
+<h3 id="package-layout">Package Layout</h3>
 <p>The following layout is recommended for themes. Two files at the top level
 directory called <code>MANIFEST.in</code> and <code>setup.py</code> beside the theme directory which
 contains an empty <code>__init__.py</code> file, a theme configuration file
@@ -826,7 +860,7 @@ should contain all of the other theme files. The minimum requirement is that
 it includes a <code>main.html</code> for the theme. It <strong>must</strong> also include a
 <code>__init__.py</code> file which should be empty, this file tells Python that the
 directory is a package.</p>
-<h3 id="theme-configuration">Theme Configuration<a class="headerlink" href="#theme-configuration" title="Permanent link"></a></h3>
+<h3 id="theme-configuration">Theme Configuration</h3>
 <p>A packaged theme is required to include a configuration file named
 <code>mkdocs_theme.yml</code> which is placed in the root of your template files. The file
 should contain default configuration options for the theme. However, if the
@@ -852,7 +886,7 @@ special options which alters its behavior:</p>
 <div class="admonition block">
 <p class="admonition-title">Block</p>
 <h4 id="locale">
-locale<a class="headerlink" href="#locale" title="Permanent link"></a></h4>
+locale</h4>
 <p>This option mirrors the <a href="../../user-guide/configuration/#theme">theme</a> config option of the same name. If this
 value is not defined in the <code>mkdocs_theme.yml</code> file and the user does not
 set it in <code>mkdocs.yml</code> then it will default to <code>en</code> (English). The value
@@ -874,12 +908,12 @@ the <code>language</code> attribute directly:</p>
 <pre class="highlight"><code class="language-html">&lt;html lang="{ config.theme.locale.language }"&gt;</code></pre>
 <p>That would render as:</p>
 <pre class="highlight"><code class="language-html">&lt;html lang="fr"&gt;</code></pre>
-<h4 id="static_templates">static_templates<a class="headerlink" href="#static_templates" title="Permanent link"></a></h4>
+<h4 id="static_templates">static_templates</h4>
 <p>This option mirrors the <a href="../../user-guide/configuration/#theme">theme</a> config option of the same name and allows
 some defaults to be set by the theme. Note that while the user can add
 templates to this list, the user cannot remove templates included in the
 theme's config.</p>
-<h4 id="extends">extends<a class="headerlink" href="#extends" title="Permanent link"></a></h4>
+<h4 id="extends">extends</h4>
 <p>Defines a parent theme that this theme inherits from. The value should be
 the string name of the parent theme. Normal <a href="https://jinja.palletsprojects.com/en/latest/templates/#template-inheritance">Jinja inheritance rules</a>
 apply.</p>
@@ -887,7 +921,7 @@ apply.</p>
 <p>Plugins may also define some options which allow the theme to inform a plugin
 about which set of plugin options it expects. See the documentation for any
 plugins you may wish to support in your theme.</p>
-<h3 id="distributing-themes">Distributing Themes<a class="headerlink" href="#distributing-themes" title="Permanent link"></a></h3>
+<h3 id="distributing-themes">Distributing Themes</h3>
 <p>With the above changes, your theme should now be ready to install. This can be
 done with pip, using <code>pip install .</code> if you are still in the same directory as
 the setup.py.</p>
@@ -897,7 +931,7 @@ you should run the following command.</p>
 <p>If you don't have an account setup, you should be prompted to create one.</p>
 <p>For a much more detailed guide, see the official Python packaging
 documentation for <a href="https://packaging.python.org/en/latest/distributing/">Packaging and Distributing Projects</a>.</p>
-<h2 id="supporting-theme-localizationtranslation">Supporting theme Localization/Translation<a class="headerlink" href="#supporting-theme-localizationtranslation" title="Permanent link"></a></h2>
+<h2 id="supporting-theme-localizationtranslation">Supporting theme Localization/Translation</h2>
 <p>While the built-in themes provide support for <a href="../../user-guide/localizing-your-theme/">localization/translation</a> of
 templates, custom themes and third-party themes may choose not to. Regardless,
 the <a href="#locale"><code>locale</code></a> setting of the <code>theme</code> configuration option is always
@@ -909,7 +943,7 @@ will experience consistent behavior regardless of the theme they may choose.</p>
 However, if a theme developer chooses to use the same mechanisms used by the
 built-in themes, the sections below outline how to enable and make use of the
 same commands utilized by MkDocs.</p>
-<h3 id="using-the-localizationtranslation-commands">Using the Localization/Translation commands<a class="headerlink" href="#using-the-localizationtranslation-commands" title="Permanent link"></a></h3>
+<h3 id="using-the-localizationtranslation-commands">Using the Localization/Translation commands</h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>
@@ -923,7 +957,7 @@ available for use.</p>
 <p>For an overview of the workflow used by MkDocs to translate the built-in
 themes, see the appropriate <a href="../../about/about/#submitting-changes-to-the-builtin-themes">section</a> of the Contributing Guide and the
 <a href="../translations/">Translation Guide</a>.</p>
-<h3 id="example-custom-theme-localizationtranslation-workflow">Example custom theme Localization/Translation workflow<a class="headerlink" href="#example-custom-theme-localizationtranslation-workflow" title="Permanent link"></a></h3>
+<h3 id="example-custom-theme-localizationtranslation-workflow">Example custom theme Localization/Translation workflow</h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If your theme inherits from an existing theme which already provides
@@ -950,7 +984,7 @@ the same time, you may override any of parent theme's translations!</p>
      It is designed to be read by looking at the theme HTML which is heavily</code></pre>
 <p>Then you would follow the <a href="../translations/">Translation Guide</a> as usual to get your translations
 running.</p>
-<h3 id="packaging-translations-with-your-theme">Packaging Translations with your theme<a class="headerlink" href="#packaging-translations-with-your-theme" title="Permanent link"></a></h3>
+<h3 id="packaging-translations-with-your-theme">Packaging Translations with your theme</h3>
 <p>While the Portable Object Template (<code>pot</code>) file created by the
 <code>extract_messages</code> command and the Portable Object (<code>po</code>) files created by the
 <code>init_catalog</code> and <code>update_catalog</code> commands are useful for creating and
@@ -977,82 +1011,84 @@ theme. At a minimum, you need to ensure that up-to-date <code>mo</code> files ar
 included at the correct location in each release. However, you may use a
 different process for generating those <code>mo</code> files if you chose to do so.</p>
 </div></div>
-</div>
-</div>
-<footer class="col-md-12">
-<hr/>
-<p>Copyright © 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
-<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-</footer>
-<script>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
             var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-<script defer="" src="../../js/base.js"></script>
-<script defer="" src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"></script>
-<script defer="" src="https://unpkg.com/d3@6.7.0/dist/d3.min.js"></script>
-<script defer="" src="https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js"></script>
-<script defer="" src="https://unpkg.com/markmap-view@0.14.0/dist/index.min.js"></script>
-<script defer="" src="../../search/main.js"></script>
-<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="searchModalLabel">Search</h4>
-<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://unpkg.com/d3@6.7.0/dist/d3.min.js" defer></script>
+        <script src="https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js" defer></script>
+        <script src="https://unpkg.com/markmap-view@0.14.0/dist/index.min.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal-body">
-<p>From here you can search these documents. Enter your search terms below.</p>
-<form>
-<div class="form-group">
-<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="search"/>
-</div>
-</form>
-<div data-no-results-text="No results found" id="mkdocs-search-results"></div>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-</div>
-<div class="modal-body">
-<table class="table">
-<thead>
-<tr>
-<th style="width: 20%;">Keys</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="help shortcut"><kbd>?</kbd></td>
-<td>Open this help</td>
-</tr>
-<tr>
-<td class="next shortcut"><kbd>n</kbd></td>
-<td>Next page</td>
-</tr>
-<tr>
-<td class="prev shortcut"><kbd>p</kbd></td>
-<td>Previous page</td>
-</tr>
-<tr>
-<td class="search shortcut"><kbd>s</kbd></td>
-<td>Search</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div>
-</body>
+
+    </body>
 </html>

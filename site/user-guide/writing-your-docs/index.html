@@ -1,204 +1,238 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="https://www.likui.info/wiki/site/user-guide/writing-your-docs/" rel="canonical"/>
-<link href="../../img/favicon.ico" rel="shortcut icon"/>
-<title>Writing - KM</title>
-<link href="../../css/bootstrap.min.css" rel="stylesheet"/>
-<link href="../../css/font-awesome.min.css" rel="stylesheet"/>
-<link href="../../css/base.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
-<link href="../../css/extra.css" rel="stylesheet"/>
-<script defer="" src="../../js/jquery-1.10.2.min.js"></script>
-<script defer="" src="../../js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
-<script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://www.likui.info/wiki/site/user-guide/writing-your-docs/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Writing - 知识文档</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../../css/extra.css" rel="stylesheet">
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/languages/django.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-274394082"></script>
+        <script>
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', 'G-274394082');
-        </script>
-</head>
-<body>
-<div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-<div class="container">
-<a class="navbar-brand" href="../..">KM</a>
-<!-- Expander button -->
-<button class="navbar-toggler" data-target="#navbar-collapse" data-toggle="collapse" type="button">
-<span class="navbar-toggler-icon"></span>
-</button>
-<!-- Expanded navigation -->
-<div class="navbar-collapse collapse" id="navbar-collapse">
-<!-- Main navigation -->
-<ul class="nav navbar-nav">
-<li class="navitem">
-<a class="nav-link" href="../..">主页</a>
-</li>
-<li class="navitem">
-<a class="nav-link" href="../../getting-started/">开始</a>
-</li>
-<li class="dropdown active">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">用户手册 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+        </script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">知识文档</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">主页</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../getting-started/" class="nav-link">开始</a>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">用户手册 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../installation/">Install</a>
+    <a href="../installation/" class="dropdown-item">Install</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../choosing-your-theme/">Theme</a>
+    <a href="../choosing-your-theme/" class="dropdown-item">Theme</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../customizing-your-theme/">Customizing</a>
+    <a href="../customizing-your-theme/" class="dropdown-item">Customizing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../localizing-your-theme/">Localizing</a>
+    <a href="../localizing-your-theme/" class="dropdown-item">Localizing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../configuration/">Configuration</a>
+    <a href="../configuration/" class="dropdown-item">Configuration</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../cli/">Cli</a>
+    <a href="../cli/" class="dropdown-item">Cli</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../deploying-your-docs/">Deploying</a>
+    <a href="../deploying-your-docs/" class="dropdown-item">Deploying</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item active" href="./">Writing</a>
+    <a href="./" class="dropdown-item active">Writing</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../">README</a>
+    <a href="../" class="dropdown-item">README</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">开发指南 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">开发指南 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../dev-guide/api/">API</a>
+    <a href="../../dev-guide/api/" class="dropdown-item">API</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../dev-guide/plugins/">Plugins</a>
+    <a href="../../dev-guide/plugins/" class="dropdown-item">Plugins</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../dev-guide/themes/">Themes</a>
+    <a href="../../dev-guide/themes/" class="dropdown-item">Themes</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../dev-guide/translations/">Translations</a>
+    <a href="../../dev-guide/translations/" class="dropdown-item">Translations</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../dev-guide/">README</a>
+    <a href="../../dev-guide/" class="dropdown-item">README</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">PPT <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">PPT <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../ppt/matlab/">ppt</a>
+    <a href="../../ppt/matlab/" class="dropdown-item">ppt</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">CS <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">CS <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/">必学工具</a>
+    <a href="../../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/" class="dropdown-item">必学工具</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/">好书推荐</a>
+    <a href="../../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/" class="dropdown-item">好书推荐</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">数学基础</a>
+    <a href="../../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/" class="dropdown-item">数学基础</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/">数学进阶</a>
+    <a href="../../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/" class="dropdown-item">数学进阶</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/">编程入门</a>
+    <a href="../../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" class="dropdown-item">编程入门</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/">电子基础</a>
+    <a href="../../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/" class="dropdown-item">电子基础</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">阅读 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">阅读 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../read/Reading/">Reading</a>
+    <a href="../../read/Reading/" class="dropdown-item">Reading</a>
 </li>
+                                    
 <li>
-<a class="dropdown-item" href="../../read/Books/">Books</a>
+    <a href="../../read/Books/" class="dropdown-item">Books</a>
 </li>
-</ul>
-</li>
-<li class="dropdown">
-<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">关于 <b class="caret"></b></a>
-<ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">关于 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
 <li>
-<a class="dropdown-item" href="../../about/about/">About</a>
+    <a href="../../about/about/" class="dropdown-item">About</a>
 </li>
-</ul>
-</li>
-</ul>
-<ul class="nav navbar-nav ml-auto">
-<li class="nav-item">
-<a class="nav-link" data-target="#mkdocs_search_modal" data-toggle="modal" href="#">
-<i class="fa fa-search"></i> Search
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
                             </a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="../deploying-your-docs/" rel="prev">
-<i class="fa fa-arrow-left"></i> Previous
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../deploying-your-docs/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
                                 </a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="../" rel="next">
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
-</a>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="container">
-<div class="row">
-<div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-<div class="navbar-header">
-<button class="navbar-toggler collapsed" data-target="#toc-collapse" data-toggle="collapse" title="Table of Contents" type="button">
-<span class="fa fa-angle-down"></span>
-</button>
-</div>
-<div class="navbar-collapse collapse card bg-secondary" id="toc-collapse">
-<ul class="nav flex-column">
-<li class="nav-item" data-level="1"><a class="nav-link" href="#writing-your-docs">Writing your docs</a>
-<ul class="nav flex-column">
-<li class="nav-item" data-level="2"><a class="nav-link" href="#file-layout">File layout</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-<li class="nav-item" data-level="2"><a class="nav-link" href="#writing-with-markdown">Writing with Markdown</a>
-<ul class="nav flex-column">
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#writing-your-docs" class="nav-link">Writing your docs</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#file-layout" class="nav-link">File layout</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#writing-with-markdown" class="nav-link">Writing with Markdown</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-<div class="col-md-9" role="main">
-<h1 id="writing-your-docs">Writing your docs<a class="headerlink" href="#writing-your-docs" title="Permanent link"></a></h1>
+                    <div class="col-md-9" role="main">
+
+<h1 id="writing-your-docs">Writing your docs</h1>
 <p>How to layout and write your Markdown source files.</p>
-<hr/>
-<h2 id="file-layout">File layout<a class="headerlink" href="#file-layout" title="Permanent link"></a></h2>
+<hr />
+<h2 id="file-layout">File layout</h2>
 <p>Your documentation source should be written as regular Markdown files (see
 <a href="#writing-with-markdown">Writing with Markdown</a> below), and placed in the
 <a href="../configuration/#docs_dir">documentation directory</a>. By default, this directory
@@ -250,7 +284,7 @@ nested URLs, like so:</p>
 within the <a href="../configuration/#docs_dir">documentation directory</a> are copied by
 MkDocs to the built site unaltered. See
 <a href="#linking-to-images-and-media">how to link to images and media</a> below for details.</p>
-<h3 id="index-pages">Index pages<a class="headerlink" href="#index-pages" title="Permanent link"></a></h3>
+<h3 id="index-pages">Index pages</h3>
 <p>When a directory is requested, by default, most web servers will return an index
 file (usually named <code>index.html</code>) contained within that directory if one exists.
 For that reason, the homepage in all of the examples above has been named
@@ -265,7 +299,7 @@ renamed to <code>index.html</code> so that the server will serve it as a proper 
 <p>If both an <code>index.md</code> file and a <code>README.md</code> file are found in the same
 directory, then the <code>index.md</code> file is used and the <code>README.md</code> file is
 ignored.</p>
-<h3 id="configure-pages-and-navigation">Configure Pages and Navigation<a class="headerlink" href="#configure-pages-and-navigation" title="Permanent link"></a></h3>
+<h3 id="configure-pages-and-navigation">Configure Pages and Navigation</h3>
 <p>The <a href="../configuration/#nav">nav</a> configuration setting in your <code>mkdocs.yml</code> file
 defines which pages are included in the global site navigation menu as well as
 the structure of that menu. If not provided, the navigation will be
@@ -317,7 +351,7 @@ While sections may mirror your directory structure, they do not have to.</p>
 included with the built site, however, they will not be linked from the global
 navigation and will not be included in the <code>previous</code> and <code>next</code> links. Such
 pages will be "hidden" unless linked to directly.</p>
-<h2 id="writing-with-markdown">Writing with Markdown<a class="headerlink" href="#writing-with-markdown" title="Permanent link"></a></h2>
+<h2 id="writing-with-markdown">Writing with Markdown</h2>
 <p>MkDocs pages must be authored in <a href="https://daringfireball.net/projects/markdown/">Markdown</a>, a lightweight markup language
 which results in easy-to-read, easy-to-write plain text documents that can be
 converted to valid HTML documents in a predictable manner.</p>
@@ -329,11 +363,11 @@ implementations, MkDocs includes support for extending the Markdown syntax with
 Python-Markdown <a href="https://python-markdown.github.io/extensions/">extensions</a>. See the MkDocs' <a href="../configuration/#markdown_extensions">markdown_extensions</a>
 configuration setting for details on how to enable extensions.</p>
 <p>MkDocs includes some extensions by default, which are highlighted below.</p>
-<h3 id="internal-links">Internal links<a class="headerlink" href="#internal-links" title="Permanent link"></a></h3>
+<h3 id="internal-links">Internal links</h3>
 <p>MkDocs allows you to interlink your documentation by using regular Markdown
 <a href="https://daringfireball.net/projects/markdown/syntax#link">links</a>. However, there are a few additional benefits to formatting those links
 specifically for MkDocs as outlined below.</p>
-<h4 id="linking-to-pages">Linking to pages<a class="headerlink" href="#linking-to-pages" title="Permanent link"></a></h4>
+<h4 id="linking-to-pages">Linking to pages</h4>
 <p>When linking between pages in the documentation you can simply use the regular
 Markdown <a href="https://daringfireball.net/projects/markdown/syntax#link">linking</a> syntax, including the <em>relative path</em> to the Markdown
 document you wish to link to.</p>
@@ -366,7 +400,7 @@ can set in your <code>mkdocs.yml</code> configuration file to alter the default 
 <li>
 <p><strong><code>permalink</code></strong></p>
 <p>Generate permanent links at the end of each header. Default: <code>False</code>.</p>
-<p>When set to True the paragraph symbol (¶ or <code>&amp;para;</code>) is used as the
+<p>When set to True the paragraph symbol (&para; or <code>&amp;para;</code>) is used as the
 link text. When set to a string, the provided string is used as the link
 text. For example, to use the hash symbol (<code>#</code>) instead, do:</p>
 <pre class="highlight"><code class="language-yaml">markdown_extensions:
@@ -405,7 +439,7 @@ option.</p>
         permalink: "#"
         baselevel: 2
         separator: "_"</code></pre>
-<h4 id="linking-to-images-and-media">Linking to images and media<a class="headerlink" href="#linking-to-images-and-media" title="Permanent link"></a></h4>
+<h4 id="linking-to-images-and-media">Linking to images and media</h4>
 <p>As well as the Markdown source files, you can also include other file types in
 your documentation, which will be copied across when generating your
 documentation site. These might include images and other media.</p>
@@ -429,14 +463,14 @@ regular Markdown image syntaxes:</p>
 *Above: Cupcake indexer in progress*</code></pre>
 <p>Your image will now be embedded when you build the documentation, and should
 also be previewed if you're working on the documentation with a Markdown editor.</p>
-<h4 id="linking-from-raw-html">Linking from raw HTML<a class="headerlink" href="#linking-from-raw-html" title="Permanent link"></a></h4>
+<h4 id="linking-from-raw-html">Linking from raw HTML</h4>
 <p>Markdown allows document authors to fall back to raw HTML when the Markdown
 syntax does not meets the author's needs. MkDocs does not limit Markdown in this
 regard. However, as all raw HTML is ignored by the Markdown parser, MkDocs is
 not able to validate or convert links contained in raw HTML. When including
 internal links within raw HTML, you will need to manually format the link
 appropriately for the rendered document.</p>
-<h3 id="meta-data">Meta-Data<a class="headerlink" href="#meta-data" title="Permanent link"></a></h3>
+<h3 id="meta-data">Meta-Data</h3>
 <p>MkDocs includes support for both YAML and MultiMarkdown style meta-data (often
 called front-matter). Meta-data consists of a series of keywords and values
 defined at the beginning of a Markdown document, which are stripped from the
@@ -472,7 +506,7 @@ ways, in order:</p>
 additional sources in the above list.</p>
 </li>
 </ul>
-<h4 id="yaml-style-meta-data">YAML Style Meta-Data<a class="headerlink" href="#yaml-style-meta-data" title="Permanent link"></a></h4>
+<h4 id="yaml-style-meta-data">YAML Style Meta-Data</h4>
 <p>YAML style meta-data consists of <a href="https://yaml.org">YAML</a> key/value pairs wrapped in YAML style
 delimiters to mark the start and/or end of the meta-data. The first line of
 a document must be <code>---</code>. The meta-data ends at the first line containing an
@@ -497,7 +531,7 @@ in a Python <code>dict</code> being returned. If any other type is returned or t
 parser encounters an error, then MkDocs does not recognize the section as
 meta-data, the page's <code>meta</code> attribute will be empty, and the section is not
 removed from the document.</p>
-<h4 id="multimarkdown-style-meta-data">MultiMarkdown Style Meta-Data<a class="headerlink" href="#multimarkdown-style-meta-data" title="Permanent link"></a></h4>
+<h4 id="multimarkdown-style-meta-data">MultiMarkdown Style Meta-Data</h4>
 <p>MultiMarkdown style meta-data uses a format first introduced by the
 <a href="https://fletcherpenney.net/MultiMarkdown_Syntax_Guide#metadata">MultiMarkdown</a> project. The data consists of a series of keywords and values
 defined at the beginning of a Markdown document, like this:</p>
@@ -529,7 +563,7 @@ detected, but the content between the delimiters is not valid YAML
 meta-data, MkDocs does not attempt to parse the content as MultiMarkdown
 style meta-data.</p>
 </div>
-<h3 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link"></a></h3>
+<h3 id="tables">Tables</h3>
 <p>The <a href="https://python-markdown.github.io/extensions/tables/">tables</a> extension adds a basic table syntax to Markdown which is popular
 across multiple implementations. The syntax is rather simple and is generally
 only useful for simple tabular data.</p>
@@ -553,7 +587,7 @@ multiple lines of text. They can, however, include inline Markdown as defined in
 Markdown's <a href="https://daringfireball.net/projects/markdown/syntax">syntax</a> rules.</p>
 <p>Additionally, a table must be surrounded by blank lines. There must be a blank
 line before and after the table.</p>
-<h3 id="fenced-code-blocks">Fenced code blocks<a class="headerlink" href="#fenced-code-blocks" title="Permanent link"></a></h3>
+<h3 id="fenced-code-blocks">Fenced code blocks</h3>
 <p>The <a href="https://python-markdown.github.io/extensions/fenced_code_blocks/">fenced code blocks</a> extension adds an alternate method of defining code
 blocks without indentation.</p>
 <p>The first line should contain 3 or more backtick (<code>`</code>) characters, and the
@@ -573,82 +607,84 @@ def fn():
 ```</code></pre>
 <p>Note that fenced code blocks can not be indented. Therefore, they cannot be
 nested inside list items, blockquotes, etc.</p></div>
-</div>
-</div>
-<footer class="col-md-12">
-<hr/>
-<p>Copyright © 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
-<p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-</footer>
-<script>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
             var base_url = "../..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-<script defer="" src="../../js/base.js"></script>
-<script defer="" src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"></script>
-<script defer="" src="https://unpkg.com/d3@6.7.0/dist/d3.min.js"></script>
-<script defer="" src="https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js"></script>
-<script defer="" src="https://unpkg.com/markmap-view@0.14.0/dist/index.min.js"></script>
-<script defer="" src="../../search/main.js"></script>
-<div aria-hidden="true" aria-labelledby="searchModalLabel" class="modal" id="mkdocs_search_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="searchModalLabel">Search</h4>
-<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <script src="../../js/base.js" defer></script>
+        <script src="https://unpkg.com/d3@6.7.0/dist/d3.min.js" defer></script>
+        <script src="https://unpkg.com/markmap-lib@0.14.1/dist/browser/index.min.js" defer></script>
+        <script src="https://unpkg.com/markmap-view@0.14.0/dist/index.min.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal-body">
-<p>From here you can search these documents. Enter your search terms below.</p>
-<form>
-<div class="form-group">
-<input class="form-control" id="mkdocs-search-query" placeholder="Search..." title="Type search term here" type="search"/>
-</div>
-</form>
-<div data-no-results-text="No results found" id="mkdocs-search-results"></div>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div><div aria-hidden="true" aria-labelledby="keyboardModalLabel" class="modal" id="mkdocs_keyboard_modal" role="dialog" tabindex="-1">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-<button class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-</div>
-<div class="modal-body">
-<table class="table">
-<thead>
-<tr>
-<th style="width: 20%;">Keys</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="help shortcut"><kbd>?</kbd></td>
-<td>Open this help</td>
-</tr>
-<tr>
-<td class="next shortcut"><kbd>n</kbd></td>
-<td>Next page</td>
-</tr>
-<tr>
-<td class="prev shortcut"><kbd>p</kbd></td>
-<td>Previous page</td>
-</tr>
-<tr>
-<td class="search shortcut"><kbd>s</kbd></td>
-<td>Search</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div>
-</body>
+
+    </body>
 </html>
