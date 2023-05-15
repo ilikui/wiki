@@ -19,6 +19,9 @@ nav:
         - Theme: user-guide/choosing-your-theme.md
     - Developer Guide: 
         - API: dev-guide/api.md
+    - CS:
+        - 必学工具: cs/必学工具.md
+        - 好书推荐: cs/好书推荐.md
     - Read:
         - Reading: read/Reading.md
         - Books: read/Books.md

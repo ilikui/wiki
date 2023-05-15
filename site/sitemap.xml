@@ -16,6 +16,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://www.likui.info/wiki/site/cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://www.likui.info/wiki/site/cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/</loc>
+         <lastmod>2023-05-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://www.likui.info/wiki/site/dev-guide/</loc>
          <lastmod>2023-05-15</lastmod>
          <changefreq>daily</changefreq>
