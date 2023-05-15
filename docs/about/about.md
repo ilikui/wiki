@@ -3,6 +3,9 @@
 
 > 环境测试
 
-```plantuml
-Alice -> Bob
+```mermaid
+graph LR
+    hello --> world
+    world --> again
+    again --> hello
 ```
