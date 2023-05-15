@@ -15,6 +15,7 @@ nav:
     - Home: index.md
     - Getting Started: getting-started.md
     - User Guide: 
+        - Install: user-guide/installation.md
         - Theme: user-guide/choosing-your-theme.md
     - Developer Guide: 
         - API: dev-guide/api.md
