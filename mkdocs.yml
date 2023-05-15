@@ -12,9 +12,9 @@ theme:
         - django
 
 nav:
-    - Home: index.md
-    - Getting Started: getting-started.md
-    - User Guide: 
+    - 主页: index.md
+    - 开始: getting-started.md
+    - 用户手册: 
         - Install: user-guide/installation.md
         - Theme: user-guide/choosing-your-theme.md
         - Customizing: user-guide/customizing-your-theme.md
@@ -24,7 +24,7 @@ nav:
         - Deploying: user-guide/deploying-your-docs.md
         - Writing: user-guide/writing-your-docs.md
         - README: user-guide/README.md
-    - Developer Guide: 
+    - 开发指南: 
         - API: dev-guide/api.md
         - Plugins: dev-guide/plugins.md
         - Themes: dev-guide/themes.md
@@ -39,10 +39,10 @@ nav:
         - 数学进阶: cs/数学进阶.md
         - 编程入门: cs/编程入门.md
         - 电子基础: cs/电子基础.md
-    - Read:
+    - 阅读:
         - Reading: read/Reading.md
         - Books: read/Books.md
-    - About:
+    - 关于:
         - About: about/about.md
        
 extra_css:
