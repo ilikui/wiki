@@ -33,6 +33,7 @@ nav:
     - PPT:
         - ppt: ppt/matlab.md
     - CS:
+        - 目录: cs/目录.md
         - 必学工具: cs/必学工具.md
         - 好书推荐: cs/好书推荐.md
         - 数学基础: cs/数学基础.md
@@ -76,15 +77,16 @@ plugins:
   - mermaid2:
   #- markmap:
   - build_plantuml:
-        render: 'server' # or "local" for local rendering
-        bin_path: '/usr/local/bin/plantuml' # ignored when render: server
-        server: 'http://www.plantuml.com/plantuml' # official plantuml server
-        disable_ssl_certificate_validation: true # for self-signed and invalid certs
-        output_format: 'svg' # or "png"
-        diagram_root: 'docs/diagrams' # should reside under docs_dir
-        output_folder: 'out'
-        input_folder: 'src'
-        input_extensions: '' # comma separated list of extensions to parse, by default every file is parsed
-
+      render: "server"
+      bin_path: "/usr/local/bin/plantuml"
+      server: "http://www.plantuml.com/plantuml"
+      output_format: "svg"
+      diagram_root: "docs/diagrams"
+      output_folder: "out"
+      input_folder: "src"
+      theme_enabled: true
+      theme_folder: "include/themes"
+      theme_light: "light.puml"
+      theme_dark: "dark.puml"
 copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.
 
