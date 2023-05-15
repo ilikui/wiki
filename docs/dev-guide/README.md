@@ -15,4 +15,4 @@ top of the page to move through the documentation in order.
 - [Plugins](plugins.md)
 - [API Reference](api.md)
 
-[Contributing Guide]: ../about/contributing.md
+[Contributing Guide]: ../about/about.md
