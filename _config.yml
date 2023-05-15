@@ -1,0 +1,15 @@
+title: HTML
+description: Modernist is a theme for GitHub Pages.
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-modernist
+
+
+
+
+  
+  
+  
+  
+ # 配置分页功能 
+ paginate: 5
