@@ -14,8 +14,8 @@ configuration file. Start by reading the [introductory tutorial], then check the
 [User Guide]: user-guide/README.md
 
 <div class="text-center">
-<a href="getting-started/" class="btn btn-primary" role="button">Getting Started</a>
-<a href="user-guide/" class="btn btn-primary" role="button">User Guide</a>
+<a href="getting-started/" class="btn btn-primary" role="button">开始</a>
+<a href="user-guide/" class="btn btn-primary" role="button">用户手册</a>
 </div>
 
 <div class="jumbotron">
