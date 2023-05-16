@@ -105,10 +105,11 @@ configuration file. Start by reading the [introductory tutorial], then check the
       <div class="card-body">
         <h3 class="card-title">CS</h3>
         <p class="card-text">
-            MkDocs builds completely static HTML sites that you can host on
-            GitHub Pages, Amazon S3, or <a
-            href="user-guide/deploying-your-docs/">anywhere</a> else you
-            choose.
+            <ol>
+              <li> <a href="cs/choosing-your-theme/#目录">目录</a> </li>
+              <li> <a href="cs/choosing-your-theme/#必须工具">必须工具</a> </li>
+              <li> <a href="cs/choosing-your-theme/#好书推荐">好书推荐</a> </li>
+              <li> <a href="cs/choosing-your-theme/#数学基础">数学基础</a> </li>
         </p>
       </div>
     </div>
