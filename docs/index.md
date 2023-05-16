@@ -82,9 +82,7 @@ Knowledge Document with&nbsp;Markdown.
               <li class = "fa fa-gear"><a href="dev-guide/plugins/#MkDocs Plugins"> Plugins</a></li><br>
               <li class = "fa fa-gear"><a href="dev-guide/themes/#Developing Themes"> Themes</a></li><br>
               <li class = "fa fa-book"><a href="dev-guide/translations/##Localization tooling prerequisites"> Translations</a></li><br>
-              <li class = "fa fa-graduation-cap"><a href="dev-guide/README/#Developer Guide
-              
-              "> README</a></li><br>
+              <li class = "far fa-archive"><a href="dev-guide/README/#Developer Guide"> README</a></li><br>
             <ol>
         </p>
       </div>
