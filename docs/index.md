@@ -110,7 +110,7 @@ Knowledge Document with&nbsp;Markdown.
               <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具">必学工具</a></li><br>
               <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具">必学工具</a></li><br>
               <li class = "fa fa-book"><a href="cs/好书推荐/#好书推荐">好书推荐</a></li><br>
-              <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础">数学基础</a></li><br>
+              <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础">数学基础</a></li>
             <ol>
         </p>
       </div>
@@ -124,9 +124,10 @@ Knowledge Document with&nbsp;Markdown.
       <div class="card-body">
         <h3 class="card-title">阅读</h3>
         <p class="card-text">
-            The built-in dev-server allows you to preview your documentation
-            as you're writing it. It will even auto-reload and refresh your
-            browser whenever you save your changes.
+            <ol>
+              <li class = "fa fa-bookmark"><a href="read/Reading/#Reading">阅读</a> </li> <br>
+              <li class = "fa fa-book"><a href="read/Books/#Books">书籍</a> </li> <br>      
+            <ol>
         </p>
       </div>
     </div>
