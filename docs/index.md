@@ -77,7 +77,13 @@ Knowledge Document with&nbsp;Markdown.
       <div class="card-body">
         <h3 class="card-title">开发指南</h3>
         <p class="card-text">
-
+            <ol>
+              <li class = "fa fa-home"><a href="dev-guide/api/#API reference"> API</a> </li> <br>
+              <li class = "fa fa-gear"><a href="dev-guide/plugins/#MkDocs Plugins"> Plugins</a></li><br>
+              <li class = "fa fa-gear"><a href="dev-guide/themes/#Developing Themes"> Themes</a></li><br>
+              <li class = "fa fa-book"><a href="dev-guide/translations/##Localization tooling prerequisites"> Translations</a></li><br>
+              <li class = "fa fa-graduation-cap"><a href="dev-guide/README/#Developer Guide"> README</a></li><br>
+            <ol>
         </p>
       </div>
     </div>
