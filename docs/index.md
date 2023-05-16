@@ -1,4 +1,4 @@
-# MkDocs
+# 知识文档
 
 Project documentation with&nbsp;Markdown.
 
@@ -19,7 +19,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
 </div>
 
 <div class="jumbotron">
-<h2 class="display-4 text-center">Features</h2>
+<h2 class="display-4 text-center">功能</h2>
 
 <div class="row">
   <div class="col-sm-6">
