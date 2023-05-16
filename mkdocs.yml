@@ -104,13 +104,13 @@ plugins:
       theme_folder: "include/themes"
       theme_light: "light.puml"
       theme_dark: "dark.puml"
-  - markmap:
-      base_path: docs
-      encoding: utf-8
-      file_extension: .mm.md
-      d3_version: 6.7.0
-      lib_version: 0.14.1
-      view_version: 0.14.0 
+#   - markmap:
+#       base_path: docs
+#       encoding: utf-8
+#       file_extension: .mm.md
+#       d3_version: 6.7.0
+#       lib_version: 0.14.1
+#       view_version: 0.14.0 
 
 copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank></a>.
 
