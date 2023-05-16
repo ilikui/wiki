@@ -267,7 +267,7 @@
 
 <h1 id="configuration">Configuration</h1>
 <p>Guide to all available configuration settings.</p>
-<hr />
+<hr/>
 <h2 id="introduction">Introduction</h2>
 <p>Project settings are configured by default using a YAML configuration file in
 the project directory named <code>mkdocs.yml</code>. You can specify another path for it
@@ -323,7 +323,7 @@ edit_uri: root/path/docs/</code></pre>
 <p>For example, having this config:</p>
 <pre class="highlight"><code class="language-yaml">repo_url: https://example.com/project/repo
 edit_uri: blob/main/docs/</code></pre>
-<p>means that a page named 'foo/bar.md' will have its edit link lead to:<br />
+<p>means that a page named 'foo/bar.md' will have its edit link lead to:<br/>
 <a href="https://example.com/project/repo/blob/main/docs/foo/bar.md">https://example.com/project/repo/blob/main/docs/foo/bar.md</a></p>
 <p><code>edit_uri</code> can actually be just an absolute URL, not necessarily relative to <code>repo_url</code>, so this can achieve the same result:</p>
 <pre class="highlight"><code class="language-yaml">edit_uri: https://example.com/project/repo/blob/main/docs/</code></pre>
@@ -378,25 +378,25 @@ edit_uri_template: 'blob/main/docs/{path}'</code></pre>
 <summary>Suggested useful configurations:</summary>
 <ul>
 <li>
-<p>GitHub Wiki:<br />
+<p>GitHub Wiki:<br/>
     (e.g. <code>https://github.com/project/repo/wiki/foo/bar/_edit</code>)</p>
 <pre class="highlight"><code class="language-yaml">repo_url: 'https://github.com/project/repo/wiki'
 edit_uri_template: '{path_noext}/_edit'</code></pre>
 </li>
 <li>
-<p>BitBucket editor:<br />
+<p>BitBucket editor:<br/>
     (e.g. <code>https://bitbucket.org/project/repo/src/master/docs/foo/bar.md?mode=edit</code>)</p>
 <pre class="highlight"><code class="language-yaml">repo_url: 'https://bitbucket.org/project/repo/'
 edit_uri_template: 'src/master/docs/{path}?mode=edit'</code></pre>
 </li>
 <li>
-<p>GitLab Static Site Editor:<br />
+<p>GitLab Static Site Editor:<br/>
     (e.g. <code>https://gitlab.com/project/repo/-/sse/master/docs%2Ffoo%2bar.md</code>)</p>
 <pre class="highlight"><code class="language-yaml">repo_url: 'https://gitlab.com/project/repo'
 edit_uri_template: '-/sse/master/docs%2F{path!q}'</code></pre>
 </li>
 <li>
-<p>GitLab Web IDE:<br />
+<p>GitLab Web IDE:<br/>
     (e.g. <code>https://gitlab.com/-/ide/project/repo/edit/master/-/docs/foo/bar.md</code>)</p>
 <pre class="highlight"><code class="language-yaml">edit_uri_template: 'https://gitlab.com/-/ide/project/repo/edit/master/-/docs/{path}'</code></pre>
 </li>
