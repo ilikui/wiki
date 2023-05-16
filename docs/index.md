@@ -84,32 +84,6 @@ configuration file. Start by reading the [introductory tutorial], then check the
         </p>
       </div>
     </div>
-<!-- 3 -->
-  <div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">Preview your site as you work</h3>
-        <p class="card-text">
-            The built-in dev-server allows you to preview your documentation
-            as you're writing it. It will even auto-reload and refresh your
-            browser whenever you save your changes.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">Host anywhere</h3>
-        <p class="card-text">
-            MkDocs builds completely static HTML sites that you can host on
-            GitHub Pages, Amazon S3, or <a
-            href="user-guide/deploying-your-docs/">anywhere</a> else you
-            choose.
-        </p>
-      </div>
-    </div>
   </div>
 </div>
 </div>
