@@ -77,10 +77,7 @@ Knowledge Document with&nbsp;Markdown.
       <div class="card-body">
         <h3 class="card-title">开发指南</h3>
         <p class="card-text">
-            MkDocs builds completely static HTML sites that you can host on
-            GitHub Pages, Amazon S3, or <a
-            href="user-guide/deploying-your-docs/">anywhere</a> else you
-            choose.
+
         </p>
       </div>
     </div>
@@ -112,7 +109,6 @@ Knowledge Document with&nbsp;Markdown.
               <li class = "fa fa-book"><a href="cs/好书推荐/#好书推荐"> 好书推荐</a></li><br>
               <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础"> 数学基础</a></li><br>
               <li class = "fa fa-calculator"><a href="cs/数学进阶/#数学进阶"> 数学进阶</a></li><br>
-
             <ol>
         </p>
       </div>
