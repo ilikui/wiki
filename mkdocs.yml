@@ -105,7 +105,7 @@ plugins:
       theme_folder: "include/themes"
       theme_light: "light.puml"
       theme_dark: "dark.puml"    
-copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a><a href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank><i class="fa fa-rss-square"></i><a/> <a href="//creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank"><i class="fa fa-cc"></i></a>
+copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a><a href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank><i class="fa fa-rss"></i><a/> <a href="//creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank"><i class="fa fa-cc"></i></a>
 
 
 
