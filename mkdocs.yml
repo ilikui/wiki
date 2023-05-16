@@ -105,5 +105,9 @@ plugins:
       theme_folder: "include/themes"
       theme_light: "light.puml"
       theme_dark: "dark.puml"    
-copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.
+copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <image src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/128px-Feed-icon.svg.png"><a href="/feed_rss_created.xml">RSS<a/></image>
+
+
+
+
 
