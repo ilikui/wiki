@@ -19,7 +19,7 @@ Knowledge Document with&nbsp;Markdown.
 </div>
 
 <div class="jumbotron">
-<h2 class="display-4 text-center">功能</h2>
+<h3 class="display-4 text-center">功能</h3>
 <!-- 1 -->
 <div class="row">
   <div class="col-sm-6">
