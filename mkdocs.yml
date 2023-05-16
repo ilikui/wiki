@@ -107,9 +107,11 @@ plugins:
       theme_dark: "dark.puml" 
 
 
-copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank></a> <br>
+copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank></a>.
 
-    
+  
+
+# copyright: Copyright &copy; 2014 <a href="https://twitter.com/starletdreaming">Tom Christie</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.  
  
  #<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">协议</a>
 
