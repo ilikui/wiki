@@ -106,10 +106,10 @@ configuration file. Start by reading the [introductory tutorial], then check the
         <h3 class="card-title">CS</h3>
         <p class="card-text">
             <ol>
-              <li class = "fa fa-home"> <a href="cs/目录/#目录">目录</a> </li>
-              <li class = "fa fa-gear"> <a href="cs/必学工具/#必学工具">必学工具</a> </li>
-              <li class = "fa fa-book"> <a href="cs/好书推荐/#好书推荐">好书推荐</a> </li>
-              <li> <a href="cs/数学基础/#数学基础">数学基础</a> </li>
+              <li class = "fa fa-home"> <a href="cs/目录/#目录">目录</a> </li> <br>
+              <li class = "fa fa-gear"> <a href="cs/必学工具/#必学工具">必学工具</a> </li><br>
+              <li class = "fa fa-book"> <a href="cs/好书推荐/#好书推荐">好书推荐</a> </li><br>
+              <li> <a href="cs/数学基础/#数学基础">数学基础</a> </li><br>
             <ol>
         </p>
       </div>
