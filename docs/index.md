@@ -106,9 +106,9 @@ configuration file. Start by reading the [introductory tutorial], then check the
         <h3 class="card-title">CS</h3>
         <p class="card-text">
             <ul>
-              <li clas = "fa fa-home"> <a href="cs/目录/#目录">目录</a> </li>
+              <li class = "fa fa-home"> <a href="cs/目录/#目录">目录</a> </li>
               <li> <a href="cs/必须工具/#必须工具">必须工具</a> </li>
-              <li> <a href="cs/好书推荐/#好书推荐">好书推荐</a> </li>
+              <li class = "fa fa-book"> <a href="cs/好书推荐/#好书推荐">好书推荐</a> </li>
               <li> <a href="cs/数学基础/#数学基础">数学基础</a> </li>
             <ul>
         </p>
