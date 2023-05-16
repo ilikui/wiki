@@ -110,7 +110,9 @@ Knowledge Document with&nbsp;Markdown.
               <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具"> 必学工具</a></li><br>
               <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具"> 必学工具</a></li><br>
               <li class = "fa fa-book"><a href="cs/好书推荐/#好书推荐"> 好书推荐</a></li><br>
-              <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础"> 数学基础</a></li>
+              <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础"> 数学基础</a></li><br>
+              <li class = "fa fa-calculator"><a href="cs/数学进阶/#数学进阶"> 数学进阶</a></li><br>
+
             <ol>
         </p>
       </div>
