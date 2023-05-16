@@ -25,7 +25,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Great themes available</h3>
+        <h3 class="card-title">主页</h3>
         <p class="card-text">
             There's a stack of good looking <a href="user-guide/choosing-your-theme">themes</a> available for MkDocs.
             Choose between the built in themes:
@@ -42,7 +42,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Easy to customize</h3>
+        <h3 class="card-title">开始</h3>
         <p class="card-text">
             Get your project documentation looking just the way you want it by
             <a href="user-guide/customizing-your-theme/">customizing your
@@ -63,7 +63,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Preview your site as you work</h3>
+        <h3 class="card-title">用户手册</h3>
         <p class="card-text">
             The built-in dev-server allows you to preview your documentation
             as you're writing it. It will even auto-reload and refresh your
@@ -75,7 +75,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Host anywhere</h3>
+        <h3 class="card-title">开发指南</h3>
         <p class="card-text">
             MkDocs builds completely static HTML sites that you can host on
             GitHub Pages, Amazon S3, or <a
@@ -91,7 +91,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Preview your site as you work</h3>
+        <h3 class="card-title">PPT</h3>
         <p class="card-text">
             The built-in dev-server allows you to preview your documentation
             as you're writing it. It will even auto-reload and refresh your
@@ -103,7 +103,7 @@ configuration file. Start by reading the [introductory tutorial], then check the
   <div class="col-sm-6">
     <div class="card">
       <div class="card-body">
-        <h3 class="card-title">Host anywhere</h3>
+        <h3 class="card-title">CS</h3>
         <p class="card-text">
             MkDocs builds completely static HTML sites that you can host on
             GitHub Pages, Amazon S3, or <a
