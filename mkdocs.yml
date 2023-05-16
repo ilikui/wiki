@@ -4,7 +4,7 @@ site_url: https://www.likui.info/wiki/site
 
 theme:
     name: mkdocs
-    locale: zh_CN
+    locale: en
     analytics: {gtag: 'G-274394082'}
     highlightjs: true
     hljs_languages:
@@ -40,6 +40,7 @@ nav:
         - 数学进阶: cs/数学进阶.md
         - 编程入门: cs/编程入门.md
         - 电子基础: cs/电子基础.md
+        - 数据结构与算法: cs/数据结构与算法.md
     - 阅读:
         - Reading: read/Reading.md
         - Books: read/Books.md
@@ -71,6 +72,7 @@ markdown_extensions:
     - mkdocs-click
 plugins:
   - search
+  - rss
   - blogging:
       dirs: # The directories to be included
         - blog
@@ -87,6 +89,6 @@ plugins:
       theme_enabled: true
       theme_folder: "include/themes"
       theme_light: "light.puml"
-      theme_dark: "dark.puml"
+      theme_dark: "dark.puml"    
 copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.
 
