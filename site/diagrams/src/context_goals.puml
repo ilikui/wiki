@@ -24,11 +24,10 @@
   System_Ext(sys_ext8, "软件工程", "Software")
   System_Ext(sys_ext9, "体系结构", "Architecture")
   System_Ext(sys_ext10, "操作系统", "System")
-
-
-
-
-
+  System_Ext(sys_ext11, "并行与分布式系统", "System")
+  System_Ext(sys_ext12, "计算机系统安全", "Security")
+  System_Ext(sys_ext13, "计算机网络", "Network")
+  System_Ext(sys_ext14, "数据库系统", "Database")
 !endfunction
 
 ' Echo the persons
@@ -50,10 +49,10 @@ Rel(cs, sys_ext7, "Data structures and algorithms", "Algorithms")
 Rel(cs, sys_ext8, "Software Engineering", "Software")
 Rel(cs, sys_ext9, "Architecture", "Architecture")
 Rel(cs, sys_ext10, "Operating system", "System")
-
-
-
-
+Rel(cs, sys_ext11, "Parallel and distributed systems", "System")
+Rel(cs, sys_ext12, "Computer system security", "Security")
+Rel(cs, sys_ext13, "Computer network", "Network")
+Rel(cs, sys_ext14, "Database system", "Database")
 
 
 @enduml
