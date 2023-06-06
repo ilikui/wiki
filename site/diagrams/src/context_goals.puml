@@ -14,11 +14,17 @@
 !endfunction
 
 !unquoted procedure EXTSYSTEMS()
-  System_Ext(sys_ext1, "必学工具", "1")
-  System_Ext(sys_ext2, "好书推荐", "2")
-  System_Ext(sys_ext3, "数学基础", "3")
-  System_Ext(sys_ext4, "数学进阶", "4")
-  System_Ext(sys_ext5, "编程入门", "5")
+  System_Ext(sys_ext1, "必学工具", "Tool")
+  System_Ext(sys_ext2, "好书推荐", "Book")
+  System_Ext(sys_ext3, "数学基础", "Mathematics")
+  System_Ext(sys_ext4, "数学进阶", "Mathematics")
+  System_Ext(sys_ext5, "编程入门", "Pogramming")
+  System_Ext(sys_ext6, "电子基础", "Electronic basis")
+  System_Ext(sys_ext7, "数据结构与算法", "Algorithms")
+  System_Ext(sys_ext8, "软件工程", "Software")
+
+
+
 !endfunction
 
 ' Echo the persons
@@ -33,7 +39,13 @@ Rel(personAlias, cs, "CSDIY", "CS")
 Rel(cs, sys_ext1, "Must-learn tool", "Tool")
 Rel(cs, sys_ext2, "Good book recommendation","Book")
 Rel(cs, sys_ext3, "Foundation of mathematics", "Mathematics")
-Rel(cs, sys_ext4, "Communicates", "SOAP")
-Rel(cs, sys_ext5, "Communicates", "SOAP")
+Rel(cs, sys_ext4, "Mathematical progression", "Mathematical")
+Rel(cs, sys_ext5, "Introduction to programming", "Pogramming")
+Rel(cs, sys_ext6, "Electronic basis", "Electronic")
+Rel(cs, sys_ext7, "Data structures and algorithms", "Algorithms")
+Rel(cs, sys_ext8, "Software Engineering", "Software")
+
+
+
 
 @enduml
