@@ -4,20 +4,21 @@
 !include ../include/themes/light.puml
 
 !unquoted procedure Person()
-  Person(personAlias, "Main", "Enduser uses My System")
+  Person(personAlias, "Main", "CSDIY")
 !endfunction
 
 !unquoted procedure BOUNDARY()
-  System_Boundary(ms, "My System Boundary") {
+  System_Boundary(ms, "My System ") {
     Container(mysystem, "My System", "Node, Angular", "Does really cool things")
   }
 !endfunction
 
 !unquoted procedure EXTSYSTEMS()
-  System_Ext(sys_ext1, "数学基础", "Does things")
-  System_Ext(sys_ext2, "Mata", "Does things")
-  System_Ext(sys_ext3, "Mata", "Does things")
-  System_Ext(sys_ext4, "Mata", "Does things")
+  System_Ext(sys_ext1, "必学工具", "1")
+  System_Ext(sys_ext2, "好书推荐", "2")
+  System_Ext(sys_ext3, "数学基础", "3")
+  System_Ext(sys_ext4, "数学进阶", "4")
+  System_Ext(sys_ext5, "编程入门", "5")
 !endfunction
 
 ' Echo the persons
@@ -33,5 +34,6 @@ Rel(mysystem, sys_ext1, "Communicates", "REST")
 Rel(mysystem, sys_ext2, "Communicates","GraphQL")
 Rel(mysystem, sys_ext3, "Syncs Data", "REST")
 Rel(mysystem, sys_ext4, "Communicates", "SOAP")
+Rel(mysystem, sys_ext5, "Communicates", "SOAP")
 
 @enduml
