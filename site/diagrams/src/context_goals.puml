@@ -14,10 +14,10 @@
 !endfunction
 
 !unquoted procedure EXTSYSTEMS()
-  System_Ext(sys_ext1, "Ext System 1", "Does things")
-  System_Ext(sys_ext2, "Ext System 2", "Does things")
-  System_Ext(sys_ext3, "Ext System 3", "Does things")
-  System_Ext(sys_ext4, "Ext System 4", "Does things")
+  System_Ext(sys_ext1, "Mata", "Does things")
+  System_Ext(sys_ext2, "Mata", "Does things")
+  System_Ext(sys_ext3, "Mata", "Does things")
+  System_Ext(sys_ext4, "Mata", "Does things")
 !endfunction
 
 ' Echo the persons
