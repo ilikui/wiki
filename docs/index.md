@@ -7,7 +7,7 @@ Knowledge Document with&nbsp;Markdown.
  
                 
             
-本[知识文档](https://www.likui.info/wiki/site)工具旨在分享相关学习内容，通过<a class = "fa fa-cc" href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">共享协议</a>来分发和演绎本站内容，只需保留本站署名且非商业使用。
+<!-- 本[知识文档](https://www.likui.info/wiki/site)工具旨在分享相关学习内容，通过<a class = "fa fa-cc" href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">共享协议</a>来分发和演绎本站内容，只需保留本站署名且非商业使用。 -->
 
 
 [introductory tutorial]: getting-started.md
