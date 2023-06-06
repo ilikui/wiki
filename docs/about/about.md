@@ -25,7 +25,7 @@
 | mermaid2   | [mermaid2](https://github.com/fralau/mkdocs-mermaid2-plugin)           | 生成结构图         |
 | plantuml   | [plantuml](https://github.com/quantorconsulting/mkdocs_build_plantuml) | UML图生成          |
 | taag       | [taag](https://patorjk.com/software/taag/#)                            | taag注释生成       |
-| 饭否小鲸鱼 | [taag](https://www.setq.me/)                                           | 饭否小鲸鱼         |
+| 饭否小鲸鱼 | [setq](https://www.setq.me/)                                           | 饭否小鲸鱼         |
 
 
 

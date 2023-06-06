@@ -4,7 +4,7 @@
 !include ../include/themes/light.puml
 
 !unquoted procedure Person()
-  Person(personAlias, "Enduser", "Enduser uses My System")
+  Person(personAlias, "Main", "Enduser uses My System")
 !endfunction
 
 !unquoted procedure BOUNDARY()
