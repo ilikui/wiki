@@ -41,6 +41,8 @@ nav:
         - 编程入门: cs/编程入门.md
         - 电子基础: cs/电子基础.md
         - 数据结构与算法: cs/数据结构与算法.md
+        - 软件工程: cs/软件工程.md
+        - 体系结构: cs/体系结构.md
     - 阅读:
         - Reading: read/Reading.md
         - Books: read/Books.md
