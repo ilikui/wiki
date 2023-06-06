@@ -22,6 +22,10 @@
   System_Ext(sys_ext6, "电子基础", "Electronic basis")
   System_Ext(sys_ext7, "数据结构与算法", "Algorithms")
   System_Ext(sys_ext8, "软件工程", "Software")
+  System_Ext(sys_ext9, "体系结构", "Architecture")
+  System_Ext(sys_ext10, "操作系统", "System")
+
+
 
 
 
@@ -44,6 +48,10 @@ Rel(cs, sys_ext5, "Introduction to programming", "Pogramming")
 Rel(cs, sys_ext6, "Electronic basis", "Electronic")
 Rel(cs, sys_ext7, "Data structures and algorithms", "Algorithms")
 Rel(cs, sys_ext8, "Software Engineering", "Software")
+Rel(cs, sys_ext9, "Architecture", "Architecture")
+Rel(cs, sys_ext10, "Operating system", "System")
+
+
 
 
 
