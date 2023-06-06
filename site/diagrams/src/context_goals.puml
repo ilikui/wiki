@@ -28,6 +28,16 @@
   System_Ext(sys_ext12, "计算机系统安全", "Security")
   System_Ext(sys_ext13, "计算机网络", "Network")
   System_Ext(sys_ext14, "数据库系统", "Database")
+  System_Ext(sys_ext15, "编译原理", "Compilation")
+  System_Ext(sys_ext16, "计算机图形学", "Graphics")
+  System_Ext(sys_ext17, "Web开发", "Web")
+  System_Ext(sys_ext18, "数据科学", "Data")
+  System_Ext(sys_ext19, "人工智能", "Artificial")
+  System_Ext(sys_ext20, "机器学习", "Machine")
+  System_Ext(sys_ext21, "机器学习系统", "Machine")
+  System_Ext(sys_ext22, "深度学习", "Learning")
+  System_Ext(sys_ext23, "机器学习进阶", "Machine")
+
 !endfunction
 
 ' Echo the persons
@@ -53,6 +63,14 @@ Rel(cs, sys_ext11, "Parallel and distributed systems", "System")
 Rel(cs, sys_ext12, "Computer system security", "Security")
 Rel(cs, sys_ext13, "Computer network", "Network")
 Rel(cs, sys_ext14, "Database system", "Database")
-
+Rel(cs, sys_ext15, "Compilation principle", "Compilation")
+Rel(cs, sys_ext16, "Computer graphics", "Graphics")
+Rel(cs, sys_ext17, "Web development", "Web")
+Rel(cs, sys_ext18, "Data science", "Data")
+Rel(cs, sys_ext19, "Artificial intelligence", "Artificial")
+Rel(cs, sys_ext20, "Machine learning", "Machine")
+Rel(cs, sys_ext21, "Machine learning system", "Machine")
+Rel(cs, sys_ext22, "Deep learning", "Learning")
+Rel(cs, sys_ext23, "Advanced machine learning", "Machine")
 
 @enduml
