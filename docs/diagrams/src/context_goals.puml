@@ -14,7 +14,7 @@
 !endfunction
 
 !unquoted procedure EXTSYSTEMS()
-  System_Ext(sys_ext1, "Math", "Does things")
+  System_Ext(sys_ext1, "数学基础", "Does things")
   System_Ext(sys_ext2, "Mata", "Does things")
   System_Ext(sys_ext3, "Mata", "Does things")
   System_Ext(sys_ext4, "Mata", "Does things")
