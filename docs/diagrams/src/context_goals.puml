@@ -8,8 +8,8 @@
 !endfunction
 
 !unquoted procedure BOUNDARY()
-  System_Boundary(ms, "My System ") {
-    Container(mysystem, "My System", "Node, Angular", "Does really cool things")
+  System_Boundary(ms, "cs ") {
+    Container(cs, "cs", "Node, Angular", "Does really cool things")
   }
 !endfunction
 
@@ -29,11 +29,11 @@ BOUNDARY()
 EXTSYSTEMS()
 
 ' Relationships
-Rel(personAlias, mysystem, "via App or Web", "REST over HTTPS")
-Rel(mysystem, sys_ext1, "Communicates", "REST")
-Rel(mysystem, sys_ext2, "Communicates","GraphQL")
-Rel(mysystem, sys_ext3, "Syncs Data", "REST")
-Rel(mysystem, sys_ext4, "Communicates", "SOAP")
-Rel(mysystem, sys_ext5, "Communicates", "SOAP")
+Rel(personAlias, cs, "CSDIY", "CS")
+Rel(cs, sys_ext1, "Must-learn tool", "Tool")
+Rel(cs, sys_ext2, "Good book recommendation","Book")
+Rel(cs, sys_ext3, "Foundation of mathematics", "Mathematics")
+Rel(cs, sys_ext4, "Communicates", "SOAP")
+Rel(cs, sys_ext5, "Communicates", "SOAP")
 
 @enduml
