@@ -109,11 +109,15 @@
 - [历史专题问题库](history/README.md)
 - [儿童教育 1000 问](child-education/README.md)
 
+- [MATLAB 与 Simulink 10000 问](matlab/README.md)
+- [电气工程及其自动化 10000 问](electrical/README.md)
+- [电气工程学习入口](electrical-overview/README.md)
+
 ## 迁移进度
 
 - [x] 建立统一目录与专题分类
 - [x] 汇总已确认的核心专题入口与方法论
-- [ ] 继续检索 Flomo 中所有相关笔记，补齐剩余专题总表与分卷链接
+- [ ] 继续检索 Flomo 中所有相关笔记，补齐剩余专题总表与分卷链接（包含自动驾驶等新专题）
 - [x] 已迁移 9 份核心专题总表/问题导航，并保留 Flomo 来源链接
 - [ ] 继续迁移其他命中笔记中的答案、案例和补充问题
 - [ ] 检查重复问题、内部链接、Mermaid 图与 GitHub 页面渲染
