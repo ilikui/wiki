@@ -1,0 +1,12 @@
+# MkDocs core and theme
+mkdocs>=1.6,<2
+
+# Plugins used by mkdocs.yml
+mkdocs-rss-plugin
+mkdocs-blogging-plugin
+mkdocs-mermaid2-plugin
+mkdocs-build-plantuml-plugin
+mkdocs-callouts
+mkdocs-click
+pymdown-extensions
+mdx-gh-links
