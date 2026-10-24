@@ -27,7 +27,7 @@
 | AUTOSAR 1000 问 | Classic / Adaptive、架构、RTE/SWC、通信栈、网络管理、诊断、NvM、OS、多核、安全、信息安全、工具链、ARXML、生成代码、集成与量产排障 | [AUTOSAR 1000 问总表](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4) |
 | 嵌入式 1000 问 | MCU/MPU、处理器架构、存储与链接、GPIO/外设、中断、定时器、DMA、低功耗、RTOS、Bootloader、嵌入式 Linux、调试、通信、性能 | [嵌入式 1000 问全景](https://v.flomoapp.com/mine/?memo_id=MjQ1NzMzNDk3) |
 | C 语言 1000 问 | 语法与类型、指针与内存、编译链接、多文件组织、预处理、标准库、未定义行为、嵌入式 C、MISRA、工程调试 | [C 语言导航](https://v.flomoapp.com/mine/?memo_id=MjQ1NzM0NTk5) |
-| 硬件 / 电气工程 1000 问 | 电源与保护、模拟/数字电路、传感器、ADC、信号完整性、接口电路、测量与故障定位 | [硬件专题导航](https://v.flomoapp.com/mine/?memo_id=MjQ七NTQ2MDE3) |
+| 硬件 / 电气工程 1000 问 | 电源与保护、模拟/数字电路、传感器、ADC、信号完整性、接口电路、测量与故障定位 | [硬件专题导航](https://v.flomoapp.com/mine/?memo_id=MjQ3NTQ2MDE3) |
 | AI 1000 问 | AI 基础、大模型、Embedding/RAG、Agent、模型部署、AI 与知识管理、端侧 AI、视频理解与生成 | [AI 1000 问全景](https://v.flomoapp.com/mine/?memo_id=MjQ2Mzc0NzUw) |
 | 考研数学 1000 问 | 高等数学、线性代数、概率论；按定义/关系、定理推导、典型题、工程应用分层 | [考研数学 1000 问导航](https://v.flomoapp.com/mine/?memo_id=MjQ2Mzc0OTc2)；[概率论分卷](https://v.flomoapp.com/mine/?memo_id=MjQ3MzMwNjE5) |
 | 软考 / 系统架构师 1000 问 | 计算机体系结构、操作系统、网络、数据库、软件工程、架构设计、案例分析与论文 | [软考 1000 问](https://v.flomoapp.com/mine/?memo_id=MjQ3Mjg1Mjgy) |
