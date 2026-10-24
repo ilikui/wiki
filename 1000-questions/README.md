@@ -95,10 +95,25 @@
 - [AI 与知识管理：从 1000 问到个人知识库闭环](https://v.flomoapp.com/mine/?memo_id=MjUwNTg2NDA1)：将问题库、卡片笔记和 AI 整理流程连接起来。
 - [1000 问：技术树深挖与知识面铺开的区别](https://v.flomoapp.com/mine/?memo_id=MjQ5MzM1NTE3)：不同领域采用不同的问题设计策略。
 
+
+
+## Wiki 已迁移分卷
+
+- [AUTOSAR 1000 问](autosar/README.md)
+- [嵌入式 1000 问](embedded/README.md)
+- [C 语言 1000 问](c-language/README.md)
+- [AI 1000 问](ai/README.md)
+- [考研数学 1000 问](math/README.md)
+- [概率论与数理统计 1000 问](probability/README.md)
+- [软考系统架构师 1000 问](soft-exam/README.md)
+- [历史专题问题库](history/README.md)
+- [儿童教育 1000 问](child-education/README.md)
+
 ## 迁移进度
 
 - [x] 建立统一目录与专题分类
 - [x] 汇总已确认的核心专题入口与方法论
-- [ ] 逐一检索 Flomo 中所有相关笔记，补齐专题总表与分卷链接
-- [ ] 将原始长文和已回答问题分专题迁入 Wiki，保留 Flomo 来源
+- [ ] 继续检索 Flomo 中所有相关笔记，补齐剩余专题总表与分卷链接
+- [x] 已迁移 9 份核心专题总表/问题导航，并保留 Flomo 来源链接
+- [ ] 继续迁移其他命中笔记中的答案、案例和补充问题
 - [ ] 检查重复问题、内部链接、Mermaid 图与 GitHub 页面渲染
