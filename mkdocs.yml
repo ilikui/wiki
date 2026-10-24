@@ -10,8 +10,6 @@ theme:
   language: zh
   features:
     - navigation.tracking
-    - navigation.tabs
-    - navigation.tabs.sticky
     - navigation.sections
     - navigation.indexes
     - navigation.top
