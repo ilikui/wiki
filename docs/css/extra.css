@@ -239,3 +239,31 @@ h5.doc-heading {
 .wiki-sidebar-group a:hover { color:var(--wiki-accent); background:rgba(241,90,53,.045); }
 .wiki-sidebar-group a.is-active { color:var(--wiki-accent); border-left-color:var(--wiki-accent); background:rgba(241,90,53,.075); font-weight:650; }
 .wiki-sidebar-group a.is-active .wiki-sidebar-icon { color:var(--wiki-accent); }
+
+
+/* GitBook-inspired support hub refinements */
+:root { --wiki-accent:#f15b3a; --wiki-border:#e9e7e5; --wiki-muted:#77736f; }
+.md-header { position:sticky; top:0; z-index:20; min-height:3.4rem; background:var(--md-default-bg-color); }
+.md-header__inner { max-width:1600px; }
+.md-header__title { font-weight:750; }
+.md-search__form { border:1px solid var(--wiki-border); border-radius:9px; }
+.md-main { background:var(--md-default-bg-color); }
+.md-main__inner { padding-top:.7rem; }
+.md-content__inner { padding-bottom:3rem; }
+.md-typeset h1 { line-height:1.18; }
+.md-typeset h2 { margin-top:2rem; padding-bottom:.35rem; }
+.md-typeset hr { border-bottom-color:var(--wiki-border); }
+.md-typeset .wiki-feature-card { border-color:var(--wiki-border); box-shadow:0 1px 2px rgba(20,20,20,.025); }
+.md-typeset .wiki-feature-card:hover { box-shadow:0 8px 24px rgba(20,20,20,.07); }
+.md-typeset .wiki-card-art { background:linear-gradient(135deg,#fff8f5,#f8f4f1); }
+.md-typeset .wiki-link-card { background:var(--md-default-bg-color); }
+.md-sidebar--secondary { border-left:1px solid var(--wiki-border); }
+.wiki-sidebar { top:3.4rem; width:258px; border-right:1px solid var(--wiki-border); }
+.wiki-sidebar-scroll { padding:1.25rem .8rem 2rem 1.55rem; }
+.wiki-sidebar-group { margin-bottom:1.35rem; }
+.wiki-sidebar-group h2 { margin-bottom:.45rem; font-size:.62rem; opacity:.78; }
+.wiki-sidebar-group a { min-height:31px; padding:.35rem .45rem; font-size:.72rem; }
+@media (min-width:1100px) { .wiki-portal-layout .md-main__inner { margin-left:258px; } }
+@media (max-width:1099px) { .wiki-sidebar { display:none !important; } .wiki-portal-layout .md-main__inner { margin-left:auto; } }
+@media (max-width:760px) { .md-main__inner { padding-top:.25rem; } .md-content__inner { padding-left:1rem; padding-right:1rem; } }
+[data-md-color-scheme="slate"] .md-typeset .wiki-card-art { background:linear-gradient(135deg,#2a2726,#211f1e); }
