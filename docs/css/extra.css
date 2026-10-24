@@ -203,3 +203,31 @@ h5.doc-heading {
   .md-typeset h1 { font-size:1.65rem; }
   .md-typeset .wiki-card-grid { grid-template-columns:1fr; }
 }
+
+
+/* Persistent left-hand documentation tree, matching the supplied reference */
+.md-sidebar--primary { display:none !important; }
+.wiki-sidebar { position:fixed; z-index:10; top:7.05rem; bottom:0; left:0; width:270px; background:var(--md-default-bg-color); border-right:1px solid var(--wiki-border); }
+.wiki-sidebar-scroll { height:100%; overflow:auto; padding:1rem .75rem 2rem 2.1rem; scrollbar-width:thin; }
+.wiki-sidebar-group { margin:0 0 1.1rem; }
+.wiki-sidebar-group h2 { margin:0 0 .3rem; padding:0 .35rem; color:var(--md-default-fg-color); font-size:.59rem; font-weight:800; letter-spacing:.045em; text-transform:uppercase; }
+.wiki-sidebar-group ul { margin:0; padding:0; list-style:none; }
+.wiki-sidebar-group li { margin:0; padding:0; }
+.md-typeset .wiki-sidebar-group a { display:flex; align-items:center; gap:.55rem; min-height:29px; padding:.28rem .38rem; border-left:2px solid transparent; border-radius:0 4px 4px 0; color:var(--wiki-muted); font-size:.69rem; line-height:1.35; text-decoration:none; }
+.md-typeset .wiki-sidebar-group a:hover { color:var(--wiki-accent); background:rgba(241,90,53,.045); }
+.md-typeset .wiki-sidebar-group a.is-active { color:var(--wiki-accent); border-left-color:var(--wiki-accent); background:rgba(241,90,53,.075); font-weight:650; }
+.wiki-sidebar-icon { width:13px; flex:none; color:#a6a6a6; font-size:.78rem; text-align:center; }
+.wiki-sidebar-group a.is-active .wiki-sidebar-icon { color:var(--wiki-accent); }
+.wiki-external { margin-left:auto; font-size:.65rem; }
+@media (min-width: 1100px) {
+  .wiki-portal-layout .md-main__inner { max-width:none; margin-left:270px; }
+  .wiki-portal-layout .md-content__inner { max-width:900px; }
+  .wiki-portal-layout .md-content { margin-left:0; }
+}
+@media (max-width: 1099px) {
+  .wiki-sidebar { display:none; }
+  .wiki-portal-layout .md-main__inner { margin-left:auto; }
+}
+@media (min-width: 1450px) {
+  .md-typeset .wiki-feedback { left:calc(100% + 1rem); }
+}
