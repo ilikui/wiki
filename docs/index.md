@@ -1,151 +1,88 @@
-# 知识文档
+# LIKUI · 知识图谱
 
-Knowledge Document with&nbsp;Markdown.
+> **持续积累，持续连接，持续创造。**  
+> 一个以 Markdown 为载体、以问题为入口、以关联和实践为驱动的个人知识花园。
 
----
+<div align="center">
 
- 
-                
-            
-<!-- 本[知识文档](https://www.likui.info/wiki/site)工具旨在分享相关学习内容，通过<a class = "fa fa-cc" href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">共享协议</a>来分发和演绎本站内容，只需保留本站署名且非商业使用。 -->
+[![Browse Knowledge](https://img.shields.io/badge/Explore-Knowledge%20Atlas-2563eb?style=for-the-badge)](../README.md)
+[![1000 Questions](https://img.shields.io/badge/Study-1000%20Questions-7c3aed?style=for-the-badge)](1000-questions/README.md)
 
-
-[introductory tutorial]: getting-started.md
-[User Guide]: user-guide/README.md
-
-<div class="text-center">
-<a href="getting-started/" class="btn btn-primary" role="button">开始</a>
-<a href="user-guide/" class="btn btn-primary" role="button">用户手册</a>
 </div>
 
-<div class="jumbotron">
-<h3 class="display-4 text-center">功能</h3>
-<!-- 1 -->
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">主页</h3>
-        <p class="card-text">
-            There's a stack of good looking <a href="user-guide/choosing-your-theme">themes</a> available for MkDocs.
-            Choose between the built in themes:
-            <a href="user-guide/choosing-your-theme/#mkdocs">mkdocs</a> and
-            <a href="user-guide/choosing-your-theme/#readthedocs">readthedocs</a>,
-            select one of the third-party themes
-            (on the <a href="https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes">MkDocs Themes</a> wiki page
-            as well as <a href="https://github.com/mkdocs/best-of-mkdocs#-theming">Best-of-MkDocs</a>),
-            or <a href="dev-guide/themes/">build your own</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">开始</h3>
-        <p class="card-text">
-            Get your project documentation looking just the way you want it by
-            <a href="user-guide/customizing-your-theme/">customizing your
-            theme</a> and/or installing some <a
-            href="user-guide/configuration/#plugins">plugins</a>. Modify
-            Markdown's behavior with <a
-            href="user-guide/configuration/#markdown_extensions">Markdown
-            extensions</a>. Many <a
-            href="user-guide/configuration/">configuration options</a> are
-            available.
-        </p>
-      </div>
-    </div>
-  </div>
+## 从这里开始
+
+<div class="grid cards" markdown>
+
+-   :material-compass-outline: **1000 问知识体系**
+
+    ---
+
+    从问题出发，建立知识地图、分卷目录、来源追踪与答案验证流程。
+
+    [进入知识总目录](1000-questions/README.md)
+
+-   :material-car: **汽车电子与 AUTOSAR**
+
+    ---
+
+    覆盖 Classic AUTOSAR、RTE/SWC、通信栈、诊断、NvM、OS 与集成排障。
+
+    [进入 AUTOSAR 专题](1000-questions/autosar/README.md)
+
+-   :material-chip: **嵌入式系统**
+
+    ---
+
+    从 MCU、外设和内存，到 RTOS、Bootloader、嵌入式 Linux 与调试。
+
+    [进入嵌入式专题](1000-questions/embedded/README.md)
+
+-   :material-code-braces: **编程与人工智能**
+
+    ---
+
+    通过 C 语言、AI 与大模型问题库，构建可复用的学习路径。
+
+    [C 语言](1000-questions/c-language/README.md) · [AI 1000 问](1000-questions/ai/README.md)
+
+-   :material-function-variant: **数学与系统架构**
+
+    ---
+
+    整理考研数学、概率论、软考与系统架构师相关问题。
+
+    [数学](1000-questions/math/README.md) · [概率论](1000-questions/probability/README.md) · [软考](1000-questions/soft-exam/README.md)
+
+-   :material-book-open-page-variant: **历史、教育与工程工具**
+
+    ---
+
+    将通识探索与 MATLAB / Simulink、电气工程学习内容纳入同一套知识导航。
+
+    [历史](1000-questions/history/README.md) · [教育](1000-questions/child-education/README.md) · [MATLAB](1000-questions/matlab/README.md) · [电气工程](1000-questions/electrical/README.md)
+
 </div>
-<!-- 2 -->
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">用户手册</h3>
-        <p class="card-text">
-            The built-in dev-server allows you to preview your documentation
-            as you're writing it. It will even auto-reload and refresh your
-            browser whenever you save your changes.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">开发指南</h3>
-        <p class="card-text">
-            <ol>
-              <li class = "fa fa-home"><a href="dev-guide/api/#API reference"> API</a> </li> <br>
-              <li class = "fa fa-gear"><a href="dev-guide/plugins/#MkDocs Plugins"> Plugins</a></li><br>
-              <li class = "fa fa-gear"><a href="dev-guide/themes/#Developing Themes"> Themes</a></li><br>
-              <li class = "fa fa-book"><a href="dev-guide/translations/##Localization tooling prerequisites"> Translations</a></li><br>
-              <li class = "fa fa-arrows"><a href="dev-guide/README/#Developer Guide"> README</a></li><br>
-            <ol>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 3 -->
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">PPT</h3>
-        <p class="card-text">
-            The built-in dev-server allows you to preview your documentation
-            as you're writing it. It will even auto-reload and refresh your
-            browser whenever you save your changes.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">CS</h3>
-        <p class="card-text">
-            <ol>
-              <li class = "fa fa-home"><a href="cs/目录/#目录"> 目录</a> </li> <br>
-              <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具"> 必学工具</a></li><br>
-              <li class = "fa fa-gear"><a href="cs/必学工具/#必学工具"> 必学工具</a></li><br>
-              <li class = "fa fa-book"><a href="cs/好书推荐/#好书推荐"> 好书推荐</a></li><br>
-              <li class = "fa fa-graduation-cap"><a href="cs/数学基础/#数学基础"> 数学基础</a></li><br>
-              <li class = "fa fa-calculator"><a href="cs/数学进阶/#数学进阶"> 数学进阶</a></li><br>
-            <ol>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- 4 -->
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">阅读</h3>
-        <p class="card-text">
-            <ol>
-              <li class = "fa fa-bookmark"><a href="read/Reading/#Reading"> 阅读</a> </li> <br>
-              <li class = "fa fa-book"><a href="read/Books/#Books"> 书籍</a> </li> <br>      
-            <ol>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="card-title">关于</h3>
-        <p class="card-text">
-             <li class = "fa fa-handshake-o"> <a href="about/about/#关于">关于</a> </li> <br>
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- END -->
-</div>
+
+## 知识如何生长
+
+```mermaid
+flowchart TD
+    A[捕获灵感与问题] --> B[归入专题]
+    B --> C[拆解概念与原理]
+    C --> D[编写答案和示例]
+    D --> E[通过实践或来源验证]
+    E --> F[建立关联并发布]
+    F --> G[复习、去重、持续修订]
+    G --> B
+```
+
+## 内容原则
+
+- **来源可追溯**：保留原始笔记、参考资料和上下文。
+- **问题可连接**：通过专题索引和相对路径链接形成知识网络。
+- **结论可验证**：区分待整理、初稿、已复核与已验证内容。
+- **结构可扩展**：每个专题维护独立页面，避免单页无限膨胀。
+- **内容可迁移**：优先使用 Markdown，便于 GitHub 浏览和 MkDocs 构建。
+
+> 本知识库持续演进中。专题入口不代表所有问题均已回答；每份内容以页面中的来源、状态和验证记录为准。
