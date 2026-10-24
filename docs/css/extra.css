@@ -160,3 +160,62 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
   .wiki-hero-banner { height: 115px; padding: 1rem; justify-content: center; border-radius: 6px; }
   .wiki-hero-banner span { margin: 0; text-align: center; }
 }
+
+/* Layout correction based on production screenshot: prevent Material's 12-column grid
+   from squeezing the article into a narrow column. */
+@media (min-width: 1200px) {
+  .md-grid { max-width: 1160px !important; }
+  .md-main__inner {
+    display: flex !important;
+    width: min(1160px, calc(100vw - 40px)) !important;
+    max-width: 1160px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    box-sizing: border-box;
+  }
+  .wiki-portal-layout .wiki-sidebar {
+    left: max(20px, calc((100vw - 1160px) / 2));
+    width: 205px;
+  }
+  .wiki-portal-layout .md-content {
+    display: block !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+    margin: 0 !important;
+    padding-left: 225px !important;
+    box-sizing: border-box !important;
+  }
+  .wiki-portal-layout .md-content__inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 24px 3rem 0 !important;
+    box-sizing: border-box !important;
+  }
+  .wiki-portal-layout .md-sidebar--secondary {
+    display: block !important;
+    position: sticky !important;
+    top: 3.35rem !important;
+    width: 155px !important;
+    min-width: 155px !important;
+    max-width: 155px !important;
+    height: calc(100vh - 3.35rem) !important;
+    flex: 0 0 155px !important;
+    margin: 0 !important;
+    padding: 1.5rem 0 0 14px !important;
+    border-left: 1px solid var(--wiki-border) !important;
+    box-sizing: border-box !important;
+  }
+  .wiki-hero-banner { height: 182px; }
+}
+@media (min-width: 1200px) and (max-width: 1400px) {
+  .wiki-portal-layout .md-sidebar--secondary { display: none !important; }
+  .wiki-portal-layout .md-content { padding-left: 225px !important; }
+}
+@media (max-width: 1199px) {
+  .wiki-portal-layout .md-content { width: 100% !important; padding-left: 0 !important; }
+  .wiki-portal-layout .md-content__inner { padding: 1.5rem 1rem 3rem !important; }
+}
