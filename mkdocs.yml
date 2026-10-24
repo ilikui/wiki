@@ -9,8 +9,6 @@ theme:
   name: material
   language: zh
   features:
-    - navigation.instant
-    - navigation.instant.progress
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
