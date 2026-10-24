@@ -213,9 +213,9 @@ h5.doc-heading {
 .wiki-sidebar-group h2 { margin:0 0 .3rem; padding:0 .35rem; color:var(--md-default-fg-color); font-size:.59rem; font-weight:800; letter-spacing:.045em; text-transform:uppercase; }
 .wiki-sidebar-group ul { margin:0; padding:0; list-style:none; }
 .wiki-sidebar-group li { margin:0; padding:0; }
-.md-typeset .wiki-sidebar-group a { display:flex; align-items:center; gap:.55rem; min-height:29px; padding:.28rem .38rem; border-left:2px solid transparent; border-radius:0 4px 4px 0; color:var(--wiki-muted); font-size:.69rem; line-height:1.35; text-decoration:none; }
-.md-typeset .wiki-sidebar-group a:hover { color:var(--wiki-accent); background:rgba(241,90,53,.045); }
-.md-typeset .wiki-sidebar-group a.is-active { color:var(--wiki-accent); border-left-color:var(--wiki-accent); background:rgba(241,90,53,.075); font-weight:650; }
+.wiki-sidebar-group a { display:flex; align-items:center; gap:.55rem; min-height:29px; padding:.28rem .38rem; border-left:2px solid transparent; border-radius:0 4px 4px 0; color:var(--wiki-muted); font-size:.69rem; line-height:1.35; text-decoration:none; }
+.wiki-sidebar-group a:hover { color:var(--wiki-accent); background:rgba(241,90,53,.045); }
+.wiki-sidebar-group a.is-active { color:var(--wiki-accent); border-left-color:var(--wiki-accent); background:rgba(241,90,53,.075); font-weight:650; }
 .wiki-sidebar-icon { width:13px; flex:none; color:#a6a6a6; font-size:.78rem; text-align:center; }
 .wiki-sidebar-group a.is-active .wiki-sidebar-icon { color:var(--wiki-accent); }
 .wiki-external { margin-left:auto; font-size:.65rem; }
@@ -231,3 +231,11 @@ h5.doc-heading {
 @media (min-width: 1450px) {
   .md-typeset .wiki-feedback { left:calc(100% + 1rem); }
 }
+
+
+/* Sidebar lives directly under body, so its selectors must not depend on .md-typeset */
+.wiki-sidebar { display:block !important; visibility:visible !important; opacity:1 !important; }
+.wiki-sidebar-group a { display:flex; align-items:center; gap:.55rem; min-height:29px; padding:.28rem .38rem; border-left:2px solid transparent; border-radius:0 4px 4px 0; color:var(--wiki-muted); font-size:.69rem; line-height:1.35; text-decoration:none; }
+.wiki-sidebar-group a:hover { color:var(--wiki-accent); background:rgba(241,90,53,.045); }
+.wiki-sidebar-group a.is-active { color:var(--wiki-accent); border-left-color:var(--wiki-accent); background:rgba(241,90,53,.075); font-weight:650; }
+.wiki-sidebar-group a.is-active .wiki-sidebar-icon { color:var(--wiki-accent); }
