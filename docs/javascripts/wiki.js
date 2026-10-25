@@ -109,8 +109,40 @@
     document.body.classList.add("wiki-portal-layout");
   }
 
+
+  // Add visible icons to the right-hand article TOC (Material for MkDocs).
+  // Use real DOM elements rather than pseudo-elements so theme CSS cannot hide them.
+  function decorateArticleToc() {
+    const sidebar = document.querySelector(".md-sidebar--secondary");
+    if (!sidebar) return;
+    const title = sidebar.querySelector(".md-nav__title, .md-sidebar__title");
+    if (title && !title.querySelector(".wiki-toc-title-icon")) {
+      const icon = document.createElement("span");
+      icon.className = "wiki-toc-title-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "☷";
+      title.prepend(icon);
+    }
+    sidebar.querySelectorAll(".md-nav__link").forEach(link => {
+      if (link.querySelector(":scope > .wiki-toc-item-icon")) return;
+      const icon = document.createElement("span");
+      icon.className = "wiki-toc-item-icon";
+      icon.setAttribute("aria-hidden", "true");
+      const depth = link.closest(".md-nav__list")?.parentElement?.closest(".md-nav__list") ? 2 : 1;
+      icon.textContent = depth > 1 ? "•" : "›";
+      link.prepend(icon);
+    });
+  }
+
+  function observeArticleToc() {
+    decorateArticleToc();
+    const observer = new MutationObserver(() => decorateArticleToc());
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
   function init() {
     render();
+    observeArticleToc();
     document.querySelectorAll("[data-feedback]").forEach(button => { button.title = "为页面提供反馈"; });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
