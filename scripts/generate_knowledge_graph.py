@@ -50,8 +50,8 @@ def page_url(path: Path) -> str:
     name = path.name.lower()
     if name in {"index.md", "readme.md"}:
         parent = path.parent.as_posix()
-        return "/" if parent == "." else parent + "/"
-    return path.with_suffix("").as_posix() + "/"
+        return "/" if parent == "." else "/" + parent.strip("/") + "/"
+    return "/" + path.with_suffix("").as_posix().lstrip("/") + "/"
 
 
 def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
