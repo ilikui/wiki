@@ -1,6 +1,6 @@
 site_name: 知识 Wiki
 site_description: 个人知识库与技术文档中心，覆盖 AUTOSAR、嵌入式、编程、人工智能与计算机科学
-site_url: https://www.likui.info/wiki/site
+site_url: https://wk.likui.info/
 repo_url: https://github.com/ilikui/wiki
 repo_name: ilikui/wiki
 edit_uri: edit/master/docs/
@@ -40,7 +40,7 @@ theme:
 nav:
     - 产品: index.md
     - API: dev-guide/api.md
-    - 知识图谱: knowledge-graph.md
+    - 知识图谱: https://wk.likui.info/graph/
     - 帮助中心: getting-started.md
     - 更新日志: user-guide/README.md
     - 用户手册: 

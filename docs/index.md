@@ -18,7 +18,7 @@
     <div class="wiki-card-art art-ai"><svg viewBox="0 0 100 100" aria-hidden="true"><rect x="17" y="22" width="66" height="48" rx="7"/><path d="M38 82h24M50 70v12" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/><path d="m40 37-9 9 9 9m20-18 9 9-9 9" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="wiki-card-content"><span class="wiki-card-eyebrow">AI & KNOWLEDGE</span><h3>人工智能与大模型</h3><p>整理 AI 基础、LLM、RAG、Agent 与知识管理实践。</p><span class="wiki-card-link">探索 AI 专题 <span aria-hidden="true">→</span></span></div>
   </a>
-  <a class="wiki-feature-card" href="knowledge-graph/">
+  <a class="wiki-feature-card" href="graph/">
     <div class="wiki-card-art art-questions"><svg viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><path d="M25 28 50 16 76 34 68 69 35 79 18 52 25 28Z"/><path d="m25 28 43 41M50 16 35 79M76 34 18 52"/></g><g fill="currentColor"><circle cx="25" cy="28" r="7"/><circle cx="50" cy="16" r="7"/><circle cx="76" cy="34" r="7"/><circle cx="68" cy="69" r="7"/><circle cx="35" cy="79" r="7"/><circle cx="18" cy="52" r="7"/></g></svg></div>
     <div class="wiki-card-content"><span class="wiki-card-eyebrow">CONNECTED KNOWLEDGE</span><h3>全站知识图谱</h3><p>以关系网络浏览文档主题与站内链接，发现知识之间的连接。</p><span class="wiki-card-link">打开知识图谱 <span aria-hidden="true">→</span></span></div>
   </a>

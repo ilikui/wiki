@@ -5,7 +5,6 @@
      布局：每个分组围成一个圆心，成员按黄金角散布；力导向模拟带距离截断 */
   const canvas = document.getElementById("kg-canvas");
   if (!canvas) return;
-  document.body.classList.add("kg-immersive");
 
   const ctx = canvas.getContext("2d");
   const stage = canvas.parentElement;
