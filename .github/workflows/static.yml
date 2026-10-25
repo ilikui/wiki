@@ -1,4 +1,4 @@
-# Deploy the wiki to GitHub Pages
+# Build the MkDocs site and deploy the generated static files to GitHub Pages
 name: Deploy static content to Pages
 
 on:
@@ -24,12 +24,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+
+      - name: Install MkDocs and plugins
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Build MkDocs static site
+        run: mkdocs build --strict
+
+      - name: Verify generated knowledge graph page
+        run: |
+          test -s site/knowledge-graph/index.html || test -s site/knowledge-graph.html
+          echo "Knowledge graph page generated successfully."
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "./site"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
