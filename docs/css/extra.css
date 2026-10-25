@@ -284,8 +284,8 @@ body.wk-no-sidebar .md-content__inner { max-width: 58rem; }
 .md-nav__item--nested > .md-nav__link .md-nav__icon { transition: transform .2s var(--wk-ease); }
 .md-nav__item--nested.md-nav__item--active > .md-nav__link .md-nav__icon { color: var(--wk-primary); }
 
-/* 面包屑（原生 .md-path 或脚本生成的 .wk-crumbs） */
-.md-path,
+/* 面包屑：Material 原生 .md-path 会贴在 tabs 下方被遮挡，隐藏之，改用脚本版本 .wk-crumbs */
+.md-path { display: none !important; }
 .wk-crumbs {
   display: flex; align-items: center; flex-wrap: wrap;
   justify-content: flex-start;
@@ -294,20 +294,9 @@ body.wk-no-sidebar .md-content__inner { max-width: 58rem; }
   padding: 0;
   font-size: .72rem;
   color: var(--wk-faint);
-  list-style: none;
 }
-.md-path__list { display: flex; align-items: center; gap: .3rem; margin: 0; padding: 0; list-style: none; }
-.md-path__item { display: inline-flex; align-items: center; gap: .3rem; }
-.md-path__link,
-.md-path a,
 .wk-crumbs a { color: var(--wk-faint); border: 0; }
-.md-path__link:hover,
-.md-path a:hover,
 .wk-crumbs a:hover { color: var(--wk-primary); }
-.md-path__item:not(:last-child)::after {
-  content: "/"; margin-left: .05rem; color: var(--wk-border-strong);
-}
-.md-path__icon { display: none; }
 .wk-crumbs__sep { color: var(--wk-border-strong); }
 
 /* 右侧页内目录 */

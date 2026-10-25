@@ -63,8 +63,7 @@
     const h1 = inner && inner.querySelector("h1");
     if (!inner || !h1 || inner.querySelector(".wk-crumbs")) return;
     if (document.body.classList.contains("wiki-home")) return;
-    // 新版 Material 自带面包屑（navigation.path），有则不再重复生成
-    if (inner.querySelector(".md-path") || document.querySelector(".md-path")) return;
+    // Material 自带的 .md-path 会贴在 tabs 下方被遮挡，统一用脚本生成的位置（标题上方）
 
     const segs = location.pathname.split("/").filter(Boolean).map(decodeURIComponent);
     if (segs.length < 2) return;
