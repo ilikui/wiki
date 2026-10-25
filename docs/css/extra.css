@@ -241,9 +241,9 @@ code, pre, kbd, samp, .highlight, .md-typeset code, .md-typeset pre {
   .md-content__inner { padding: 1.5rem 1.25rem 3rem; }
 }
 
-/* 无子导航的板块（如首页）：隐藏空侧栏，内容真正居中 */
+/* 无子导航的板块（如首页）：隐藏空侧栏，内容靠左与全站对齐 */
 body.wk-no-sidebar .md-sidebar--primary { display: none !important; }
-body.wk-no-sidebar .md-content__inner { max-width: 58rem; }
+body.wk-no-sidebar .md-content__inner { max-width: 58rem; margin-inline: 0; }
 
 /* 左侧导航 */
 .md-sidebar--primary {
@@ -911,33 +911,84 @@ h5.doc-heading { font-size: 1rem; }
 }
 
 @media screen and (max-width: 76.1875em) {
-  /* 移动端：抽屉式导航，收起时完全移出视口，打开时贴左显示 */
+  /* 移动端：抽屉式导航，收起时完全移出视口，打开时贴左显示。
+     Material 自带 left:-12.1rem（rem 基准 20px = -242px）是按其 12.1rem
+     抽屉宽算的，我们的抽屉更宽，必须显式归零，否则打开后仍留在视口外 */
+  /* 遮罩抬到顶栏之上（顶栏 30），抽屉再抬到遮罩之上 */
+  .md-overlay { z-index: 35; }
   .md-sidebar--primary {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
     width: min(86vw, 18rem);
     height: 100%;
     padding-top: 0;
-    z-index: 5;
+    /* 必须高于顶栏的 z-index:30，否则抽屉自带的标题栏（层级返回/关闭入口）
+       会被顶栏盖住，移动端无法回到上一层 */
+    z-index: 40;
     background: var(--wk-surface);
     border-right: 1px solid var(--wk-border);
     transform: translateX(-100%);
     transition: transform .25s var(--wk-ease);
   }
+  /* Material 写死了 [dir=ltr] .md-sidebar--primary { left:-12.1rem }（rem 基准
+     20px = -242px，按其 12.1rem 抽屉宽推算），我们的抽屉更宽，须同优先级归零 */
+  [dir] .md-sidebar--primary { left: 0; }
   :root:has([data-md-toggle="drawer"]:checked) .md-sidebar--primary {
     transform: none;
   }
+  /* 抽屉展开时锁住背景滚动，避免滑动穿透 */
+  :root:has([data-md-toggle="drawer"]:checked) { overflow: hidden; }
+  /* 抽屉标题栏：Material 的 padding-top:3rem + 大 logo 会撑破固定高度，
+     这里统一改成紧凑单行；根级标题右侧给一个明确的关闭入口 */
   .md-nav--primary .md-nav__title {
     display: flex;
     align-items: center;
-    gap: .5rem;
-    height: var(--wk-header-h);
-    padding-inline: 1rem;
+    gap: .55rem;
+    height: 3.25rem;
+    padding: 0 .95rem;
     background: var(--wk-surface);
     box-shadow: none;
-    font-size: .82rem; font-weight: 650; color: var(--wk-ink);
+    font-size: .92rem;
+    font-weight: 650;
+    color: var(--wk-ink);
+    line-height: 1.2;
   }
-  .md-nav--primary .md-nav__title .md-nav__icon { color: var(--wk-muted); }
+  .md-nav--primary .md-nav__title .md-logo {
+    position: static;
+    flex: none;
+    width: 1.3rem; height: 1.3rem;
+    margin: 0; padding: 0;
+  }
+  .md-nav--primary .md-nav__title .md-logo svg { width: 100%; height: 100%; }
+  .md-nav--primary .md-nav__title .md-nav__icon {
+    position: static;
+    flex: none;
+    width: 1.05rem; height: 1.05rem;
+    margin: 0;
+    color: var(--wk-muted);
+  }
+  /* 根级标题：点击空白处即关闭抽屉（label for=__drawer），配一个 ✕ 提示 */
+  .md-nav--primary > .md-nav__title { border-bottom: 1px solid var(--wk-border); }
+  .md-nav--primary > .md-nav__title::after {
+    content: "✕";
+    margin-left: auto;
+    font-size: .95rem;
+    font-weight: 400;
+    color: var(--wk-faint);
+  }
+  .md-nav--primary > .md-nav__title:hover::after { color: var(--wk-ink); }
+  /* 仓库卡：去掉主题的亮蓝填充与「0 0」计数，收敛成安静的一行 */
+  .md-nav--primary .md-nav__source { margin: .6rem .75rem .2rem; }
+  .md-nav--primary .md-source {
+    background: var(--wk-soft);
+    color: var(--wk-ink);
+    border: 1px solid var(--wk-border);
+    border-radius: .55rem;
+    padding: .35rem .55rem;
+  }
+  .md-nav--primary .md-source__icon svg { width: 1.1rem; height: 1.1rem; }
+  .md-nav--primary .md-source__facts { display: none; }
+  .md-nav--primary .md-source__repository { color: var(--wk-muted); font-size: .72rem; }
   .md-nav--primary { padding: 0 0 2rem; }
   .md-nav--primary .md-nav__list { padding: .5rem .75rem; }
   .md-sidebar__scrollwrap { height: 100%; overflow-y: auto; }

@@ -95,6 +95,22 @@
     h1.parentNode.insertBefore(nav, h1);
   }
 
+  // 移动端：Material 会把当前页的所有祖先层级面板叠在同一位面，
+  // 从深层页面打开抽屉时「返回」会退到空白面板。打开时统一折叠到根级，
+  // 让抽屉始终从一级菜单开始，逐层进入、逐层返回。
+  function collapseNavTree() {
+    document.querySelectorAll(".md-sidebar--primary .md-nav__toggle")
+      .forEach(t => { if (t.checked) t.checked = false; });
+  }
+  function initDrawerReset() {
+    document.addEventListener("change", event => {
+      const drawer = event.target;
+      if (!drawer || drawer.id !== "__drawer" || !drawer.checked) return;
+      if (window.innerWidth > 1219) return;
+      collapseNavTree();
+    }, true);
+  }
+
   function init() {
     markExternalLinks();
     initTabsScroll();
@@ -106,9 +122,10 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
+    document.addEventListener("DOMContentLoaded", () => { init(); initDrawerReset(); }, { once: true });
   } else {
     init();
+    initDrawerReset();
   }
 
   // Material 的即时导航（instant loading）会在切页后重新渲染内容
