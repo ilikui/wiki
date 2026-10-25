@@ -2,5 +2,18 @@
   command = "mkdocs build --config-file mkdocs.yml"
   publish = "site"
 
+# 旧版图谱页（Material 内嵌）→ 独立全屏页 /graph/
+[[redirects]]
+  from = "/knowledge-graph"
+  to = "/graph/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge-graph/*"
+  to = "/graph/:splat"
+  status = 301
+  force = true
+
 [build.environment]
   RUBY_VERSION = "2.7.4"
