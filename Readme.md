@@ -8,7 +8,7 @@
 - MkDocs 配置：[`mkdocs.yml`](mkdocs.yml)
 - 本地构建依赖：[`requirements.7z`](requirements.7z)
 - 构建脚本：[`Build.bat`](Build.bat)
-- 项目文档站配置地址：`https://www.likui.info/wiki/site`（以当前 `mkdocs.yml` 为准；域名与部署迁移后应同步更新）
+- 项目文档站配置地址：`https://wk.likui.info/（以当前 `mkdocs.yml` 为准；域名与部署迁移后应同步更新）
 
 ## 内容导航
 
