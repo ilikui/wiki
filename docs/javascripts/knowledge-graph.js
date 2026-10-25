@@ -259,9 +259,26 @@
     });
   }
 
-  /* ---- 加载数据 ---- */
-  fetch("../knowledge-graph.json")
-    .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+  /* ---- 加载数据 ----
+     file:// 直接打开时浏览器会拦截 fetch，直接给出明确提示 */
+  async function loadGraphData() {
+    if (location.protocol === "file:") {
+      const err = new Error("file protocol");
+      err.fileBlocked = true;
+      throw err;
+    }
+    const candidates = ["../knowledge-graph.json", "/knowledge-graph.json"];
+    let lastErr = null;
+    for (const url of candidates) {
+      try {
+        const r = await fetch(url);
+        if (r.ok) return await r.json();
+        lastErr = new Error("HTTP " + r.status);
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr;
+  }
+  loadGraphData()
     .then(data => {
       state.groups = data.groups || [];
       state.nodes = data.nodes.map(n => ({ ...n, g: n.g ?? 0, _nb: null }));
@@ -279,5 +296,12 @@
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(frame);
     })
-    .catch(() => { stats.textContent = "图谱数据加载失败"; });
+    .catch(err => {
+      if (err && err.fileBlocked) {
+        stats.innerHTML = '本地 file:// 打开无法加载数据（浏览器安全限制）<br>' +
+          '<span style="font-size:.72rem">请运行 <code>mkdocs serve</code> 后访问 /graph/，或使用线上站点</span>';
+      } else {
+        stats.textContent = "图谱数据加载失败" + (err && err.message ? "（" + err.message + "）" : "");
+      }
+    });
 })();

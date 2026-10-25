@@ -217,7 +217,7 @@ body {
   <div class="graph-help">拖动平移 · 滚轮缩放 · 点击节点打开文章 · 双击复位视图</div>
 </div>
 
-<script src="/javascripts/knowledge-graph.js" defer></script>
+<script src="../javascripts/knowledge-graph.js" defer></script>
 </body>
 </html>
 """
