@@ -583,3 +583,48 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
   .md-typeset .wiki-hero { padding: 1.7rem 1.4rem 1.6rem; border-radius: 14px; }
   .md-typeset .wiki-hero h1 { font-size: 1.7rem; }
 }
+
+
+/* 知识图谱独立工作区：减少文档页留白，让关系网络成为页面主角 */
+body:has(.kg-app) .md-content > .md-content__inner {
+  max-width: 1600px !important;
+  padding-top: 28px;
+}
+body:has(.kg-app) .md-sidebar--secondary { display: none !important; }
+body:has(.kg-app) .md-main__inner {
+  width: 100% !important;
+  max-width: 1800px !important;
+  padding-right: 24px !important;
+}
+body:has(.kg-app) .kg-app { margin-top: 1rem; }
+body:has(.kg-app) .kg-stage {
+  min-height: min(72vh, 820px);
+  border-radius: 20px;
+}
+body:has(.kg-app) .kg-stage canvas {
+  width: 100%;
+  height: min(72vh, 820px);
+  min-height: 520px;
+}
+body:has(.kg-app) .kg-toolbar { align-items: center; }
+body:has(.kg-app) .kg-toolbar input { min-height: 44px; }
+body:has(.kg-app) .kg-toolbar button { min-height: 44px; }
+body:has(.kg-app) .kg-stats {
+  display: inline-flex;
+  align-items: center;
+  padding: .4rem .7rem;
+  border: 1px solid var(--wiki-border);
+  border-radius: 999px;
+  background: var(--wiki-soft);
+}
+body:has(.kg-app) .kg-index-grid a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+body:has(.kg-app) .kg-index-grid a:hover { transform: translateY(-1px); }
+@media (max-width: 760px) {
+  body:has(.kg-app) .md-main__inner { padding-right: 0 !important; }
+  body:has(.kg-app) .kg-stage canvas { min-height: 460px; height: 62vh; }
+}
