@@ -225,7 +225,7 @@
     state.drag = null; canvas.style.cursor = "grab";
     if (d.node) {
       d.node.fixed = false;
-      if (!d.moved) window.location.href = d.node.url;
+      if (!d.moved) window.location.assign(new URL(d.node.url, window.location.origin).href);
     }
     showTip(null, p);
   });
