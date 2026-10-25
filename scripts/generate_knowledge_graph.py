@@ -82,7 +82,7 @@ def main() -> None:
     for path in files:
         lines.append(f"- [{titles[path]}]({path.as_posix()})")
     lines.extend(["", "---", "", "*本页面由 scripts/generate_knowledge_graph.py 生成，请勿手动编辑。*", ""])
-    OUTPUT.write_text("\\n".join(lines), encoding="utf-8")
+    OUTPUT.write_text("\n".join(lines), encoding="utf-8")
     print(f"Generated {OUTPUT.relative_to(ROOT)}: {len(files)} documents, {len(edges)} links")
 
 if __name__ == "__main__":
