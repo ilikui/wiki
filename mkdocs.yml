@@ -9,111 +9,115 @@ theme:
   name: material
   language: zh
   features:
+    - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.tracking
-    - navigation.sections
+    - navigation.path
+    - navigation.top
+    - navigation.footer
     - navigation.indexes
+    - toc.follow
     - search.suggest
     - search.highlight
     - search.share
     - content.code.copy
+    - content.code.select
     - content.action.edit
     - content.tabs.link
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: cyan
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-sunny
         name: 切换到深色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: cyan
+      primary: custom
+      accent: custom
       toggle:
-        icon: material/brightness-4
+        icon: material/weather-night
         name: 切换到浅色模式
-  font:
-    text: LXGW WenKai
-    code: JetBrains Mono
 
 nav:
-    - 产品: index.md
-    - API: dev-guide/api.md
-    - 知识图谱: https://wk.likui.info/graph/
-    - 帮助中心: getting-started.md
-    - 更新日志: user-guide/README.md
-    - 用户手册: 
-        - Install: user-guide/installation.md
-        - Theme: user-guide/choosing-your-theme.md
-        - Customizing: user-guide/customizing-your-theme.md
-        - Localizing: user-guide/localizing-your-theme.md
-        - Configuration: user-guide/configuration.md
-        - Cli: user-guide/cli.md
-        - Deploying: user-guide/deploying-your-docs.md
-        - Writing: user-guide/writing-your-docs.md
-        - README: user-guide/README.md
-    - 开发指南: 
-        - API: dev-guide/api.md
-        - Plugins: dev-guide/plugins.md
-        - Themes: dev-guide/themes.md
-        - Translations: dev-guide/translations.md
-        - README: dev-guide/README.md
-    - 1000 问知识体系:
-        - 总目录: types/README.md
-        - AUTOSAR:
-            - 1000 问总表: types/autosar/README.md
-            - 规范笔记库: types/autosar/specs/README.md
-            - 笔记库使用指南: types/autosar/specs/HELP.md
-        - 嵌入式: types/embedded/README.md
-        - C 语言: types/c-language/README.md
-        - AI 与大模型: types/ai/README.md
-        - 考研数学: types/math/README.md
-        - 概率论与数理统计: types/probability/README.md
-        - 软考与系统架构: types/soft-exam/README.md
-        - 历史: types/history/README.md
-        - 儿童教育: types/child-education/README.md
-        - MATLAB / Simulink: types/matlab/README.md
-        - 电气工程: types/electrical/README.md
-        - 电气工程学习入口: types/electrical-overview/README.md
-    - PPT:
-        - ppt: ppt/matlab.md
-    - CS:
-        - 目录: cs/目录.md
-        - 必学工具: cs/必学工具.md
-        - 好书推荐: cs/好书推荐.md
-        - 数学基础: cs/数学基础.md
-        - 数学进阶: cs/数学进阶.md
-        - 编程入门: cs/编程入门.md
-        - 电子基础: cs/电子基础.md
-        - 数据结构与算法: cs/数据结构与算法.md
-        - 软件工程: cs/软件工程.md
-        - 体系结构: cs/体系结构.md
-        - 操作系统: cs/操作系统.md
-        - 并行与分布式系统: cs/并行与分布式系统.md
-        - 计算机系统安全: cs/计算机系统安全.md
-        - 计算机网络: cs/计算机网络.md
-        - 数据库系统: cs/数据库系统.md
-        - 编译原理: cs/编译原理.md
-        - 计算机图形学: cs/计算机图形学.md
-        - Web开发: cs/Web开发.md
-        - 数据科学: cs/数据科学.md
-        - 人工智能: cs/人工智能.md
-        - 机器学习: cs/机器学习.md
-        - 机器学习系统: cs/机器学习系统.md
-        - 深度学习: cs/深度学习.md
-        - 机器学习进阶: cs/机器学习进阶.md
-    - 阅读:
-        - Reading: read/Reading.md
-        - Books: read/Books.md
-    - 关于:
-        - About: about/about.md
-       
+  - 首页: index.md
+  - 知识体系:
+      - 总目录: types/README.md
+      - 嵌入式: types/embedded/README.md
+      - C 语言: types/c-language/README.md
+      - AI 与大模型: types/ai/README.md
+      - 考研数学: types/math/README.md
+      - 概率论与数理统计: types/probability/README.md
+      - 软考与系统架构: types/soft-exam/README.md
+      - 历史: types/history/README.md
+      - 儿童教育: types/child-education/README.md
+      - MATLAB / Simulink: types/matlab/README.md
+      - 电气工程: types/electrical/README.md
+      - 电气工程学习入口: types/electrical-overview/README.md
+      - 演示文稿: ppt/matlab.md
+  # AUTOSAR 子项（1000 问总表 + 345 篇规范笔记）由 hooks/nav.py 构建时自动生成
+  - AUTOSAR:
+      - 1000 问总表: types/autosar/README.md
+      - 规范笔记库: types/autosar/specs/README.md
+  - 计算机科学:
+      - 目录: cs/目录.md
+      - 必学工具: cs/必学工具.md
+      - 好书推荐: cs/好书推荐.md
+      - 数学基础: cs/数学基础.md
+      - 数学进阶: cs/数学进阶.md
+      - 编程入门: cs/编程入门.md
+      - 电子基础: cs/电子基础.md
+      - 数据结构与算法: cs/数据结构与算法.md
+      - 软件工程: cs/软件工程.md
+      - 体系结构: cs/体系结构.md
+      - 操作系统: cs/操作系统.md
+      - 并行与分布式系统: cs/并行与分布式系统.md
+      - 计算机系统安全: cs/计算机系统安全.md
+      - 计算机网络: cs/计算机网络.md
+      - 数据库系统: cs/数据库系统.md
+      - 编译原理: cs/编译原理.md
+      - 计算机图形学: cs/计算机图形学.md
+      - Web 开发: cs/Web开发.md
+      - 数据科学: cs/数据科学.md
+      - 人工智能: cs/人工智能.md
+      - 机器学习: cs/机器学习.md
+      - 机器学习系统: cs/机器学习系统.md
+      - 深度学习: cs/深度学习.md
+      - 机器学习进阶: cs/机器学习进阶.md
+  - 阅读:
+      - 阅读记录: read/Reading.md
+      - 书籍索引: read/Books.md
+  - 知识图谱: https://wk.likui.info/graph/
+  - 关于:
+      - 关于知识库: about/about.md
+      - 快速开始: getting-started.md
+      - 更新日志: user-guide/README.md
+      - 用户手册:
+          - Install: user-guide/installation.md
+          - Theme: user-guide/choosing-your-theme.md
+          - Customizing: user-guide/customizing-your-theme.md
+          - Localizing: user-guide/localizing-your-theme.md
+          - Configuration: user-guide/configuration.md
+          - Cli: user-guide/cli.md
+          - Deploying: user-guide/deploying-your-docs.md
+          - Writing: user-guide/writing-your-docs.md
+      - 开发指南:
+          - API: dev-guide/api.md
+          - Plugins: dev-guide/plugins.md
+          - Themes: dev-guide/themes.md
+          - Translations: dev-guide/translations.md
+          - README: dev-guide/README.md
+
 extra_css:
     - css/extra.css
 
 extra_javascript:
     - javascripts/wiki.js
+
+hooks:
+    - hooks/nav.py
+
 markdown_extensions:
   - toc:
       permalink: true
@@ -147,6 +151,7 @@ markdown_extensions:
       user: ilikui
       repo: wiki
   - mkdocs-click
+
 plugins:
   - search
   - rss:
@@ -180,28 +185,5 @@ plugins:
       theme_folder: "include/themes"
       theme_light: "light.puml"
       theme_dark: "dark.puml"
-#   - markmap:
-#       base_path: docs
-#       encoding: utf-8
-#       file_extension: .mm.md
-#       d3_version: 6.7.0
-#       lib_version: 0.14.1
-#       view_version: 0.14.0 
 
-copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank></a>.
-
-  
-
-# copyright: Copyright &copy; 2014 <a href="https://twitter.com/starletdreaming">Tom Christie</a>, Maintained by the <a href="/about/release-notes/#maintenance-team">MkDocs Team</a>.  
- 
- #<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/legalcode" target="_blank">协议</a>
-
-
-
-
-
-
-
-
-
-           
+copyright: Copyright &copy; 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank"></a>.
