@@ -1,19 +1,20 @@
 # 全站知识图谱
 
-探索 Wiki 文档之间的连接。拖动节点调整布局，滚轮缩放，拖动空白区域平移；点击节点打开对应文档。
+以关系网络浏览 Wiki 文档之间的连接。拖动节点调整布局，拖动空白区域平移，滚轮缩放；点击节点打开对应文档。
 
-<div class="knowledge-graph-app">
+<div class="kg-app">
   <div class="kg-toolbar">
     <input id="kg-search" type="search" placeholder="搜索文章标题或路径…" aria-label="搜索知识图谱">
     <button id="kg-reset" type="button">重置视图</button>
     <button id="kg-labels" type="button" aria-pressed="true">隐藏标签</button>
   </div>
   <div class="kg-stats" id="kg-stats">正在加载知识图谱…</div>
-  <div class="kg-canvas-wrap">
+  <div class="kg-stage">
     <canvas id="kg-canvas" aria-label="可交互知识图谱"></canvas>
+    <div class="kg-legend" id="kg-legend"></div>
     <div class="kg-tooltip" id="kg-tooltip" hidden></div>
   </div>
-  <p class="kg-hint">操作提示：拖动节点可调整布局 · 拖动背景可平移 · 滚轮缩放 · 点击节点阅读文档</p>
+  <p class="kg-hint">操作提示：拖动节点调整布局 · 拖动背景平移 · 滚轮缩放 · 点击节点阅读文档 · 悬停图例可高亮分组</p>
   <noscript>知识图谱需要启用 JavaScript。你仍可通过左侧导航浏览所有文档。</noscript>
 </div>
 
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     box.innerHTML = "";
     const list = document.createElement("div");
     list.className = "kg-index-grid";
-    graph.nodes.sort((a, b) => a.title.localeCompare(b.title, "zh-CN")).forEach(node => {
+    graph.nodes.slice().sort((a, b) => a.title.localeCompare(b.title, "zh-CN")).forEach(node => {
       const link = document.createElement("a");
       link.href = node.url;
       link.textContent = node.title;
@@ -50,4 +51,4 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 ---
 
-*本页面由 scripts/generate_knowledge_graph.py 自动生成，请勿手动编辑。*
+*本页面由 scripts/generate_knowledge_graph.py 自动生成，请勿手动编辑。当前共 57 篇文档、53 条关联。*

@@ -1,141 +1,287 @@
 (() => {
   "use strict";
+  /* 知识图谱 — 分组聚类力导向布局（参考 read.pmthinking.com/graph 的渲染方式）
+     每个分组围成一个圆心，成员按黄金角散布；力导向模拟带距离截断，节点多也流畅 */
   const canvas = document.getElementById("kg-canvas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const wrap = canvas.parentElement;
+  const stage = canvas.parentElement;
   const stats = document.getElementById("kg-stats");
   const search = document.getElementById("kg-search");
-  const reset = document.getElementById("kg-reset");
-  const labelsButton = document.getElementById("kg-labels");
+  const resetBtn = document.getElementById("kg-reset");
+  const labelsBtn = document.getElementById("kg-labels");
+  const legendBox = document.getElementById("kg-legend");
   const tooltip = document.getElementById("kg-tooltip");
-  const state = { scale: 1, panX: 0, panY: 0, showLabels: true, nodes: [], links: [], width: 0, height: 0, drag: null, hover: null, query: "" };
-  let animationFrame = 0;
-  const palette = ["#8e4ec6", "#3182ce", "#0d9488", "#d97706", "#db2777", "#64748b", "#4f46e5"];
-  const groupColor = group => palette[Math.abs(hash(group)) % palette.length];
-  function hash(s) { let h = 0; for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0; return h; }
+
+  /* 暖黑舞台上的低饱和配色（与参考站同族） */
+  const PALETTE = ["#8e6fd8", "#aae2f0", "#d9a851", "#c76f5a", "#66a68d", "#b585ad", "#8d96e0", "#c9b06a", "#5fa3b8", "#c98a7a", "#8fae6f", "#b56a6a", "#9a8fae", "#7fb8a8"];
+  const BG = "#15161d";
+  const CREAM = "rgba(231, 233, 242, ";
+  const colorOf = g => PALETTE[g % PALETTE.length];
+
+  const state = {
+    nodes: [], links: [], groups: [], legend: [],
+    scale: 1, panX: 0, panY: 0,
+    width: 0, height: 0,
+    drag: null, hover: null, hoverGroup: -1, query: "",
+    showLabels: true, alpha: 1, frame: 0,
+  };
+  let raf = 0;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+
   function resize() {
-    const rect = wrap.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
-    state.width = Math.max(300, rect.width); state.height = Math.max(440, Math.min(760, window.innerHeight * .72));
-    canvas.width = state.width * dpr; canvas.height = state.height * dpr;
+    const rect = stage.getBoundingClientRect();
+    state.width = Math.max(300, rect.width);
+    state.height = Math.max(420, Math.min(760, window.innerHeight * .68));
+    canvas.width = state.width * DPR; canvas.height = state.height * DPR;
     canvas.style.width = state.width + "px"; canvas.style.height = state.height + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); draw();
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
   }
-  function screen(node) { return { x: node.x * state.scale + state.panX, y: node.y * state.scale + state.panY }; }
-  function world(point) { return { x: (point.x - state.panX) / state.scale, y: (point.y - state.panY) / state.scale }; }
-  function point(e) { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+
+  /* ---- 初始布局：各分组围成椭圆，成员在组中心附近按黄金角散布 ---- */
+  function seed() {
+    const R = Math.max(state.width, 900) * .42;
+    const centers = state.groups.map((_, gi) => {
+      const a = (gi / state.groups.length) * Math.PI * 2 - Math.PI / 2;
+      return { x: Math.cos(a) * R, y: Math.sin(a) * R * .72 };
+    });
+    const perGroup = new Map();
+    state.nodes.forEach((n, i) => {
+      const k = perGroup.get(n.g) || 0;
+      perGroup.set(n.g, k + 1);
+      const a = (i * 2.399963) % (Math.PI * 2);
+      const r = 26 + (k % 55) * 2.2;
+      n.x = centers[n.g].x + Math.cos(a) * r;
+      n.y = centers[n.g].y + Math.sin(a) * r;
+      n.vx = 0; n.vy = 0; n.fixed = false;
+      n.r = 3 + Math.sqrt(n.degree || 0) * 1.6;
+      n.c = centers[n.g];
+    });
+  }
+
+  /* ---- 力导向模拟（O(n·近邻)，带距离截断） ---- */
+  function tick() {
+    const alpha = state.alpha;
+    const nodes = state.nodes;
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        let dx = a.x - b.x, dy = a.y - b.y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 > 32000) continue;
+        if (d2 < 1) { d2 = 1; dx = 1; }
+        const f = (900 * alpha) / d2;
+        const fx = dx * f, fy = dy * f;
+        a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+      }
+    }
+    for (const [a, b] of state.links) {
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      const f = ((dist - 74) / dist) * .03 * alpha;
+      const fx = dx * f, fy = dy * f;
+      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+    }
+    for (const n of nodes) {
+      n.vx += (n.c.x - n.x) * .012 * alpha + (0 - n.x) * .002 * alpha;
+      n.vy += (n.c.y - n.y) * .012 * alpha + (0 - n.y) * .002 * alpha;
+      if (n.fixed) { n.vx = 0; n.vy = 0; continue; }
+      n.vx *= .82; n.vy *= .82;
+      n.x += n.vx; n.y += n.vy;
+    }
+    state.alpha *= .985;
+    if (++state.frame === 150) fitView();   // 布局稳定后自动取景
+  }
+
+  /* ---- 视图变换与取景 ---- */
+  function fitView() {
+    if (!state.nodes.length) return;
+    let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    for (const n of state.nodes) {
+      minX = Math.min(minX, n.x); maxX = Math.max(maxX, n.x);
+      minY = Math.min(minY, n.y); maxY = Math.max(maxY, n.y);
+    }
+    const k = Math.min(state.width / (maxX - minX + 170), state.height / (maxY - minY + 170), 1.7);
+    state.scale = k;
+    state.panX = state.width / 2 - ((minX + maxX) / 2) * k;
+    state.panY = state.height / 2 - ((minY + maxY) / 2) * k;
+  }
+  const screenOf = n => ({ x: n.x * state.scale + state.panX, y: n.y * state.scale + state.panY });
+  const worldOf = p => ({ x: (p.x - state.panX) / state.scale, y: (p.y - state.panY) / state.scale });
+  const pointOf = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+
+  /* ---- 匹配 / 邻接 / 高亮判定 ---- */
+  const matches = n => !state.query || (n.title + " " + n.path + " " + state.groups[n.g]).toLowerCase().includes(state.query);
+  const neighborsOf = n => {
+    if (!n._nb) {
+      n._nb = new Set();
+      for (const [a, b] of state.links) {
+        if (a === n) n._nb.add(b);
+        else if (b === n) n._nb.add(a);
+      }
+    }
+    return n._nb;
+  };
+  function dim(n) {
+    if (state.query && !matches(n)) return true;
+    if (state.hoverGroup >= 0 && n.g !== state.hoverGroup) return true;
+    if (state.hover && n !== state.hover && !neighborsOf(state.hover).has(n)) return true;
+    return false;
+  }
+  const labelSet = new Set();
+  function computeLabels() {
+    labelSet.clear();
+    const sorted = [...state.nodes].sort((a, b) => b.degree - a.degree);
+    for (const n of sorted) { if (n.degree >= 3 && labelSet.size < 26) labelSet.add(n); }
+  }
+
+  /* ---- 绘制 ---- */
+  function draw() {
+    ctx.clearRect(0, 0, state.width, state.height);
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, state.width, state.height);
+
+    /* 连线 */
+    for (const [a, b] of state.links) {
+      const dimmed = dim(a) || dim(b);
+      const hot = state.hover && (a === state.hover || b === state.hover);
+      const p = screenOf(a), q = screenOf(b);
+      ctx.strokeStyle = hot ? CREAM + ".5)" : CREAM + (dimmed ? ".04)" : ".13)");
+      ctx.lineWidth = hot ? 1.2 : .8;
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+    }
+    /* 节点与标签 */
+    for (const n of state.nodes) {
+      const p = screenOf(n), r = n.r * (state.hover === n ? 1.45 : 1) * state.scale ** .35;
+      ctx.globalAlpha = dim(n) ? .18 : 1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(1.5, r), 0, Math.PI * 2);
+      ctx.fillStyle = colorOf(n.g); ctx.fill();
+      if (state.hover === n) {
+        ctx.strokeStyle = "rgba(231,233,242,.9)"; ctx.lineWidth = 1.6; ctx.stroke();
+      }
+      const showLabel = state.showLabels && (labelSet.has(n) || state.hover === n || matches(n) && !!state.query);
+      if (showLabel && !dim(n)) {
+        const hovered = state.hover === n;
+        ctx.font = (hovered ? "600 12px" : "11px") + " -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif";
+        ctx.textAlign = "left"; ctx.textBaseline = "middle";
+        ctx.fillStyle = CREAM + (hovered ? ".95)" : ".62)");
+        const label = n.title.length > 22 ? n.title.slice(0, 21) + "…" : n.title;
+        ctx.fillText(label, p.x + r + 5, p.y);
+      }
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function frame() {
+    tick();
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
+
+  /* ---- 交互 ---- */
   function hitTest(p) {
     for (let i = state.nodes.length - 1; i >= 0; i--) {
-      const n = state.nodes[i], s = screen(n), radius = nodeRadius(n) * state.scale + 5;
+      const n = state.nodes[i], s = screenOf(n);
+      const radius = n.r * state.scale + 6;
       if ((s.x - p.x) ** 2 + (s.y - p.y) ** 2 <= radius ** 2) return n;
     }
     return null;
   }
-  function nodeRadius(n) { return Math.max(4, Math.min(13, 4 + Math.sqrt(n.degree || 0) * 1.4)); }
-  function visible(n) { return !state.query || (n.title + " " + n.path + " " + n.group).toLowerCase().includes(state.query); }
-  function draw() {
-    if (!ctx || !state.width) return;
-    ctx.clearRect(0, 0, state.width, state.height);
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--md-default-bg-color").trim() || "#fff";
-    ctx.fillRect(0, 0, state.width, state.height);
-    const active = state.nodes.filter(visible);
-    const activeIds = new Set(active.map(n => n.id));
-    ctx.lineWidth = .8;
-    for (const edge of state.links) {
-      const a = edge.sourceNode, b = edge.targetNode;
-      if (!a || !b || (!activeIds.has(a.id) && !activeIds.has(b.id))) continue;
-      const p = screen(a), q = screen(b);
-      ctx.strokeStyle = activeIds.has(a.id) && activeIds.has(b.id) ? "rgba(142,78,198,.22)" : "rgba(150,150,160,.07)";
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-    }
-    for (const n of state.nodes) {
-      if (!visible(n)) continue;
-      const p = screen(n), r = nodeRadius(n) * (state.hover === n ? 1.45 : 1);
-      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.fillStyle = groupColor(n.group); ctx.fill();
-      if (state.hover === n) { ctx.strokeStyle = "#fff"; ctx.lineWidth = 2; ctx.stroke(); }
-      if (state.showLabels || state.hover === n) {
-        ctx.font = (state.hover === n ? "600 12px" : "11px") + " system-ui, sans-serif";
-        ctx.textAlign = "left"; ctx.textBaseline = "middle";
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--md-typeset-color").trim() || "#333";
-        const label = n.title.length > 24 ? n.title.slice(0, 23) + "…" : n.title;
-        ctx.fillText(label, p.x + r + 4, p.y);
-      }
-    }
-  }
-  function tick() {
-    const nodes = state.nodes;
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      if (a.fixed) continue;
-      let fx = 0, fy = 0;
-      for (let j = 0; j < nodes.length; j++) {
-        if (i === j) continue;
-        const b = nodes[j], dx = a.x - b.x, dy = a.y - b.y;
-        const d2 = Math.max(80, dx * dx + dy * dy), force = 1600 / d2;
-        fx += dx * force; fy += dy * force;
-      }
-      for (const edge of a.edges) {
-        const b = edge.other, dx = b.x - a.x, dy = b.y - a.y, d = Math.max(1, Math.hypot(dx, dy));
-        const force = (d - 90) * .0018;
-        fx += dx * force; fy += dy * force;
-      }
-      const cx = state.width / 2, cy = state.height / 2;
-      fx += (cx - a.x) * .0004; fy += (cy - a.y) * .0004;
-      a.vx = (a.vx + fx) * .86; a.vy = (a.vy + fy) * .86;
-      a.x += Math.max(-4, Math.min(4, a.vx)); a.y += Math.max(-4, Math.min(4, a.vy));
-    }
-    draw();
-    animationFrame = requestAnimationFrame(tick);
-  }
-  function showTooltip(n, p) {
+  function showTip(n, p) {
     if (!n) { tooltip.hidden = true; return; }
-    tooltip.hidden = false; tooltip.textContent = n.title + " · " + n.path + " · " + n.degree + " 条关联";
-    tooltip.style.left = Math.min(p.x + 14, state.width - 260) + "px";
+    tooltip.hidden = false;
+    tooltip.innerHTML = "";
+    const t = document.createElement("strong"); t.textContent = n.title;
+    const meta = document.createElement("span");
+    meta.textContent = state.groups[n.g] + " · " + n.degree + " 条关联";
+    tooltip.append(t, meta);
+    tooltip.style.left = Math.min(p.x + 14, state.width - 240) + "px";
     tooltip.style.top = Math.max(8, p.y + 14) + "px";
   }
-  fetch("../knowledge-graph.json").then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).then(data => {
-    state.nodes = data.nodes.map((n, i) => ({ ...n, x: state.width / 2 + Math.cos(i * 2.399) * (30 + Math.sqrt(i) * 9), y: state.height / 2 + Math.sin(i * 2.399) * (30 + Math.sqrt(i) * 9), vx: 0, vy: 0, edges: [] }));
-    const byId = new Map(state.nodes.map(n => [n.id, n]));
-    state.links = data.links.map(e => ({ sourceNode: byId.get(e.source), targetNode: byId.get(e.target) })).filter(e => e.sourceNode && e.targetNode);
-    for (const e of state.links) { e.sourceNode.edges.push({ other: e.targetNode }); e.targetNode.edges.push({ other: e.sourceNode }); }
-    stats.textContent = state.nodes.length + " 篇文档 · " + state.links.length + " 条关联";
-    resize();
-    cancelAnimationFrame(animationFrame); animationFrame = requestAnimationFrame(tick);
-  }).catch(() => { stats.textContent = "图谱数据加载失败，请刷新页面后重试。"; });
+
   canvas.addEventListener("pointerdown", e => {
-    const p = point(e), n = hitTest(p);
+    const p = pointOf(e), n = hitTest(p);
     state.drag = { start: p, last: p, node: n, moved: false };
     if (n) { n.fixed = true; canvas.style.cursor = "grabbing"; }
     canvas.setPointerCapture(e.pointerId);
   });
   canvas.addEventListener("pointermove", e => {
-    const p = point(e);
+    const p = pointOf(e);
     if (state.drag) {
       const d = state.drag, dx = p.x - d.last.x, dy = p.y - d.last.y;
       if (Math.hypot(p.x - d.start.x, p.y - d.start.y) > 4) d.moved = true;
-      if (d.node) { const w = world(p); d.node.x = w.x; d.node.y = w.y; d.node.vx = d.node.vy = 0; }
+      if (d.node) { const w = worldOf(p); d.node.x = w.x; d.node.y = w.y; d.node.vx = d.node.vy = 0; }
       else { state.panX += dx; state.panY += dy; }
-      d.last = p; draw(); return;
+      d.last = p; return;
     }
-    state.hover = hitTest(p); canvas.style.cursor = state.hover ? "pointer" : "grab";
-    showTooltip(state.hover, p); draw();
+    state.hover = hitTest(p);
+    canvas.style.cursor = state.hover ? "pointer" : "grab";
+    showTip(state.hover, p);
   });
   canvas.addEventListener("pointerup", e => {
     if (!state.drag) return;
-    const d = state.drag, p = point(e); state.drag = null; canvas.style.cursor = "grab";
-    if (d.node) { d.node.fixed = false; if (!d.moved) window.location.href = d.node.url; }
-    showTooltip(null, p); draw();
+    const d = state.drag, p = pointOf(e);
+    state.drag = null; canvas.style.cursor = "grab";
+    if (d.node) {
+      d.node.fixed = false;
+      if (!d.moved) window.location.href = d.node.url;
+    }
+    showTip(null, p);
   });
   canvas.addEventListener("pointercancel", () => { state.drag = null; });
   canvas.addEventListener("wheel", e => {
-    e.preventDefault(); const p = point(e), before = world(p);
-    state.scale = Math.max(.3, Math.min(3.5, state.scale * (e.deltaY < 0 ? 1.1 : .9)));
-    state.panX = p.x - before.x * state.scale; state.panY = p.y - before.y * state.scale; draw();
+    e.preventDefault();
+    const p = pointOf(e), before = worldOf(p);
+    state.scale = Math.max(.25, Math.min(4, state.scale * (e.deltaY < 0 ? 1.1 : .9)));
+    state.panX = p.x - before.x * state.scale;
+    state.panY = p.y - before.y * state.scale;
   }, { passive: false });
-  search.addEventListener("input", () => { state.query = search.value.trim().toLowerCase(); draw(); });
-  reset.addEventListener("click", () => { state.scale = 1; state.panX = state.panY = 0; draw(); });
-  labelsButton.addEventListener("click", () => { state.showLabels = !state.showLabels; labelsButton.textContent = state.showLabels ? "隐藏标签" : "显示标签"; labelsButton.setAttribute("aria-pressed", String(state.showLabels)); draw(); });
-  window.addEventListener("resize", resize);
+
+  search.addEventListener("input", () => { state.query = search.value.trim().toLowerCase(); });
+  resetBtn.addEventListener("click", () => { state.alpha = Math.max(state.alpha, .35); fitView(); });
+  labelsBtn.addEventListener("click", () => {
+    state.showLabels = !state.showLabels;
+    labelsBtn.textContent = state.showLabels ? "隐藏标签" : "显示标签";
+    labelsBtn.setAttribute("aria-pressed", String(state.showLabels));
+  });
+  window.addEventListener("resize", () => { resize(); });
+
+  /* ---- 图例：悬停高亮分组 ---- */
+  function buildLegend() {
+    legendBox.innerHTML = "";
+    const counts = new Map();
+    for (const n of state.nodes) counts.set(n.g, (counts.get(n.g) || 0) + 1);
+    state.groups.forEach((name, gi) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "kg-legend-chip";
+      chip.innerHTML = '<i style="background:' + colorOf(gi) + '"></i>' + name + " · " + (counts.get(gi) || 0);
+      chip.addEventListener("mouseenter", () => { state.hoverGroup = gi; });
+      chip.addEventListener("mouseleave", () => { state.hoverGroup = -1; });
+      legendBox.appendChild(chip);
+    });
+  }
+
+  /* ---- 加载数据 ---- */
+  fetch("../knowledge-graph.json")
+    .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(data => {
+      state.groups = data.groups || [];
+      state.nodes = data.nodes.map((n, i) => ({ ...n, g: n.g ?? 0, _nb: null }));
+      const byIndex = state.nodes;
+      state.links = (data.links || []).map(pair => {
+        const a = byIndex[pair[0]], b = byIndex[pair[1]];
+        return a && b ? [a, b] : null;
+      }).filter(Boolean);
+      stats.textContent = state.nodes.length + " 篇 · " + state.links.length + " 条关联";
+      buildLegend();
+      resize();
+      seed();
+      computeLabels();
+      fitView();
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(frame);
+    })
+    .catch(() => { stats.textContent = "图谱数据加载失败，请刷新页面后重试。"; });
 })();

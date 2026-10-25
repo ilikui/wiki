@@ -1,8 +1,9 @@
-# 欢迎来到知识 Wiki
+<div class="wiki-hero">
+  <h1>欢迎来到知识 Wiki</h1>
+  <p>这里是你的个人知识支持中心：以问题驱动学习，以专题组织内容，把技术文档、阅读笔记与实践经验连接成可持续生长的知识网络。</p>
+</div>
 
-这里是你的个人知识支持中心：以问题驱动学习，以专题组织内容，把技术文档、阅读笔记与实践经验连接成可持续生长的知识网络。
-
-## 从这里开始
+<div class="wiki-section-title">从这里开始</div>
 
 <div class="wiki-card-grid wiki-start-grid">
   <a class="wiki-feature-card" href="types/">
@@ -23,7 +24,7 @@
   </a>
 </div>
 
-## 浏览全部知识
+<div class="wiki-section-title">浏览全部知识</div>
 
 <div class="wiki-link-grid">
   <section class="wiki-link-card"><h3>编程与工程</h3><ul>
