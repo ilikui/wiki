@@ -547,8 +547,12 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
 
 /* 分组图例 */
 .kg-legend {
-  position: absolute; left: 12px; bottom: 12px; z-index: 2;
-  display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 24px);
+  /* 图例放在画布下方，避免遮挡节点、连线和点击区域 */
+  position: relative; left: auto; bottom: auto; z-index: 2;
+  display: flex; flex-wrap: wrap; gap: 6px;
+  max-width: none; padding: 12px 14px;
+  border-top: 1px solid rgba(231, 233, 242, .1);
+  background: #15161d;
 }
 .kg-legend-chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -598,7 +602,7 @@ body:has(.kg-app) .md-main__inner {
 }
 body:has(.kg-app) .kg-app { margin-top: 1rem; }
 body:has(.kg-app) .kg-stage {
-  min-height: min(72vh, 820px);
+  min-height: 0;
   border-radius: 20px;
 }
 body:has(.kg-app) .kg-stage canvas {
