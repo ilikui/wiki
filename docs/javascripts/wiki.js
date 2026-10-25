@@ -63,6 +63,8 @@
     const h1 = inner && inner.querySelector("h1");
     if (!inner || !h1 || inner.querySelector(".wk-crumbs")) return;
     if (document.body.classList.contains("wiki-home")) return;
+    // 新版 Material 自带面包屑（navigation.path），有则不再重复生成
+    if (inner.querySelector(".md-path") || document.querySelector(".md-path")) return;
 
     const segs = location.pathname.split("/").filter(Boolean).map(decodeURIComponent);
     if (segs.length < 2) return;
