@@ -42,8 +42,8 @@ jobs:
 
       - name: Verify generated knowledge graph page
         run: |
-          test -s site/knowledge-graph/index.html || test -s site/knowledge-graph.html
-          echo "Knowledge graph page generated successfully."
+          test -s site/graph/index.html
+          echo "Standalone knowledge graph page generated successfully: site/graph/index.html"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
