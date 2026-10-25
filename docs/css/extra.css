@@ -378,3 +378,46 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
   }
   .wiki-portal-layout .md-footer { margin-left: 0 !important; }
 }
+
+/* Typography: LXGW WenKai for all reading content, monospace for code */
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai&display=swap');
+:root {
+  --md-text-font: "LXGW WenKai", "霞鹜文楷", "KaiTi", "STKaiti", serif;
+  --md-code-font: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
+}
+html, body, button, input, textarea, select,
+.md-typeset, .md-header, .md-tabs, .md-nav,
+.wiki-sidebar, .md-search, .md-footer {
+  font-family: "LXGW WenKai", "霞鹜文楷", "KaiTi", "STKaiti", serif !important;
+}
+code, pre, kbd, samp, .highlight, .md-typeset code,
+.md-typeset pre, .md-typeset pre code {
+  font-family: "JetBrains Mono", "Cascadia Code", "Consolas", monospace !important;
+}
+
+/* Markdown rendering polish: tables, quotes, task lists and fenced diagrams */
+.md-typeset table:not([class]) {
+  display: table;
+  width: 100%;
+  border: 1px solid var(--wiki-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.md-typeset blockquote {
+  border-left-color: var(--wiki-primary);
+  background: var(--wiki-primary-soft);
+  padding: .7rem 1rem;
+  border-radius: 0 8px 8px 0;
+}
+.md-typeset mark {
+  background: rgba(255, 220, 100, .42);
+  padding: 0 .15em;
+  border-radius: 3px;
+}
+.md-typeset .task-list-item {
+  list-style: none;
+}
+.md-typeset .task-list-control {
+  margin-right: .45rem;
+}
+
