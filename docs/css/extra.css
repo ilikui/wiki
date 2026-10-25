@@ -1,16 +1,16 @@
 /* ==========================================================================
    知识 Wiki — 设计系统 v2（GitBook 风格骨架 + 精修视觉）
    骨架：通栏页头 64px / 左侧固定目录 264px / 居中 portal 框架 / 右侧页内目录
-   主色：#8E4EC6 · 字体：霞鹜文楷（正文）+ JetBrains Mono（代码）
+   主色：青绿 / 蓝 · 字体：Noto Sans SC（正文）+ JetBrains Mono（代码）
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    1. 设计令牌
    -------------------------------------------------------------------------- */
 :root {
-  --wiki-primary: #8e4ec6;
-  --wiki-primary-strong: #7a3fb0;
-  --wiki-primary-soft: rgba(142, 78, 198, .08);
+  --wiki-primary: #0f8b8d;
+  --wiki-primary-strong: #087f83;
+  --wiki-primary-soft: rgba(15, 139, 141, .09);
   --wiki-ink: #241f2e;
   --wiki-muted: #6b6577;
   --wiki-faint: #a39dae;
@@ -18,7 +18,7 @@
   --wiki-border-strong: #ddd9e6;
   --wiki-soft: #f7f6fa;
   --wiki-card-shadow: 0 1px 2px rgba(36, 31, 46, .04), 0 8px 24px -12px rgba(36, 31, 46, .12);
-  --wiki-card-shadow-hover: 0 2px 4px rgba(36, 31, 46, .05), 0 16px 36px -12px rgba(142, 78, 198, .22);
+  --wiki-card-shadow-hover: 0 2px 4px rgba(36, 31, 46, .05), 0 16px 36px -12px rgba(15, 139, 141, .20);
   --wiki-header-h: 64px;
   --wiki-sidebar-w: 264px;
   --wiki-frame-w: 1440px;
@@ -33,9 +33,9 @@
   --md-default-bg-color: #fefefe;
 }
 [data-md-color-scheme="slate"] {
-  --wiki-primary: #b18ae4;
-  --wiki-primary-strong: #c7a8ef;
-  --wiki-primary-soft: rgba(177, 138, 228, .13);
+  --wiki-primary: #70d4d0;
+  --wiki-primary-strong: #a3e5e2;
+  --wiki-primary-soft: rgba(112, 212, 208, .14);
   --wiki-ink: #f0edf6;
   --wiki-muted: #a8a2b4;
   --wiki-faint: #7d7789;
@@ -43,22 +43,22 @@
   --wiki-border-strong: rgba(236, 234, 240, .22);
   --wiki-soft: #26232f;
   --wiki-card-shadow: 0 1px 2px rgba(0, 0, 0, .2), 0 8px 24px -12px rgba(0, 0, 0, .5);
-  --wiki-card-shadow-hover: 0 2px 4px rgba(0, 0, 0, .25), 0 16px 36px -12px rgba(177, 138, 228, .28);
+  --wiki-card-shadow-hover: 0 2px 4px rgba(0, 0, 0, .25), 0 16px 36px -12px rgba(112, 212, 208, .24);
   --md-primary-fg-color: var(--wiki-primary);
   --md-accent-fg-color: var(--wiki-primary);
   --md-typeset-a-color: var(--wiki-primary);
 }
 
-/* 字体：霞鹜文楷阅读字体 + 等宽代码字体 */
-@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai&display=swap');
+/* 字体：现代无衬线中文正文 + 清晰等宽代码字体 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 :root {
-  --md-text-font: "LXGW WenKai", "霞鹜文楷", "KaiTi", "STKaiti", serif;
+  --md-text-font: "Inter", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --md-code-font: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
 }
 html, body, button, input, textarea, select,
 .md-typeset, .md-header, .md-tabs, .md-nav,
 .wiki-sidebar, .md-search, .md-footer {
-  font-family: "LXGW WenKai", "霞鹜文楷", "KaiTi", "STKaiti", serif !important;
+  font-family: "Inter", "Noto Sans SC", "Microsoft YaHei", sans-serif !important;
 }
 code, pre, kbd, samp, .highlight, .md-typeset code,
 .md-typeset pre, .md-typeset pre code {
