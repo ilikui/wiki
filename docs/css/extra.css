@@ -92,8 +92,8 @@ html { scroll-behavior: smooth; }
 /* Material 的 [dir=ltr] ... ~ .md-content > .md-content__inner 规则特异性更高，
    会压掉 margin auto，这里用 !important 保证内容列在侧栏与页内目录之间居中 */
 .md-content > .md-content__inner {
-  max-width: 800px; margin-left: auto !important; margin-right: auto !important;
-  padding: 40px 36px 56px;
+  max-width: 980px; width: 100%; margin-left: auto !important; margin-right: auto !important;
+  padding: 40px 36px 56px; box-sizing: border-box;
 }
 
 @media (min-width: 1200px) {
@@ -305,4 +305,21 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
   .md-typeset .wiki-card-grid, .md-typeset .wiki-link-grid { grid-template-columns: 1fr; }
   .md-typeset .wiki-card-art { height: 110px; }
   .md-typeset .wiki-card-content p { min-height: 0; }
+}
+
+/* Restore the prior balanced desktop proportions: sidebar + wide article + optional TOC */
+@media (min-width: 1200px) {
+  .md-grid { max-width: none !important; }
+  .md-main__inner {
+    width: auto !important; max-width: none !important;
+    margin-left: var(--wiki-sidebar-w) !important; margin-right: 0 !important;
+  }
+  .md-content { flex: 1 1 auto !important; min-width: 0 !important; }
+  .md-content > .md-content__inner {
+    max-width: 980px !important; width: 100% !important;
+    padding-left: 40px !important; padding-right: 40px !important;
+  }
+  .md-sidebar--secondary:not([hidden]) {
+    flex: 0 0 190px !important; width: 190px !important; min-width: 190px !important;
+  }
 }
