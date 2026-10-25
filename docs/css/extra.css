@@ -58,29 +58,30 @@ html { scroll-behavior: smooth; }
 .md-header__source, .md-header__link { color: var(--wiki-muted); }
 .md-header__source:hover, .md-header__link:hover { color: var(--wiki-primary); }
 
-/* GitBook 风格内联搜索胶囊 */
-.md-search { margin-left: auto; }
-.md-search__form {
-  background: var(--wiki-soft);
-  border: 1px solid transparent;
-  border-radius: 10px;
-  min-height: 40px;
-  box-shadow: none;
-  color: var(--wiki-muted);
-  width: min(420px, 34vw);
-  transition: border-color .15s ease, background-color .15s ease;
-}
-.md-search__form:hover, .md-search__form:focus-within {
-  background: var(--wiki-soft);
-  border-color: color-mix(in srgb, var(--wiki-primary) 35%, var(--wiki-border));
-  box-shadow: none;
-}
-.md-search__icon { color: var(--wiki-muted); }
-.md-search__input { font-size: .8rem; color: var(--wiki-ink); }
-.md-search__input::placeholder { color: var(--wiki-muted); }
-.md-search__form kbd {
-  background: transparent; border: 1px solid var(--wiki-border);
-  border-radius: 6px; color: var(--wiki-muted); font-size: .62rem; box-shadow: none;
+/* GitBook 风格内联搜索胶囊（仅桌面端内联表单；移动端弹窗保持 Material 默认） */
+@media (min-width: 960px) {
+  .md-search__form {
+    background: var(--wiki-soft);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    min-height: 40px;
+    box-shadow: none;
+    color: var(--wiki-muted);
+    width: min(420px, 34vw);
+    transition: border-color .15s ease, background-color .15s ease;
+  }
+  .md-search__form:hover, .md-search__form:focus-within {
+    background: var(--wiki-soft);
+    border-color: color-mix(in srgb, var(--wiki-primary) 35%, var(--wiki-border));
+    box-shadow: none;
+  }
+  .md-search__icon { color: var(--wiki-muted); }
+  .md-search__input { font-size: .8rem; color: var(--wiki-ink); }
+  .md-search__input::placeholder { color: var(--wiki-muted); }
+  .md-search__form kbd {
+    background: transparent; border: 1px solid var(--wiki-border);
+    border-radius: 6px; color: var(--wiki-muted); font-size: .62rem; box-shadow: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -88,7 +89,12 @@ html { scroll-behavior: smooth; }
    -------------------------------------------------------------------------- */
 .md-main { background: var(--md-default-bg-color); }
 .md-content { margin: 0; max-width: none; min-width: 0; }
-.md-content__inner { max-width: 880px; margin: 0 auto; padding: 40px 36px 56px; }
+/* Material 的 [dir=ltr] ... ~ .md-content > .md-content__inner 规则特异性更高，
+   会压掉 margin auto，这里用 !important 保证内容列在侧栏与页内目录之间居中 */
+.md-content > .md-content__inner {
+  max-width: 800px; margin-left: auto !important; margin-right: auto !important;
+  padding: 40px 36px 56px;
+}
 
 @media (min-width: 1200px) {
   .md-sidebar--primary { display: none !important; } /* 由自定义目录接管 */
@@ -102,9 +108,9 @@ html { scroll-behavior: smooth; }
   .md-content__inner { padding: 24px 16px 48px; }
 }
 
-/* 宽屏右侧页内目录（GitBook “On this page”） */
-@media (min-width: 1400px) {
-  .md-sidebar--secondary {
+/* 宽屏右侧页内目录（GitBook “On this page”）：≥1200px 显示，与左侧目录断点一致 */
+@media (min-width: 1200px) {
+  .md-sidebar--secondary:not([hidden]) {
     display: block; position: sticky; top: var(--wiki-header-h);
     width: 210px; min-width: 210px; flex: 0 0 210px;
     height: calc(100vh - var(--wiki-header-h));
@@ -119,8 +125,8 @@ html { scroll-behavior: smooth; }
   .md-sidebar--secondary .md-nav__link:hover { color: var(--wiki-primary); }
   .md-sidebar--secondary .md-nav__link--active { color: var(--wiki-primary); }
 }
-@media (max-width: 1399px) {
-  .md-sidebar--secondary { display: none; }
+@media (max-width: 1199.98px) {
+  .md-sidebar--secondary { display: none !important; }
 }
 
 /* --------------------------------------------------------------------------
@@ -165,7 +171,7 @@ html { scroll-behavior: smooth; }
 /* --------------------------------------------------------------------------
    正文排版：GitBook 尺寸与层次
    -------------------------------------------------------------------------- */
-.md-typeset { font-size: .88rem; line-height: 1.8; }
+.md-typeset { font-size: .9rem; line-height: 1.8; }
 .md-typeset h1 {
   margin: 0 0 1.1rem; font-size: 1.9rem; line-height: 1.25;
   letter-spacing: -.028em; font-weight: 740; color: var(--wiki-ink);
