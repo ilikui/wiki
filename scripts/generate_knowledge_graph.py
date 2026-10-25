@@ -2,6 +2,7 @@
 """Generate a Mermaid knowledge graph from Markdown files under docs/."""
 from __future__ import annotations
 import re
+import hashlib
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -23,7 +24,9 @@ def page_title(path: Path, text: str) -> str:
     return clean_label(match.group(1)) if match else clean_label(path.stem.replace("-", " ").replace("_", " "))
 
 def node_id(path: Path) -> str:
-    return "n_" + re.sub(r"[^a-zA-Z0-9_]", "_", path.as_posix())
+    slug = re.sub(r"[^a-zA-Z0-9_]", "_", path.as_posix()).strip("_") or "page"
+    suffix = hashlib.sha1(path.as_posix().encode("utf-8")).hexdigest()[:10]
+    return f"n_{slug[:48]}_{suffix}"
 
 def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
     target = target.strip().strip("<>").split()[0] if target.strip() else ""
