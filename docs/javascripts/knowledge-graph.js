@@ -1,307 +1,24 @@
 (() => {
   "use strict";
-  /* 知识图谱 — 沉浸式全屏页（完整对齐 read.pmthinking.com/graph 的布局与交互）
-     整页深色 100dvh · HUD 悬浮（标题+统计+分组筛选 chips）· 底部操作提示胶囊
-     布局：每个分组围成一个圆心，成员按黄金角散布；力导向模拟带距离截断 */
-  const canvas = document.getElementById("kg-canvas");
-  if (!canvas) return;
+  /* 知识图谱 — Graphify 风格（vis-network + ForceAtlas2 + 右侧信息栏）
+     数据源：docs/knowledge-graph.json（本地生成，纯链接解析，无 LLM） */
+  if (typeof vis === "undefined") {
+    const el = document.getElementById("stats");
+    if (el) el.textContent = "vis-network 库加载失败";
+    return;
+  }
 
-  const ctx = canvas.getContext("2d");
-  const stage = canvas.parentElement;
-  const stats = document.getElementById("kg-stats");
-  const chipbar = document.getElementById("kg-chipbar");
-  const tooltip = document.getElementById("kg-tooltip");
-
-  /* 暖黑舞台上的低饱和配色（与参考站同族） */
-  const PALETTE = ["#8e6fd8", "#aae2f0", "#d9a851", "#c76f5a", "#66a68d", "#b585ad", "#8d96e0", "#c9b06a", "#5fa3b8", "#c98a7a", "#8fae6f", "#b56a6a", "#9a8fae", "#7fb8a8"];
-  const BG = "#14171e";
-  const CREAM = "rgba(231, 233, 242, ";
+  /* Graphify 社区调色板（exporters/base.py COMMUNITY_COLORS）
+     原第 10 色 #BAB0AC 在深色底上过亮（223 个节点的 CP 组会糊成白盘），改为中灰蓝 */
+  const PALETTE = ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F",
+                   "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#8892A6"];
   const colorOf = g => PALETTE[g % PALETTE.length];
 
-  const state = {
-    nodes: [], links: [], groups: [],
-    scale: 1, panX: 0, panY: 0,
-    width: 0, height: 0,
-    drag: null, hover: null, hoverGroup: -1, activeGroup: -1, query: "",
-    showLabels: true, alpha: 1, frame: 0,
-  };
-  let raf = 0;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const THEME_KEY = "wiki-graph-theme";
+  const themeMQ = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
+  let labelColor = "#ffffff";
 
-  function resize() {
-    const rect = stage.getBoundingClientRect();
-    state.width = Math.max(300, rect.width);
-    state.height = Math.max(360, rect.height);
-    canvas.width = state.width * DPR; canvas.height = state.height * DPR;
-    canvas.style.width = state.width + "px"; canvas.style.height = state.height + "px";
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-
-  /* ---- 初始布局：各分组围成椭圆，成员在组中心附近按黄金角散布 ---- */
-  function seed() {
-    /* 分组越多，椭圆半径越大，避免簇与簇初始重叠 */
-    const R = Math.max(state.width, 900) * .42 * Math.sqrt(Math.max(1, state.groups.length) / 8);
-    const centers = state.groups.map((_, gi) => {
-      const a = (gi / state.groups.length) * Math.PI * 2 - Math.PI / 2;
-      return { x: Math.cos(a) * R, y: Math.sin(a) * R * .72 };
-    });
-    const perGroup = new Map();
-    state.nodes.forEach((n, i) => {
-      const k = perGroup.get(n.g) || 0;
-      perGroup.set(n.g, k + 1);
-      const a = (i * 2.399963) % (Math.PI * 2);
-      /* 半径按 sqrt(k) 增长（面积均匀），避免全部挤在同一圈上 */
-      const r = 20 + Math.sqrt(k) * 16;
-      n.x = centers[n.g].x + Math.cos(a) * r;
-      n.y = centers[n.g].y + Math.sin(a) * r;
-      n.vx = 0; n.vy = 0; n.fixed = false;
-      n.r = 3 + Math.sqrt(n.degree || 0) * 1.6;
-      n.c = centers[n.g];
-    });
-    state.fitted = false;
-  }
-
-  /* ---- 力导向模拟（带距离截断 / 力与速度上限，防数值发散） ---- */
-  const MIN_D2 = 36;    // 最近邻距离平方（6px），避免重合节点产生奇点力
-  const MAX_REP = 8;    // 单次斥力上限
-  const MAX_SPRING = 2; // 单次弹簧力上限
-  const MAX_V = 14;     // 单帧速度上限
-  const LIMIT = 30000;  // 坐标硬边界，越界即归位
-
-  function tick() {
-    const alpha = state.alpha;
-    const nodes = state.nodes;
-    for (let i = 0; i < nodes.length; i++) {
-      const a = nodes[i];
-      for (let j = i + 1; j < nodes.length; j++) {
-        const b = nodes[j];
-        let dx = a.x - b.x, dy = a.y - b.y;
-        let d2 = dx * dx + dy * dy;
-        if (d2 > 32000) continue;
-        if (d2 < MIN_D2) {
-          /* 过近：给一个由下标确定的分离方向，避免 dx=dy=0 造成 1/0 爆炸 */
-          const ang = ((i * 12.9898 + j * 78.233) % 6.2832);
-          dx += Math.cos(ang) * 4; dy += Math.sin(ang) * 4;
-          d2 = dx * dx + dy * dy;
-        }
-        const f = Math.min(MAX_REP, (900 * alpha) / d2);
-        const fx = dx * f, fy = dy * f;
-        a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
-      }
-    }
-    for (const [a, b] of state.links) {
-      const dx = b.x - a.x, dy = b.y - a.y;
-      let dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 1) dist = 1;
-      const f = Math.max(-MAX_SPRING, Math.min(MAX_SPRING, ((dist - 74) / Math.max(dist, 30)) * .03 * alpha));
-      const fx = dx * f, fy = dy * f;
-      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
-    }
-    for (const n of nodes) {
-      n.vx += (n.c.x - n.x) * .012 * alpha + (0 - n.x) * .002 * alpha;
-      n.vy += (n.c.y - n.y) * .012 * alpha + (0 - n.y) * .002 * alpha;
-      if (n.fixed) { n.vx = 0; n.vy = 0; continue; }
-      n.vx *= .82; n.vy *= .82;
-      n.vx = Math.max(-MAX_V, Math.min(MAX_V, n.vx));
-      n.vy = Math.max(-MAX_V, Math.min(MAX_V, n.vy));
-      n.x += n.vx; n.y += n.vy;
-      if (!isFinite(n.x) || !isFinite(n.y) || Math.abs(n.x) > LIMIT || Math.abs(n.y) > LIMIT) {
-        n.x = n.c.x; n.y = n.c.y; n.vx = 0; n.vy = 0;
-      }
-    }
-    state.alpha *= .985;
-  }
-
-  /* ---- 视图变换与取景 ---- */
-  function fitView() {
-    if (!state.nodes.length) return;
-    let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
-    for (const n of state.nodes) {
-      minX = Math.min(minX, n.x); maxX = Math.max(maxX, n.x);
-      minY = Math.min(minY, n.y); maxY = Math.max(maxY, n.y);
-    }
-    const w = maxX - minX, h = maxY - minY;
-    /* 布局异常（坐标发散）时跳过取景，避免把 scale 算成 0 后永远看不清 */
-    if (!isFinite(w) || !isFinite(h) || w > 20000 || h > 20000) return;
-    /* 顶部预留 HUD（标题 + chips）高度，避免节点被筛选栏遮住 */
-    const padTop = 150, padBottom = 46, padSide = 56;
-    const availW = state.width - padSide * 2;
-    const availH = Math.max(200, state.height - padTop - padBottom);
-    const k = Math.min(availW / (w + 120), availH / (h + 120), 1.7);
-    state.scale = Math.max(.08, Math.min(1.7, k));
-    state.panX = state.width / 2 - ((minX + maxX) / 2) * state.scale;
-    state.panY = padTop + availH / 2 - ((minY + maxY) / 2) * state.scale;
-  }
-  const screenOf = n => ({ x: n.x * state.scale + state.panX, y: n.y * state.scale + state.panY });
-  const worldOf = p => ({ x: (p.x - state.panX) / state.scale, y: (p.y - state.panY) / state.scale });
-  const pointOf = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
-
-  /* ---- 高亮判定 ---- */
-  const neighborsOf = n => {
-    if (!n._nb) {
-      n._nb = new Set();
-      for (const [a, b] of state.links) {
-        if (a === n) n._nb.add(b);
-        else if (b === n) n._nb.add(a);
-      }
-    }
-    return n._nb;
-  };
-  function dim(n) {
-    if (state.activeGroup >= 0 && n.g !== state.activeGroup) return true;
-    if (state.hoverGroup >= 0 && n.g !== state.hoverGroup) return true;
-    if (state.hover && n !== state.hover && !neighborsOf(state.hover).has(n)) return true;
-    return false;
-  }
-  const labelSet = new Set();
-  function computeLabels() {
-    labelSet.clear();
-    const sorted = [...state.nodes].sort((a, b) => b.degree - a.degree);
-    for (const n of sorted) { if (n.degree >= 3 && labelSet.size < 36) labelSet.add(n); }
-  }
-
-  /* ---- 绘制 ---- */
-  function draw() {
-    ctx.clearRect(0, 0, state.width, state.height);
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, state.width, state.height);
-
-    for (const [a, b] of state.links) {
-      const dimmed = dim(a) || dim(b);
-      const hot = state.hover && (a === state.hover || b === state.hover);
-      const p = screenOf(a), q = screenOf(b);
-      ctx.strokeStyle = hot ? CREAM + ".5)" : CREAM + (dimmed ? ".04)" : ".13)");
-      ctx.lineWidth = hot ? 1.2 : .8;
-      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-    }
-    for (const n of state.nodes) {
-      const p = screenOf(n), r = n.r * (state.hover === n ? 1.45 : 1) * state.scale ** .35;
-      ctx.globalAlpha = dim(n) ? .18 : 1;
-      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(1.5, r), 0, Math.PI * 2);
-      ctx.fillStyle = colorOf(n.g); ctx.fill();
-      if (state.hover === n) {
-        ctx.strokeStyle = "rgba(231,233,242,.9)"; ctx.lineWidth = 1.6; ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
-    }
-
-    /* 标签单独一遍：按连接度从高到低绘制，并跳过与已绘制标签重叠的项 */
-    const placed = [];
-    const candidates = state.nodes
-      .filter(n => (labelSet.has(n) || state.hover === n) && !dim(n))
-      .sort((a, b) => b.degree - a.degree);
-    for (const n of candidates) {
-      const p = screenOf(n), r = n.r * (state.hover === n ? 1.45 : 1) * state.scale ** .35;
-      const hovered = state.hover === n;
-      ctx.font = (hovered ? "600 12px" : "11px") + " -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif";
-      ctx.textAlign = "left"; ctx.textBaseline = "middle";
-      const label = n.title.length > 22 ? n.title.slice(0, 21) + "…" : n.title;
-      const w = ctx.measureText(label).width;
-      let x = p.x + Math.max(1.5, r) + 5, y = p.y;
-      /* 右侧放不下就翻到左侧 */
-      if (x + w > state.width - 8) x = p.x - Math.max(1.5, r) - 5 - w;
-      const box = { x: x - 2, y: y - 7, w: w + 4, h: 14 };
-      if (!hovered && placed.some(q => !(box.x > q.x + q.w || box.x + box.w < q.x || box.y > q.y + q.h || box.y + box.h < q.y))) continue;
-      placed.push(box);
-      ctx.fillStyle = CREAM + (hovered ? ".95)" : ".62)");
-      ctx.fillText(label, x, y);
-    }
-  }
-
-  function frame() {
-    tick();
-    draw();
-    /* 布局冷却后再取景一次：初始取景可能落在尚未稳定的坐标上 */
-    if (!state.fitted && state.alpha < .04) { state.fitted = true; fitView(); }
-    raf = requestAnimationFrame(frame);
-  }
-
-  /* ---- 交互 ---- */
-  function hitTest(p) {
-    for (let i = state.nodes.length - 1; i >= 0; i--) {
-      const n = state.nodes[i], s = screenOf(n);
-      const radius = n.r * state.scale + 6;
-      if ((s.x - p.x) ** 2 + (s.y - p.y) ** 2 <= radius ** 2) return n;
-    }
-    return null;
-  }
-  function showTip(n, p) {
-    if (!n) { tooltip.hidden = true; return; }
-    tooltip.hidden = false;
-    tooltip.innerHTML = "";
-    const t = document.createElement("strong"); t.textContent = n.title;
-    const meta = document.createElement("span");
-    meta.textContent = state.groups[n.g] + " · " + n.degree + " 条关联";
-    tooltip.append(t, meta);
-    tooltip.style.left = Math.min(p.x + 14, state.width - 240) + "px";
-    tooltip.style.top = Math.max(8, p.y + 14) + "px";
-  }
-
-  canvas.addEventListener("pointerdown", e => {
-    const p = pointOf(e), n = hitTest(p);
-    state.drag = { start: p, last: p, node: n, moved: false };
-    if (n) { n.fixed = true; canvas.classList.add("dragging"); }
-    canvas.setPointerCapture(e.pointerId);
-  });
-  canvas.addEventListener("pointermove", e => {
-    const p = pointOf(e);
-    if (state.drag) {
-      const d = state.drag, dx = p.x - d.last.x, dy = p.y - d.last.y;
-      if (Math.hypot(p.x - d.start.x, p.y - d.start.y) > 4) d.moved = true;
-      if (d.node) { const w = worldOf(p); d.node.x = w.x; d.node.y = w.y; d.node.vx = d.node.vy = 0; }
-      else { state.panX += dx; state.panY += dy; }
-      d.last = p; return;
-    }
-    state.hover = hitTest(p);
-    canvas.style.cursor = state.hover ? "pointer" : "";
-    showTip(state.hover, p);
-  });
-  canvas.addEventListener("pointerup", e => {
-    if (!state.drag) return;
-    const d = state.drag, p = pointOf(e);
-    state.drag = null; canvas.classList.remove("dragging");
-    if (d.node) {
-      d.node.fixed = false;
-      if (!d.moved) window.location.href = d.node.url;
-    }
-    showTip(null, p);
-  });
-  canvas.addEventListener("pointercancel", () => { state.drag = null; canvas.classList.remove("dragging"); });
-  canvas.addEventListener("wheel", e => {
-    e.preventDefault();
-    const p = pointOf(e), before = worldOf(p);
-    state.scale = Math.max(.25, Math.min(4, state.scale * (e.deltaY < 0 ? 1.1 : .9)));
-    state.panX = p.x - before.x * state.scale;
-    state.panY = p.y - before.y * state.scale;
-  }, { passive: false });
-  canvas.addEventListener("dblclick", () => { state.alpha = Math.max(state.alpha, .35); fitView(); });
-
-  window.addEventListener("resize", () => { resize(); fitView(); });
-
-  /* ---- 分组筛选 chips（点击选中/再点取消，参考站 chipbar 交互） ---- */
-  function buildChips() {
-    chipbar.innerHTML = "";
-    const counts = new Map();
-    for (const n of state.nodes) counts.set(n.g, (counts.get(n.g) || 0) + 1);
-    state.groups.forEach((name, gi) => {
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "chip";
-      chip.innerHTML = '<i class="swatch" style="background:' + colorOf(gi) + '"></i>' + name + " · " + (counts.get(gi) || 0);
-      chip.setAttribute("aria-pressed", "false");
-      chip.addEventListener("click", () => {
-        state.activeGroup = state.activeGroup === gi ? -1 : gi;
-        chipbar.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
-        if (state.activeGroup >= 0) chip.setAttribute("aria-pressed", "true");
-      });
-      chip.addEventListener("mouseenter", () => { state.hoverGroup = gi; });
-      chip.addEventListener("mouseleave", () => { state.hoverGroup = -1; });
-      chipbar.appendChild(chip);
-    });
-  }
-
-  /* ---- 加载数据 ----
-     file:// 直接打开时浏览器会拦截 fetch，直接给出明确提示 */
+  /* ---- 数据加载（file:// 下给出明确提示） ---- */
   async function loadGraphData() {
     if (location.protocol === "file:") {
       const err = new Error("file protocol");
@@ -319,30 +36,353 @@
     }
     throw lastErr;
   }
-  loadGraphData()
-    .then(data => {
-      state.groups = data.groups || [];
-      state.nodes = data.nodes.map(n => ({ ...n, g: n.g ?? 0, _nb: null }));
-      const byIndex = state.nodes;
-      state.links = (data.links || []).map(pair => {
-        const a = byIndex[pair[0]], b = byIndex[pair[1]];
-        return a && b ? [a, b] : null;
-      }).filter(Boolean);
-      stats.textContent = state.nodes.length + " 篇 · " + state.links.length + " 条关联";
-      buildChips();
-      resize();
-      seed();
-      computeLabels();
-      fitView();
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(frame);
-    })
-    .catch(err => {
-      if (err && err.fileBlocked) {
-        stats.innerHTML = '本地 file:// 打开无法加载数据（浏览器安全限制）<br>' +
-          '<span style="font-size:.72rem">请运行 <code>mkdocs serve</code> 后访问 /graph/，或使用线上站点</span>';
-      } else {
-        stats.textContent = "图谱数据加载失败" + (err && err.message ? "（" + err.message + "）" : "");
+
+  loadGraphData().then(data => {
+    const groups = data.groups || [];
+    const rawNodes = data.nodes || [];
+
+    /* ---- 节点：Graphify 样式（按度数定大小，黄金角螺旋散布） ---- */
+    const degOf = rawNodes.map(n => n.degree || 0);
+    const maxDeg = Math.max(1, ...degOf);
+    /* 按度数升序插入：vis 逐节点绘制，度数高的枢纽最后画 → 标签浮在叶子之上 */
+    const drawOrder = rawNodes.map((_, i) => i).sort((a, b) => degOf[a] - degOf[b]);
+    const nodesDS = new vis.DataSet(drawOrder.map(i => {
+      const n = rawNodes[i];
+      const deg = degOf[i];
+      const color = colorOf(n.g);
+      return {
+        id: n.id,
+        /* 长标题截断，避免标记横穿整个节点簇；完整名在悬停提示与右侧面板中 */
+        label: String(n.title).length > 30 ? String(n.title).slice(0, 29) + "…" : String(n.title),
+        color: { background: color, border: color,
+                 highlight: { background: "#ffffff", border: color } },
+        size: Math.round((9 + 26 * Math.sqrt(deg / maxDeg)) * 10) / 10,
+        font: { size: 0, color: labelColor, strokeWidth: 0 },
+        fullTitle: n.title,
+        title: n.title + "\n" + (groups[n.g] || "") + " · " + deg + " 条关联",
+        community: n.g,
+        group_name: groups[n.g] || "",
+        url: n.url,
+        path: n.path,
+        degree: deg,
+        /* 黄金角螺旋初始位置（graphify #3699 同款），避免物理引擎奇点 */
+        x: 30 * Math.sqrt(i) * Math.cos(i * 2.4),
+        y: 30 * Math.sqrt(i) * Math.sin(i * 2.4),
+      };
+    }));
+
+    /* 边长度按两端最大度数自适应：超级 hub（如 223 篇的分类节点）用短边，
+       否则 240 条均匀长边会把整张图撑成巨大星爆、其余内容被压成一点。 */
+    const edgesDS = new vis.DataSet((data.links || []).map(([a, b], i) => {
+      const m = Math.max(degOf[a], degOf[b]);
+      const len = Math.max(32, Math.min(160, 165 / Math.sqrt(1 + m / 8)));
+      return {
+        id: i, from: rawNodes[a].id, to: rawNodes[b].id, length: Math.round(len),
+        color: { color: "#8a8aa8", opacity: m >= 40 ? 0.14 : 0.32, highlight: "#4E79A7", hover: "#4E79A7" },
+      };
+    }));
+
+    const container = document.getElementById("graph");
+    const network = new vis.Network(container, { nodes: nodesDS, edges: edgesDS }, {
+      physics: {
+        enabled: true,
+        solver: "forceAtlas2Based",
+        forceAtlas2Based: {
+          gravitationalConstant: -55,
+          centralGravity: 0.008,
+          springLength: 130,
+          springConstant: 0.07,
+          damping: 0.45,
+          avoidOverlap: 0.6,
+        },
+        stabilization: { enabled: true, iterations: 600, updateInterval: 25, fit: true },
+        minVelocity: 0.9,
+      },
+      interaction: {
+        hover: true,
+        tooltipDelay: 100,
+        hideEdgesOnDrag: true,
+        navigationButtons: false,
+        keyboard: false,
+      },
+      nodes: { shape: "dot", borderWidth: 1.5 },
+      edges: { smooth: { type: "continuous", roundness: 0.2 }, selectionWidth: 3 },
+    });
+
+    window.__net = network; /* 供调试/自动化检查（无副作用） */
+
+    /* ---- 自绘标签层 ----
+       vis 逐节点绘制且顺序不可控，hub 的标签会被周围叶子节点盖住；
+       这里关掉内置标签（font.size=0），在 afterDrawing 里用画布坐标重绘，
+       标签永远浮在最上层，且屏幕字号天然恒定。 */
+    let labelColor2 = "#ffffff";
+    let labelBgRgba = "rgba(14,16,24,0.92)";
+    /* 度数分布是断崖式的（1:59 / 2:314 / 3+:45 / 24+:10），按可见密度分档 */
+    function tierDeg(scale) {
+      if (scale < 0.45) return 24;
+      if (scale < 1.9) return 3;
+      return 1;
+    }
+    function roundRectPath(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r); return; }
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+    function drawLabels(ctx) {
+      const scale = network.getScale();
+      const degMin = tierDeg(scale);
+      const px = scale >= 1.9 ? 10 : 11;
+      const W = container.clientWidth, H = container.clientHeight;
+
+      const ids = [], idxs = [];
+      for (let i = 0; i < rawNodes.length; i++) {
+        if (degOf[i] >= degMin) { ids.push(rawNodes[i].id); idxs.push(i); }
+      }
+      if (!ids.length) return;
+      const posMap = network.getPositions(ids);
+
+      ctx.save();
+      /* afterDrawing 时 ctx 仍带着 vis 的相机变换（scale+translate），
+         必须重置为设备像素比，否则 canvasToDOM 得到的坐标会被二次缩放 */
+      const cv = ctx.canvas;
+      const dpr = cv.clientWidth ? cv.width / cv.clientWidth : 1;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = `400 ${px}px "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      for (let k = 0; k < ids.length; k++) {
+        const pos = posMap[ids[k]];
+        if (!pos) continue;
+        const p = network.canvasToDOM(pos);
+        if (p.x < -120 || p.x > W + 120 || p.y < -40 || p.y > H + 40) continue;
+        const node = nodesDS.get(ids[k]);
+        const text = node.label;
+        const r = (node.size || 8) * scale;
+        const y = p.y + r + px * 0.75;
+        const tw = ctx.measureText(text).width;
+        const padX = 4, padY = 2.5;
+        ctx.fillStyle = labelBgRgba;
+        roundRectPath(ctx, p.x - tw / 2 - padX, y - px / 2 - padY, tw + padX * 2, px + padY * 2, 3);
+        ctx.fill();
+        ctx.fillStyle = labelColor2;
+        ctx.fillText(text, p.x, y);
+      }
+      ctx.restore();
+    }
+    network.on("afterDrawing", ctx => { try { drawLabels(ctx); } catch (e) {} });
+
+    let settled = false;
+    function settle() {
+      if (settled) return;
+      settled = true;
+      network.setOptions({ physics: { enabled: false } });
+      network.fit({ animation: false });
+    }
+    network.once("stabilized", settle);
+    /* 兜底：物理迟迟不收敛时（超大 hub 常见）强制收敛并回到全图视野 */
+    setTimeout(settle, 7000);
+
+    /* ---- 主题切换（浅色/深色/跟随系统，持久化） ---- */
+    function themePref() {
+      let p = null;
+      try { p = localStorage.getItem(THEME_KEY); } catch (e) {}
+      return (p === "light" || p === "dark" || p === "system") ? p : null;
+    }
+    function applyTheme(pref) {
+      const t = pref === "light" ? "light" : (pref === "system" && themeMQ && themeMQ.matches) ? "light" : "dark";
+      const root = document.documentElement;
+      if (!root) return;
+      root.setAttribute("data-theme", t);
+      document.querySelectorAll("[data-theme-choice]").forEach(b => {
+        b.setAttribute("aria-pressed", String(b.dataset.themeChoice === (pref || "dark")));
+      });
+      const c = getComputedStyle(root).getPropertyValue("--node-label").trim();
+      if (c) labelColor2 = c;
+      labelBgRgba = t === "light" ? "rgba(255,255,255,0.92)" : "rgba(14,16,24,0.92)";
+      network.redraw(); /* 自绘标签层随主题重绘 */
+    }
+    document.querySelectorAll("[data-theme-choice]").forEach(b => {
+      b.addEventListener("click", () => {
+        const pref = b.dataset.themeChoice;
+        try { localStorage.setItem(THEME_KEY, pref); } catch (e) {}
+        applyTheme(pref);
+      });
+    });
+    if (themeMQ) {
+      const onSchemeChange = () => { if (themePref() === "system") applyTheme("system"); };
+      if (themeMQ.addEventListener) themeMQ.addEventListener("change", onSchemeChange);
+      else if (themeMQ.addListener) themeMQ.addListener(onSchemeChange);
+    }
+    applyTheme(themePref());
+
+    /* ---- 节点信息面板 ---- */
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+    function showInfo(nodeId) {
+      const n = nodesDS.get(nodeId);
+      if (!n) return;
+      const neighborIds = network.getConnectedNodes(nodeId);
+      const neighborItems = neighborIds.map(nid => {
+        const nb = nodesDS.get(nid);
+        const color = nb ? nb.color.background : "#555";
+        return `<span class="neighbor-link" style="border-left-color:${esc(color)}" data-nid="${esc(nid)}">${esc(nb ? (nb.fullTitle || nb.label) : nid)}</span>`;
+      }).join("");
+      let html = `<div class="field"><b>${esc(n.fullTitle || n.label)}</b></div>`;
+      html += `<div class="field">分组：${esc(n.group_name || "-")}</div>`;
+      html += `<div class="field">路径：${esc(n.path || "-")}</div>`;
+      html += `<div class="field">关联：${n.degree} 篇</div>`;
+      if (n.url) html += `<a class="open-link" href="${esc(n.url)}">打开文章 →</a>`;
+      if (neighborIds.length) {
+        html += `<div class="field" style="margin-top:8px;color:var(--text-2);font-size:11px">关联文章（${neighborIds.length}）</div><div id="neighbors-list">${neighborItems}</div>`;
+      }
+      document.getElementById("info-content").innerHTML = html;
+    }
+    function focusNode(nodeId) {
+      network.focus(nodeId, { scale: 1.4, animation: true });
+      network.selectNodes([nodeId]);
+      showInfo(nodeId);
+    }
+    document.addEventListener("click", e => {
+      const el = e.target.closest(".neighbor-link");
+      if (el && el.dataset.nid !== undefined) focusNode(el.dataset.nid);
+    });
+
+    let hoveredNodeId = null;
+    network.on("hoverNode", p => { hoveredNodeId = p.node; container.style.cursor = "pointer"; });
+    network.on("blurNode", () => { hoveredNodeId = null; container.style.cursor = "default"; });
+    network.on("click", params => {
+      if (params.nodes.length > 0) showInfo(params.nodes[0]);
+      else if (hoveredNodeId === null) {
+        document.getElementById("info-content").innerHTML = '<span class="empty">点击节点查看详情</span>';
       }
     });
+    /* 双击节点直接打开文章 */
+    network.on("doubleClick", params => {
+      if (params.nodes.length > 0) {
+        const n = nodesDS.get(params.nodes[0]);
+        if (n && n.url) window.location.href = n.url;
+      }
+    });
+
+    /* ---- 搜索 ---- */
+    const searchInput = document.getElementById("search");
+    const searchResults = document.getElementById("search-results");
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.toLowerCase().trim();
+      searchResults.innerHTML = "";
+      if (!q) { searchResults.style.display = "none"; return; }
+      /* 相关性排序：整词匹配 > 标题开头 > 词边界 > 词中子串（如 sta-rte-d 命中 RTE） */
+      const scored = [];
+      rawNodes.forEach(n => {
+        const t = String(n.title).toLowerCase();
+        const i = t.indexOf(q);
+        if (i < 0) return;
+        let s;
+        if (t === q) s = 100;
+        else if (i === 0) s = 70;
+        else if (/[\s\-_/(（\[【·:：`"'「]/.test(t.charAt(i - 1))) s = 45;
+        else s = 8;
+        s -= Math.min(15, t.length / 30);         /* 同档内短标题优先 */
+        scored.push({ n, s });
+      });
+      const matches = scored.sort((a, b) => b.s - a.s).slice(0, 20).map(o => o.n);
+      if (!matches.length) { searchResults.style.display = "none"; return; }
+      searchResults.style.display = "block";
+      matches.forEach(n => {
+        const el = document.createElement("div");
+        el.className = "search-item";
+        el.textContent = n.title;
+        el.style.borderLeft = `3px solid ${colorOf(n.g)}`;
+        el.style.paddingLeft = "8px";
+        el.onclick = () => {
+          focusNode(n.id);
+          searchResults.style.display = "none";
+          searchInput.value = "";
+        };
+        searchResults.appendChild(el);
+      });
+    });
+    document.addEventListener("click", e => {
+      if (!searchResults.contains(e.target) && e.target !== searchInput)
+        searchResults.style.display = "none";
+    });
+
+    /* ---- 分组筛选（图例复选框） ---- */
+    const counts = new Map();
+    rawNodes.forEach(n => counts.set(n.g, (counts.get(n.g) || 0) + 1));
+    const LEGEND = groups.map((label, cid) => ({ cid, label, color: colorOf(cid), count: counts.get(cid) || 0 }));
+    const hiddenGroups = new Set();
+    const selectAllCb = document.getElementById("select-all-cb");
+
+    window.toggleAllGroups = function toggleAllGroups(hide) {
+      document.querySelectorAll(".legend-item").forEach(item => {
+        hide ? item.classList.add("dimmed") : item.classList.remove("dimmed");
+      });
+      document.querySelectorAll(".legend-cb").forEach(cb => { cb.checked = !hide; });
+      LEGEND.forEach(c => {
+        if (hide) hiddenGroups.add(c.cid); else hiddenGroups.delete(c.cid);
+      });
+      const updates = rawNodes.map(n => ({ id: n.id, hidden: hide }));
+      nodesDS.update(updates);
+      updateSelectAllState();
+    };
+    function updateSelectAllState() {
+      const total = LEGEND.length;
+      const hidden = hiddenGroups.size;
+      selectAllCb.checked = hidden === 0;
+      selectAllCb.indeterminate = hidden > 0 && hidden < total;
+    }
+    const legendEl = document.getElementById("legend");
+    LEGEND.forEach(c => {
+      const item = document.createElement("div");
+      item.className = "legend-item";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.className = "legend-cb";
+      cb.checked = true;
+      cb.title = c.count + " 篇";
+      cb.addEventListener("change", e => {
+        e.stopPropagation();
+        if (cb.checked) {
+          hiddenGroups.delete(c.cid);
+          item.classList.remove("dimmed");
+        } else {
+          hiddenGroups.add(c.cid);
+          item.classList.add("dimmed");
+        }
+        const updates = rawNodes.filter(n => n.community === c.cid).map(n => ({ id: n.id, hidden: !cb.checked }));
+        nodesDS.update(updates);
+        updateSelectAllState();
+      });
+      item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>` +
+        `<span class="legend-label">${esc(c.label)}</span>` +
+        `<span class="legend-count">${c.count}</span>`;
+      item.prepend(cb);
+      item.onclick = e => {
+        if (e.target === cb) return;
+        cb.checked = !cb.checked;
+        cb.dispatchEvent(new Event("change"));
+      };
+      legendEl.appendChild(item);
+    });
+
+    /* ---- 统计 ---- */
+    document.getElementById("stats").textContent =
+      `${rawNodes.length} 篇文档 · ${(data.links || []).length} 条关联 · ${groups.length} 个分组`;
+  }).catch(err => {
+    const el = document.getElementById("stats");
+    if (!el) return;
+    if (err && err.fileBlocked) {
+      el.innerHTML = '本地 file:// 打开无法加载数据<br><span style="font-size:.72rem">请运行 <code>mkdocs serve</code> 或使用线上站点</span>';
+    } else {
+      el.textContent = "图谱数据加载失败" + (err && err.message ? "（" + err.message + "）" : "");
+    }
+  });
 })();
