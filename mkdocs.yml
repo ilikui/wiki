@@ -12,7 +12,6 @@ theme:
     - navigation.tracking
     - navigation.sections
     - navigation.indexes
-    - navigation.top
     - search.suggest
     - search.highlight
     - search.share
@@ -35,7 +34,7 @@ theme:
         icon: material/brightness-4
         name: 切换到浅色模式
   font:
-    text: Roboto
+    text: Inter
     code: Roboto Mono
 
 nav:

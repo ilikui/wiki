@@ -1,15 +1,6 @@
 # 欢迎来到知识 Wiki
 
-<div class="wiki-hero-banner" role="img" aria-label="知识探索，持续生长">
-  <span>知识探索，持续生长</span>
-</div>
-
 这里是你的个人知识支持中心：以问题驱动学习，以专题组织内容，把技术文档、阅读笔记与实践经验连接成可持续生长的知识网络。
-
-<div class="wiki-home-actions">
-  <a class="wiki-home-primary" href="1000-questions/">开始探索 <span aria-hidden="true">→</span></a>
-  <a class="wiki-home-secondary" href="getting-started/">了解知识库使用方法</a>
-</div>
 
 ## 从这里开始
 
