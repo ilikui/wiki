@@ -13,7 +13,8 @@
 > - [基础架构与通信栈第一批答案](answers/基础架构与通信栈第一批答案.md)
 > - [诊断栈、UDS 与 DoIP 工程答案](answers/诊断栈-UDS与DoIP工程答案.md)
 > - [NvM、MemIf、Fee 与非易失性存储工程答案](answers/NvM-MemIf-Fee非易失性存储工程答案.md)
-> - [OS、调度与多核工程答案](answers/OS调度与多核工程答案.md)  
+> - [OS、调度与多核工程答案](answers/OS调度与多核工程答案.md)
+> - [功能安全、E2E 与信息安全工程答案](answers/功能安全-E2E与SecOC工程答案.md)  
 > - 后续继续覆盖诊断、NvM、OS/多核、功能安全、信息安全、Adaptive、工具链与工程排障。
 
 记录AUTOSAR学习的1000个问题：
