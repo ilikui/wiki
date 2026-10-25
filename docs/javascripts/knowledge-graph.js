@@ -1,29 +1,29 @@
 (() => {
   "use strict";
-  /* 知识图谱 — 分组聚类力导向布局（参考 read.pmthinking.com/graph 的渲染方式）
-     每个分组围成一个圆心，成员按黄金角散布；力导向模拟带距离截断，节点多也流畅 */
+  /* 知识图谱 — 沉浸式全屏页（完整对齐 read.pmthinking.com/graph 的布局与交互）
+     整页深色 100dvh · HUD 悬浮（标题+统计+分组筛选 chips）· 底部操作提示胶囊
+     布局：每个分组围成一个圆心，成员按黄金角散布；力导向模拟带距离截断 */
   const canvas = document.getElementById("kg-canvas");
   if (!canvas) return;
+  document.body.classList.add("kg-immersive");
+
   const ctx = canvas.getContext("2d");
   const stage = canvas.parentElement;
   const stats = document.getElementById("kg-stats");
-  const search = document.getElementById("kg-search");
-  const resetBtn = document.getElementById("kg-reset");
-  const labelsBtn = document.getElementById("kg-labels");
-  const legendBox = document.getElementById("kg-legend");
+  const chipbar = document.getElementById("kg-chipbar");
   const tooltip = document.getElementById("kg-tooltip");
 
   /* 暖黑舞台上的低饱和配色（与参考站同族） */
   const PALETTE = ["#8e6fd8", "#aae2f0", "#d9a851", "#c76f5a", "#66a68d", "#b585ad", "#8d96e0", "#c9b06a", "#5fa3b8", "#c98a7a", "#8fae6f", "#b56a6a", "#9a8fae", "#7fb8a8"];
-  const BG = "#15161d";
+  const BG = "#14171e";
   const CREAM = "rgba(231, 233, 242, ";
   const colorOf = g => PALETTE[g % PALETTE.length];
 
   const state = {
-    nodes: [], links: [], groups: [], legend: [],
+    nodes: [], links: [], groups: [],
     scale: 1, panX: 0, panY: 0,
     width: 0, height: 0,
-    drag: null, hover: null, hoverGroup: -1, query: "",
+    drag: null, hover: null, hoverGroup: -1, activeGroup: -1, query: "",
     showLabels: true, alpha: 1, frame: 0,
   };
   let raf = 0;
@@ -32,7 +32,7 @@
   function resize() {
     const rect = stage.getBoundingClientRect();
     state.width = Math.max(300, rect.width);
-    state.height = Math.max(420, Math.min(760, window.innerHeight * .68));
+    state.height = Math.max(360, rect.height);
     canvas.width = state.width * DPR; canvas.height = state.height * DPR;
     canvas.style.width = state.width + "px"; canvas.style.height = state.height + "px";
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -59,7 +59,7 @@
     });
   }
 
-  /* ---- 力导向模拟（O(n·近邻)，带距离截断） ---- */
+  /* ---- 力导向模拟（带距离截断） ---- */
   function tick() {
     const alpha = state.alpha;
     const nodes = state.nodes;
@@ -111,8 +111,7 @@
   const worldOf = p => ({ x: (p.x - state.panX) / state.scale, y: (p.y - state.panY) / state.scale });
   const pointOf = e => { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
 
-  /* ---- 匹配 / 邻接 / 高亮判定 ---- */
-  const matches = n => !state.query || (n.title + " " + n.path + " " + state.groups[n.g]).toLowerCase().includes(state.query);
+  /* ---- 高亮判定 ---- */
   const neighborsOf = n => {
     if (!n._nb) {
       n._nb = new Set();
@@ -124,7 +123,7 @@
     return n._nb;
   };
   function dim(n) {
-    if (state.query && !matches(n)) return true;
+    if (state.activeGroup >= 0 && n.g !== state.activeGroup) return true;
     if (state.hoverGroup >= 0 && n.g !== state.hoverGroup) return true;
     if (state.hover && n !== state.hover && !neighborsOf(state.hover).has(n)) return true;
     return false;
@@ -142,7 +141,6 @@
     ctx.fillStyle = BG;
     ctx.fillRect(0, 0, state.width, state.height);
 
-    /* 连线 */
     for (const [a, b] of state.links) {
       const dimmed = dim(a) || dim(b);
       const hot = state.hover && (a === state.hover || b === state.hover);
@@ -151,7 +149,6 @@
       ctx.lineWidth = hot ? 1.2 : .8;
       ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
     }
-    /* 节点与标签 */
     for (const n of state.nodes) {
       const p = screenOf(n), r = n.r * (state.hover === n ? 1.45 : 1) * state.scale ** .35;
       ctx.globalAlpha = dim(n) ? .18 : 1;
@@ -160,7 +157,7 @@
       if (state.hover === n) {
         ctx.strokeStyle = "rgba(231,233,242,.9)"; ctx.lineWidth = 1.6; ctx.stroke();
       }
-      const showLabel = state.showLabels && (labelSet.has(n) || state.hover === n || matches(n) && !!state.query);
+      const showLabel = labelSet.has(n) || state.hover === n;
       if (showLabel && !dim(n)) {
         const hovered = state.hover === n;
         ctx.font = (hovered ? "600 12px" : "11px") + " -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif";
@@ -203,7 +200,7 @@
   canvas.addEventListener("pointerdown", e => {
     const p = pointOf(e), n = hitTest(p);
     state.drag = { start: p, last: p, node: n, moved: false };
-    if (n) { n.fixed = true; canvas.style.cursor = "grabbing"; }
+    if (n) { n.fixed = true; canvas.classList.add("dragging"); }
     canvas.setPointerCapture(e.pointerId);
   });
   canvas.addEventListener("pointermove", e => {
@@ -216,20 +213,20 @@
       d.last = p; return;
     }
     state.hover = hitTest(p);
-    canvas.style.cursor = state.hover ? "pointer" : "grab";
+    canvas.style.cursor = state.hover ? "pointer" : "";
     showTip(state.hover, p);
   });
   canvas.addEventListener("pointerup", e => {
     if (!state.drag) return;
     const d = state.drag, p = pointOf(e);
-    state.drag = null; canvas.style.cursor = "grab";
+    state.drag = null; canvas.classList.remove("dragging");
     if (d.node) {
       d.node.fixed = false;
       if (!d.moved) window.location.href = d.node.url;
     }
     showTip(null, p);
   });
-  canvas.addEventListener("pointercancel", () => { state.drag = null; });
+  canvas.addEventListener("pointercancel", () => { state.drag = null; canvas.classList.remove("dragging"); });
   canvas.addEventListener("wheel", e => {
     e.preventDefault();
     const p = pointOf(e), before = worldOf(p);
@@ -237,29 +234,29 @@
     state.panX = p.x - before.x * state.scale;
     state.panY = p.y - before.y * state.scale;
   }, { passive: false });
+  canvas.addEventListener("dblclick", () => { state.alpha = Math.max(state.alpha, .35); fitView(); });
 
-  search.addEventListener("input", () => { state.query = search.value.trim().toLowerCase(); });
-  resetBtn.addEventListener("click", () => { state.alpha = Math.max(state.alpha, .35); fitView(); });
-  labelsBtn.addEventListener("click", () => {
-    state.showLabels = !state.showLabels;
-    labelsBtn.textContent = state.showLabels ? "隐藏标签" : "显示标签";
-    labelsBtn.setAttribute("aria-pressed", String(state.showLabels));
-  });
-  window.addEventListener("resize", () => { resize(); });
+  window.addEventListener("resize", () => { resize(); fitView(); });
 
-  /* ---- 图例：悬停高亮分组 ---- */
-  function buildLegend() {
-    legendBox.innerHTML = "";
+  /* ---- 分组筛选 chips（点击选中/再点取消，参考站 chipbar 交互） ---- */
+  function buildChips() {
+    chipbar.innerHTML = "";
     const counts = new Map();
     for (const n of state.nodes) counts.set(n.g, (counts.get(n.g) || 0) + 1);
     state.groups.forEach((name, gi) => {
       const chip = document.createElement("button");
       chip.type = "button";
-      chip.className = "kg-legend-chip";
-      chip.innerHTML = '<i style="background:' + colorOf(gi) + '"></i>' + name + " · " + (counts.get(gi) || 0);
+      chip.className = "chip";
+      chip.innerHTML = '<i class="swatch" style="background:' + colorOf(gi) + '"></i>' + name + " · " + (counts.get(gi) || 0);
+      chip.setAttribute("aria-pressed", "false");
+      chip.addEventListener("click", () => {
+        state.activeGroup = state.activeGroup === gi ? -1 : gi;
+        chipbar.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+        if (state.activeGroup >= 0) chip.setAttribute("aria-pressed", "true");
+      });
       chip.addEventListener("mouseenter", () => { state.hoverGroup = gi; });
       chip.addEventListener("mouseleave", () => { state.hoverGroup = -1; });
-      legendBox.appendChild(chip);
+      chipbar.appendChild(chip);
     });
   }
 
@@ -268,14 +265,14 @@
     .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
     .then(data => {
       state.groups = data.groups || [];
-      state.nodes = data.nodes.map((n, i) => ({ ...n, g: n.g ?? 0, _nb: null }));
+      state.nodes = data.nodes.map(n => ({ ...n, g: n.g ?? 0, _nb: null }));
       const byIndex = state.nodes;
       state.links = (data.links || []).map(pair => {
         const a = byIndex[pair[0]], b = byIndex[pair[1]];
         return a && b ? [a, b] : null;
       }).filter(Boolean);
       stats.textContent = state.nodes.length + " 篇 · " + state.links.length + " 条关联";
-      buildLegend();
+      buildChips();
       resize();
       seed();
       computeLabels();
@@ -283,5 +280,5 @@
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(frame);
     })
-    .catch(() => { stats.textContent = "图谱数据加载失败，请刷新页面后重试。"; });
+    .catch(() => { stats.textContent = "图谱数据加载失败"; });
 })();
