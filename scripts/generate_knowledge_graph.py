@@ -223,6 +223,19 @@ body {
 """
 
 
+def group_of(path: Path) -> str:
+    """分组粒度：取前两级目录，AUTOSAR 规范笔记再按平台（CP/AP/FO）细分。
+
+    单取一级目录时 types 会吞掉 390+ 篇文档，图谱上挤成一团看不出结构。
+    """
+    parts = path.parts
+    if len(parts) >= 5 and parts[:3] == ("types", "autosar", "specs"):
+        return "types/autosar/" + parts[3]
+    if len(parts) >= 3:
+        return parts[0] + "/" + parts[1]
+    return parts[0] if len(parts) > 1 else "首页与指南"
+
+
 def main() -> None:
     files = sorted(
         p.relative_to(DOCS) for p in DOCS.rglob("*.md")
@@ -248,12 +261,12 @@ def main() -> None:
         degree[source] += 1
         degree[target] += 1
 
-    # 分组 = 文档一级目录；分组表 + 节点组索引（供前端聚类布局）
+    # 分组 = 前两级目录（AUTOSAR 规范按 CP/AP/FO 细分）；分组表 + 节点组索引（供前端聚类布局）
     groups: list[str] = []
     for path in files:
-        group = path.parts[0] if len(path.parts) > 1 else "首页与指南"
-        if group not in groups:
-            groups.append(group)
+        g = group_of(path)
+        if g not in groups:
+            groups.append(g)
 
     nodes = [{
         "id": node_id(path),
@@ -261,8 +274,8 @@ def main() -> None:
         "path": path.as_posix(),
         "url": page_url(path),
         "degree": degree[path],
-        "group": path.parts[0] if len(path.parts) > 1 else "首页与指南",
-        "g": groups.index(path.parts[0] if len(path.parts) > 1 else "首页与指南"),
+        "group": group_of(path),
+        "g": groups.index(group_of(path)),
     } for path in files]
     index_of = {node_id(p): i for i, p in enumerate(files)}
     links = [[index_of[node_id(s)], index_of[node_id(t)]] for s, t in sorted(edges)]
