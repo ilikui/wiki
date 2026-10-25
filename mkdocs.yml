@@ -21,8 +21,8 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: cyan
+      primary: teal
+      accent: light blue
       toggle:
         icon: material/brightness-7
         name: 切换到深色模式
@@ -34,7 +34,7 @@ theme:
         icon: material/brightness-4
         name: 切换到浅色模式
   font:
-    text: LXGW WenKai
+    text: Noto Sans SC
     code: JetBrains Mono
 
 nav:
