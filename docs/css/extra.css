@@ -589,6 +589,38 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
 }
 
 
+/* 知识图谱页面避开固定左侧目录，避免目录树覆盖画布 */
+@media (min-width: 1200px) {
+  body:has(.kg-app) .md-main__inner {
+    width: calc(100% - 210px) !important;
+    max-width: none !important;
+    margin-left: 210px !important;
+    margin-right: 0 !important;
+    padding: 0 24px 0 0 !important;
+    box-sizing: border-box !important;
+  }
+  body:has(.kg-app) .md-content > .md-content__inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 28px 0 64px !important;
+    box-sizing: border-box !important;
+  }
+}
+@media (max-width: 1199.98px) {
+  body:has(.kg-app) .md-main__inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+  }
+  body:has(.kg-app) .md-content > .md-content__inner {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 24px 0 48px !important;
+  }
+}
+
 /* 知识图谱独立工作区：减少文档页留白，让关系网络成为页面主角 */
 body:has(.kg-app) .md-content > .md-content__inner {
   max-width: 1600px !important;
