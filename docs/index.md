@@ -1,6 +1,33 @@
 <div class="wiki-hero">
-  <h1>欢迎来到知识 Wiki</h1>
-  <p>这里是你的个人知识支持中心：以问题驱动学习，以专题组织内容，把技术文档、阅读笔记与实践经验连接成可持续生长的知识网络。</p>
+  <div class="wiki-hero-body">
+    <span class="wiki-hero-badge">Personal Knowledge Base</span>
+    <h1>把碎片信息，长成<span class="wiki-hero-accent">知识网络</span></h1>
+    <p>以问题驱动学习，以专题组织内容——技术文档、阅读笔记与实践经验在这里互相连接、持续生长。</p>
+    <div class="wiki-hero-meta">
+      <span><strong>8</strong> 大专题</span><i></i>
+      <span><strong>50+</strong> 篇文档</span><i></i>
+      <span><strong>50+</strong> 条知识连接</span>
+    </div>
+    <div class="wiki-hero-actions">
+      <a class="wiki-btn wiki-btn-primary" href="types/">浏览知识体系 <span aria-hidden="true">→</span></a>
+      <a class="wiki-btn wiki-btn-ghost" href="graph/">打开知识图谱</a>
+    </div>
+  </div>
+  <svg class="wiki-hero-art" viewBox="0 0 260 220" fill="none" aria-hidden="true">
+    <g stroke="#8e4ec6" stroke-opacity=".22" stroke-width="1.2">
+      <path d="M40 60 130 30M130 30 210 78M40 60 96 140M130 30 96 140M210 78 168 168M96 140 168 168M40 60 210 78M96 140 40 60"/>
+      <path d="M210 78 226 150M168 168 226 150M96 140 30 178"/>
+    </g>
+    <g>
+      <circle cx="40" cy="60" r="9" fill="#8e6fd8" fill-opacity=".85"/>
+      <circle cx="130" cy="30" r="12" fill="#8e4ec6" fill-opacity=".9"/>
+      <circle cx="210" cy="78" r="9" fill="#5da0e2" fill-opacity=".8"/>
+      <circle cx="96" cy="140" r="11" fill="#b585ad" fill-opacity=".8"/>
+      <circle cx="168" cy="168" r="8" fill="#66a68d" fill-opacity=".8"/>
+      <circle cx="226" cy="150" r="6" fill="#d9a851" fill-opacity=".75"/>
+      <circle cx="30" cy="178" r="6" fill="#8d96e0" fill-opacity=".7"/>
+    </g>
+  </svg>
 </div>
 
 <div class="wiki-section-title">从这里开始</div>

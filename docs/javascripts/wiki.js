@@ -1,5 +1,9 @@
 (() => {
   "use strict";
+  // 首页隐藏“编辑此页”按钮（GitBook 风格首页不放编辑入口）
+  if (location.pathname === "/" || location.pathname.endsWith("/index.html")) {
+    document.body.classList.add("wiki-home");
+  }
   // 每个条目专属图标（Lucide 风格描边 SVG），激活时随文字变紫
   const ic = paths => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
   const ICONS = {
