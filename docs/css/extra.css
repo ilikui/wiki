@@ -336,3 +336,28 @@ h4.doc-heading { font-size: 1.15rem; } h5.doc-heading { font-size: 1.05rem; }
     padding-right: 8px !important;
   }
 }
+
+/* Reserve a real gutter for the fixed navigation tree so it never overlays article text */
+@media (min-width: 1200px) {
+  .wiki-portal-layout .md-main__inner {
+    margin-left: 0 !important;
+    padding-left: max(238px, calc((100vw - 960px) / 2 + 206px)) !important;
+    box-sizing: border-box !important;
+  }
+  .wiki-portal-layout .md-content {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+  }
+  .wiki-portal-layout .md-content > .md-content__inner {
+    max-width: 980px !important;
+    width: 100% !important;
+    padding-left: 28px !important;
+    padding-right: 28px !important;
+    box-sizing: border-box !important;
+  }
+  .wiki-portal-layout .md-sidebar--secondary:not([hidden]) {
+    flex: 0 0 190px !important;
+    width: 190px !important;
+    min-width: 190px !important;
+  }
+}
