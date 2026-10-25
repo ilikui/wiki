@@ -523,3 +523,40 @@ code, pre, kbd, samp, .highlight, .md-typeset code,
     text-align: center !important;
   }
 }
+
+
+/* Article TOC icons are inserted as real elements by wiki.js for reliable rendering. */
+.md-sidebar--secondary .md-nav__title::before,
+.md-sidebar--secondary .md-nav__item > .md-nav__link::before {
+  content: none !important;
+  display: none !important;
+}
+.md-sidebar--secondary .wiki-toc-title-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 16px;
+  width: 16px;
+  margin-right: 6px;
+  color: var(--md-accent-fg-color, #526cfe);
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1;
+}
+.md-sidebar--secondary .md-nav__link .wiki-toc-item-icon {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 14px;
+  width: 14px;
+  margin-right: 5px;
+  color: var(--md-default-fg-color--lighter, #777);
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.md-sidebar--secondary .md-nav__link:hover .wiki-toc-item-icon,
+.md-sidebar--secondary .md-nav__link--active .wiki-toc-item-icon {
+  color: var(--md-accent-fg-color, #526cfe);
+}
