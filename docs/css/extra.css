@@ -978,7 +978,7 @@ h5.doc-heading { font-size: 1rem; }
   }
   .md-nav--primary > .md-nav__title:hover::after { color: var(--wk-ink); }
   /* 仓库卡：去掉主题的亮蓝填充与「0 0」计数，收敛成安静的一行 */
-  .md-nav--primary .md-nav__source { margin: .6rem .75rem .2rem; }
+  .md-nav--primary .md-nav__source { margin: .6rem .75rem .2rem; background: transparent; padding: 0; }
   .md-nav--primary .md-source {
     background: var(--wk-soft);
     color: var(--wk-ink);
