@@ -1,32 +1,36 @@
 #!/usr/bin/env python3
-"""Generate a Mermaid knowledge graph from Markdown files under docs/."""
+"""Generate an interactive, link-aware knowledge graph from docs Markdown files."""
 from __future__ import annotations
-import re
 import hashlib
+import json
+import re
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
-OUTPUT = DOCS / "knowledge-graph.md"
+OUTPUT_MD = DOCS / "knowledge-graph.md"
+OUTPUT_JSON = DOCS / "knowledge-graph.json"
 EXCLUDED = {"knowledge-graph.md"}
-LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+LINK_RE = re.compile(r"!?[[^]]*](([^)]+))")
 WIKI_RE = re.compile(r"\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]")
 HEADING_RE = re.compile(r"^#\s+(.+?)\s*#*\s*$", re.M)
 
-def clean_label(value: str, limit: int = 54) -> str:
+
+def clean_label(value: str, limit: int = 100) -> str:
     value = re.sub(r"[\x00-\x1f*_~]", "", value).replace('"', "'")
     value = re.sub(r"\s+", " ", value).strip()
     return value if len(value) <= limit else value[: limit - 1] + "…"
 
-def page_title(path: Path, text: str) -> str:
-    match = HEADING_RE.search(text)
+
+def page_title(path: Path, content: str) -> str:
+    match = HEADING_RE.search(content)
     return clean_label(match.group(1)) if match else clean_label(path.stem.replace("-", " ").replace("_", " "))
 
+
 def node_id(path: Path) -> str:
-    slug = re.sub(r"[^a-zA-Z0-9_]", "_", path.as_posix()).strip("_") or "page"
-    suffix = hashlib.sha1(path.as_posix().encode("utf-8")).hexdigest()[:10]
-    return f"n_{slug[:48]}_{suffix}"
+    return hashlib.sha1(path.as_posix().encode("utf-8")).hexdigest()[:12]
+
 
 def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
     target = target.strip().strip("<>").split()[0] if target.strip() else ""
@@ -36,10 +40,7 @@ def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
     target_path = unquote(parsed.path)
     if not target_path:
         return None
-    if target_path.startswith("/"):
-        candidate = (DOCS / target_path.lstrip("/")).resolve()
-    else:
-        candidate = (DOCS / source.parent / target_path).resolve()
+    candidate = (DOCS / target_path.lstrip("/")).resolve() if target_path.startswith("/") else (DOCS / source.parent / target_path).resolve()
     options = [candidate]
     if candidate.suffix == "":
         options.extend([candidate.with_suffix(".md"), candidate / "index.md", candidate / "README.md"])
@@ -52,6 +53,7 @@ def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
             return rel
     return None
 
+
 def main() -> None:
     files = sorted(p.relative_to(DOCS) for p in DOCS.rglob("*.md")
                    if p.name not in EXCLUDED and not any(part.startswith(".") for part in p.parts))
@@ -60,33 +62,84 @@ def main() -> None:
     titles = {p: page_title(p, contents[p]) for p in files}
     edges: set[tuple[Path, Path]] = set()
     for source in files:
-        targets = [match.group(1) for match in LINK_RE.finditer(contents[source])]
+        targets = [m.group(1) for m in LINK_RE.finditer(contents[source])]
         targets.extend(WIKI_RE.findall(contents[source]))
         for target in targets:
             resolved = resolve_target(source, target.split("|", 1)[0], pages)
             if resolved and resolved != source:
                 edges.add((source, resolved))
 
-    fence = chr(96) * 3
-    lines = [
-        "# 文档知识图谱", "",
-        "> 由 GitHub Actions 自动生成。图谱从 docs/ 下的 Markdown 文件及其站内链接提取；修改文档后会自动更新。", "",
-        f"- **文档数量：** {len(files)}",
-        f"- **站内关联：** {len(edges)}",
-        "- **阅读方式：** 下方图谱展示文档之间的站内链接关系；文档索引可直接打开原文。", "",
-        "## 知识关系图", "", fence + "mermaid", "flowchart LR",
-    ]
-    for path in files:
-        label = clean_label(f"{titles[path]} · {path.as_posix()}", 72).replace('"', "'")
-        lines.append(f'  {node_id(path)}["{label}"]')
-    for source, target in sorted(edges, key=lambda edge: (edge[0].as_posix(), edge[1].as_posix())):
-        lines.append(f"  {node_id(source)} --> {node_id(target)}")
-    lines.extend([fence, "", "## 文档索引", ""])
-    for path in files:
-        lines.append(f"- [{titles[path]}]({path.as_posix()})")
-    lines.extend(["", "---", "", "*本页面由 scripts/generate_knowledge_graph.py 生成，请勿手动编辑。*", ""])
-    OUTPUT.write_text("\n".join(lines), encoding="utf-8")
-    print(f"Generated {OUTPUT.relative_to(ROOT)}: {len(files)} documents, {len(edges)} links")
+    degree = {p: 0 for p in files}
+    for source, target in edges:
+        degree[source] += 1
+        degree[target] += 1
+    nodes = [{
+        "id": node_id(path),
+        "title": titles[path],
+        "path": path.as_posix(),
+        "url": path.with_suffix("").as_posix() + ("/" if path.name.lower() in {"index.md", "readme.md"} else "/"),
+        "degree": degree[path],
+        "group": path.parts[0] if len(path.parts) > 1 else "首页与指南",
+    } for path in files]
+    links = [{"source": node_id(source), "target": node_id(target)} for source, target in sorted(edges)]
+    OUTPUT_JSON.write_text(json.dumps({"nodes": nodes, "links": links}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    OUTPUT_MD.write_text("""# 全站知识图谱
+
+探索 Wiki 文档之间的连接。拖动节点调整布局，滚轮缩放，拖动空白区域平移；点击节点打开对应文档。
+
+<div class="knowledge-graph-app">
+  <div class="kg-toolbar">
+    <input id="kg-search" type="search" placeholder="搜索文章标题或路径…" aria-label="搜索知识图谱">
+    <button id="kg-reset" type="button">重置视图</button>
+    <button id="kg-labels" type="button" aria-pressed="true">隐藏标签</button>
+  </div>
+  <div class="kg-stats" id="kg-stats">正在加载知识图谱…</div>
+  <div class="kg-canvas-wrap">
+    <canvas id="kg-canvas" aria-label="可交互知识图谱"></canvas>
+    <div class="kg-tooltip" id="kg-tooltip" hidden></div>
+  </div>
+  <p class="kg-hint">操作提示：拖动节点可调整布局 · 拖动背景可平移 · 滚轮缩放 · 点击节点阅读文档</p>
+  <noscript>知识图谱需要启用 JavaScript。你仍可通过左侧导航浏览所有文档。</noscript>
+</div>
+
+<script src="../javascripts/knowledge-graph.js" defer></script>
+
+## 浏览全部文档
+
+<div id="kg-index" class="kg-index"><p>文档索引正在加载…</p></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const box = document.getElementById("kg-index");
+  if (!box) return;
+  try {
+    const response = await fetch("../knowledge-graph.json");
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const graph = await response.json();
+    box.innerHTML = "";
+    const list = document.createElement("div");
+    list.className = "kg-index-grid";
+    graph.nodes.sort((a, b) => a.title.localeCompare(b.title, "zh-CN")).forEach(node => {
+      const link = document.createElement("a");
+      link.href = node.url;
+      link.textContent = node.title;
+      link.title = node.path;
+      list.appendChild(link);
+    });
+    box.appendChild(list);
+  } catch (error) {
+    box.textContent = "文档索引加载失败，请刷新页面或使用站点导航。";
+  }
+});
+</script>
+
+---
+
+*本页面由 scripts/generate_knowledge_graph.py 自动生成，请勿手动编辑。*
+""", encoding="utf-8")
+    print(f"Generated interactive graph: {len(nodes)} documents, {len(links)} links")
+
 
 if __name__ == "__main__":
     main()
