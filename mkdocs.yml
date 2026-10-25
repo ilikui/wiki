@@ -34,8 +34,8 @@ theme:
         icon: material/brightness-4
         name: 切换到浅色模式
   font:
-    text: Inter
-    code: Roboto Mono
+    text: LXGW WenKai
+    code: JetBrains Mono
 
 nav:
     - 产品: index.md
@@ -126,6 +126,9 @@ markdown_extensions:
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
   - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
