@@ -77,7 +77,7 @@ def main() -> None:
         "id": node_id(path),
         "title": titles[path],
         "path": path.as_posix(),
-        "url": path.with_suffix("").as_posix() + ("/" if path.name.lower() in {"index.md", "readme.md"} else "/"),
+        "url": ("/" if path.name.lower() in {"index.md", "readme.md"} and path.parent.as_posix() == "." else (path.parent.as_posix() + "/" if path.name.lower() in {"index.md", "readme.md"} else path.with_suffix("").as_posix() + "/")),
         "degree": degree[path],
         "group": path.parts[0] if len(path.parts) > 1 else "首页与指南",
     } for path in files]
