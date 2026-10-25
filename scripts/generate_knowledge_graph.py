@@ -23,7 +23,7 @@ def page_title(path: Path, text: str) -> str:
     return clean_label(match.group(1)) if match else clean_label(path.stem.replace("-", " ").replace("_", " "))
 
 def node_id(path: Path) -> str:
-    return "n_" + re.sub(r"[^a-zA-Z0-9_]", "_", path.relative_to(DOCS).as_posix())
+    return "n_" + re.sub(r"[^a-zA-Z0-9_]", "_", path.as_posix())
 
 def resolve_target(source: Path, target: str, pages: set[Path]) -> Path | None:
     target = target.strip().strip("<>").split()[0] if target.strip() else ""
