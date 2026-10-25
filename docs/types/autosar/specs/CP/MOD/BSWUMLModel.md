@@ -1,0 +1,13 @@
+# Basic Software UML Model (`BSWUMLModel`)
+
+> [返回本类索引](index.md)
+
+| 属性 | 值 |
+|---|---|
+| 平台 | CP |
+| 类别 | MOD — 元模型（Model） |
+| UID | 052 |
+| 规范版本 | R26-11 |
+
+## 本地文件
+

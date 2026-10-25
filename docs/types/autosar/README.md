@@ -19,6 +19,10 @@
 - [CDD、ARXML 自动化与工具链集成工程答案](answers/CDD-ARXML自动化与工具链工程答案.md)  
 > - 后续继续覆盖诊断、NvM、OS/多核、功能安全、信息安全、Adaptive、工具链与工程排障。
 
+**规范笔记库**（同步自工作区 `AUTOSAR_Module_Notes`，R25-11/R26-11 全部 345 篇官方规范）：
+- [AUTOSAR 规范笔记库总索引](specs/README.md) — 按平台/类别 345 篇模块笔记，每章含中文标题与正文节选
+- [笔记库使用指南](specs/HELP.md) — 笔记库工具链 / AUTOSAR 开发工具链 / 如何读懂 ARXML / RTE 详解 / 网络信号配置操作逻辑
+
 记录AUTOSAR学习的1000个问题：
 
 **基础概念**

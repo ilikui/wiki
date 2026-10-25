@@ -61,7 +61,10 @@ nav:
         - README: dev-guide/README.md
     - 1000 问知识体系:
         - 总目录: types/README.md
-        - AUTOSAR: types/autosar/README.md
+        - AUTOSAR:
+            - 1000 问总表: types/autosar/README.md
+            - 规范笔记库: types/autosar/specs/README.md
+            - 笔记库使用指南: types/autosar/specs/HELP.md
         - 嵌入式: types/embedded/README.md
         - C 语言: types/c-language/README.md
         - AI 与大模型: types/ai/README.md
