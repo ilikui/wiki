@@ -40,6 +40,7 @@ theme:
 nav:
     - 产品: index.md
     - API: dev-guide/api.md
+    - 知识图谱: knowledge-graph.md
     - 帮助中心: getting-started.md
     - 更新日志: user-guide/README.md
     - 用户手册: 
