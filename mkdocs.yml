@@ -59,19 +59,19 @@ nav:
         - Translations: dev-guide/translations.md
         - README: dev-guide/README.md
     - 1000 问知识体系:
-        - 总目录: 1000-questions/README.md
-        - AUTOSAR: 1000-questions/autosar/README.md
-        - 嵌入式: 1000-questions/embedded/README.md
-        - C 语言: 1000-questions/c-language/README.md
-        - AI 与大模型: 1000-questions/ai/README.md
-        - 考研数学: 1000-questions/math/README.md
-        - 概率论与数理统计: 1000-questions/probability/README.md
-        - 软考与系统架构: 1000-questions/soft-exam/README.md
-        - 历史: 1000-questions/history/README.md
-        - 儿童教育: 1000-questions/child-education/README.md
-        - MATLAB / Simulink: 1000-questions/matlab/README.md
-        - 电气工程: 1000-questions/electrical/README.md
-        - 电气工程学习入口: 1000-questions/electrical-overview/README.md
+        - 总目录: types/README.md
+        - AUTOSAR: types/autosar/README.md
+        - 嵌入式: types/embedded/README.md
+        - C 语言: types/c-language/README.md
+        - AI 与大模型: types/ai/README.md
+        - 考研数学: types/math/README.md
+        - 概率论与数理统计: types/probability/README.md
+        - 软考与系统架构: types/soft-exam/README.md
+        - 历史: types/history/README.md
+        - 儿童教育: types/child-education/README.md
+        - MATLAB / Simulink: types/matlab/README.md
+        - 电气工程: types/electrical/README.md
+        - 电气工程学习入口: types/electrical-overview/README.md
     - PPT:
         - ppt: ppt/matlab.md
     - CS:
