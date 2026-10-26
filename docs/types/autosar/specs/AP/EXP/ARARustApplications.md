@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | AP |
-| 类别 | EXP — 解释性指南（Explanation） |
-| UID | 1079 |
-| 规范版本 | R25-11 |
+| 属性     | 值                              |
+| -------- | ------------------------------- |
+| 平台     | AP                              |
+| 类别     | EXP — 解释性指南（Explanation） |
+| UID      | 1079                            |
+| 规范版本 | R25-11                          |
 
 ## 本地文件
 
@@ -24,7 +24,8 @@ The target audience of this document is application developers who want to write
 ## 章节详细内容
 
 ### 1. 简介
-*原文标题：Introduction*
+
+_原文标题：Introduction_
 
 This document introduces the current proposal for a programmer's interface to write AUTOSAR Adaptive applications in the Rust programming language. This API was created within the AUTOSAR Rust working group.
 
@@ -40,15 +41,15 @@ Rust is a relatively recent programming language with modern tooling. It is conv
 
 The introduction of Rust aims to address the following challenges with C++:
 
-| Use cases | C++ approach | Rust approach |
-|---|---|---|
-| Language design focus | Speed and maximum flexibility | Correctness with good enough speed |
-| Memory management | Speed-optimized manual memory management | Formalized ownership based memory management, checked at compile time |
-| Data protection for multithreaded application | Association between critical sections and data by documentation, checked by runtime instrumentation | Send and Sync restrict thread local and concurrent access, checked at compile time |
-| Object semantics | Objects are copied by default, aliasing between pointers | Objects are moved by default, read-write interference is prevented across modules |
-| Out of range detection for array-like data type | No boundary check by default. Checking bounds is the more verbose variant. | Always checked at compile or runtime, unchecked access is verbose and requires careful review |
-| Object initialization | Initialization checked by static analyzers | Object initialization required by compiler |
-| Modules | Introduced in C++20 | Modules are a core language feature. |
+| Use cases                                       | C++ approach                                                                                        | Rust approach                                                                                 |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Language design focus                           | Speed and maximum flexibility                                                                       | Correctness with good enough speed                                                            |
+| Memory management                               | Speed-optimized manual memory management                                                            | Formalized ownership based memory management, checked at compile time                         |
+| Data protection for multithreaded application   | Association between critical sections and data by documentation, checked by runtime instrumentation | Send and Sync restrict thread local and concurrent access, checked at compile time            |
+| Object semantics                                | Objects are copied by default, aliasing between pointers                                            | Objects are moved by default, read-write interference is prevented across modules             |
+| Out of range detection for array-like data type | No boundary check by default. Checking bounds is the more verbose variant.                          | Always checked at compile or runtime, unchecked access is verbose and requires careful review |
+| Object initialization                           | Initialization checked by static analyzers                                                          | Object initialization required by compiler                                                    |
+| Modules                                         | Introduced in C++20                                                                                 | Modules are a core language feature.                                                          |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -57,7 +58,8 @@ The introduction of Rust aims to address the following challenges with C++:
 Despite availability of several Rust binding generators, we introduce manually implemented Rust bindings for AUTOSAR Adaptive APIs to provide community agreed and reviewed bindings, and also avoid inconsistency of automated data types conversion between languages. This approach may change in the future as Rust binding generators become more feature rich and production ready. In our Rust binding methodology, we would like to utilize the best of both worlds, top-down (package design drives implementation) design and bottom-up (interface implementation leads to usable packages structure) to introduce Rust bindings that will be easy to understand, fast to adapt to new projects and minimize incorrect usage cases.
 
 ### 5. Layered 架构
-*原文标题：Layered architecture*
+
+_原文标题：Layered architecture_
 
 Starting with a simple application, omitting ARXML generated code for now, we see that Rust application support needs numerous layers. The Rust API adapter can't directly talk to the AUTOSAR C++ API, because there is no common binary interoperability between Rust and C++ objects. A language independent binary interface, an ABI, is needed.
 
@@ -65,60 +67,65 @@ One option for a future option to define this interface for multiple languages a
 
 Please note that there exists no C code for this purpose, it merely uses the C compatible subset of Rust and C++ to interoperate.
 
-| Rust Application | < |
-|---|---|
-| AUTOSAR Rust API | Rust standard library |
-| AUTOSAR Rust adapter | ^ |
-| Language neutral binary interface (ABI) | ^ |
-| Language neutral to C++ adapter | ^ |
-| AUTOSAR C++ API | ^ |
-| AUTOSAR C++ stack | ^ |
-| POSIX PSE51 API | < |
-| Operating system | < |
+| Rust Application                        | <                     |
+| --------------------------------------- | --------------------- |
+| AUTOSAR Rust API                        | Rust standard library |
+| AUTOSAR Rust adapter                    | ^                     |
+| Language neutral binary interface (ABI) | ^                     |
+| Language neutral to C++ adapter         | ^                     |
+| AUTOSAR C++ API                         | ^                     |
+| AUTOSAR C++ stack                       | ^                     |
+| POSIX PSE51 API                         | <                     |
+| Operating system                        | <                     |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 6. 术语与缩略语定义
-*原文标题：Definition of terms and acronyms*
+
+_原文标题：Definition of terms and acronyms_
 
 Acronyms and abbreviations which have a local scope and therefore are not contained in the AUTOSAR Glossary :
 
 ### 7. 缩略语
-*原文标题：Acronyms and abbreviations*
 
-| Abbreviation / Acronym: | Description: |
-|---|---|
-| ABI | Application Binary Interface |
-| ANSSI | Agence nationale de la sécurité des systèmes d'information |
-| APD | Adaptive Platform Demonstrator |
-| API | Application Programming Interface |
-| ARA | AUTOSAR Adaptive (Platform) |
-| FFI | Foreign Function Interface |
-| I/O | Input/Output |
-| MDG | Model Driven Generation |
-| SDK | Software Development Kit |
-| TDD | Test Driven Development |
-| UML | Unified Modeling Language |
+_原文标题：Acronyms and abbreviations_
+
+| Abbreviation / Acronym: | Description:                                               |
+| ----------------------- | ---------------------------------------------------------- |
+| ABI                     | Application Binary Interface                               |
+| ANSSI                   | Agence nationale de la sécurité des systèmes d'information |
+| APD                     | Adaptive Platform Demonstrator                             |
+| API                     | Application Programming Interface                          |
+| ARA                     | AUTOSAR Adaptive (Platform)                                |
+| FFI                     | Foreign Function Interface                                 |
+| I/O                     | Input/Output                                               |
+| MDG                     | Model Driven Generation                                    |
+| SDK                     | Software Development Kit                                   |
+| TDD                     | Test Driven Development                                    |
+| UML                     | Unified Modeling Language                                  |
 
 Note: ABI and API are easily confused.
 
 ### 8. 定义 of terms
-*原文标题：Definition of terms*
+
+_原文标题：Definition of terms_
 
 Definition of terms which are not self-explaining and are needed to understand the explanations in this document.
 
-| Terms: | Description: |
-|---|---|
-| async | asynchronous |
-| impl | implementation |
+| Terms: | Description:   |
+| ------ | -------------- |
+| async  | asynchronous   |
+| impl   | implementation |
 
 ### 9. 相关文档
-*原文标题：Related Documentation*
+
+_原文标题：Related Documentation_
 
 ### 10. 输入文档与相关标准规范
-*原文标题：Input documents & related standards and norms*
 
-Programming rules for secure applications by ANSSI  High Assurance Rust standard  SAE International good practices  Qualified toolchain for Functional Safety and matching specification
+_原文标题：Input documents & related standards and norms_
+
+Programming rules for secure applications by ANSSI High Assurance Rust standard SAE International good practices Qualified toolchain for Functional Safety and matching specification
 
 ### 11. Rust language tutorials
 
@@ -126,22 +133,24 @@ This chapter first introduces the Rust programming language and then the more re
 
 Rust is a complex multi-paradigm programming language. While it might take a while to learn it compared to Python or Swift, it pays off when designing large-scale projects with high stability and security requirements. There is a number of free books and tutorials available on the Internet:
 
-* The official documentation
-* A good free course
-* C and C++ developers might find a lot of familiar concepts like manual memory management, RAII, destructors. They can read  and  to speed up the learning process.
-* The Rust cheat sheet
+- The official documentation
+- A good free course
+- C and C++ developers might find a lot of familiar concepts like manual memory management, RAII, destructors. They can read and to speed up the learning process.
+- The Rust cheat sheet
 
 ### 12. Tool installation
 
-We recommend using the version of the toolchain (rustc/cargo) included in the Rust-enabled ARA SDK. See  for the details.
+We recommend using the version of the toolchain (rustc/cargo) included in the Rust-enabled ARA SDK. See for the details.
 
 ### 13. Which Advanced Rust 概念 to know
-*原文标题：Which Advanced Rust concepts to know*
+
+_原文标题：Which Advanced Rust concepts to know_
 
 The Rust binding to AUTOSAR Adaptive uses asynchronous programming to minimize the number of necessary threads and context switches. So Asynchronous Rust is an advanced topic end users should be familiar with.
 
 ### 14. Asynchronous Rust：futures, streams, tasks
-*原文标题：Asynchronous Rust: futures, streams, tasks*
+
+_原文标题：Asynchronous Rust: futures, streams, tasks_
 
 The main source of information about asynchronous Rust is . Here is a short overview of its features.
 
@@ -149,7 +158,7 @@ While the identically named C++ feature std::async is typically based on a threa
 
 Using the AUTOSAR specific ara::core::Future::then extension to the C++ std::future already reduces context switches and is more efficient than a blocking method invocation, but also reduces readability by introducing nested callbacks. Coroutines, like co_await and async Rust functions, can re-linearize this callback code again.
 
-Diagram  shows how the state machine represented in the Future data structure enables async functions remember their state. So in a way which maintains source-code readability, async automatically resumes execution at the last wait point across invocations of poll until the function finally returns a value.
+Diagram shows how the state machine represented in the Future data structure enables async functions remember their state. So in a way which maintains source-code readability, async automatically resumes execution at the last wait point across invocations of poll until the function finally returns a value.
 
 Since its introduction to Rust in 2018 async became a commonly taught and used language feature. It also showed unique performance advantages in microcontroller environments (see ), which looks promising in context of future AUTOSAR Classic Rust bindings.
 
@@ -159,10 +168,10 @@ Rust supports asynchronous operations to allow time-consuming operations like I/
 
 There are four main Rust packages implementing async executors and features for async operations:
 
-* tokio
-* async-std
-* smol
-* embassy
+- tokio
+- async-std
+- smol
+- embassy
 
 tokio and async-std are the most popular, general-purpose runtimes providing well developed tools for asynchronous and concurrent operations like Future bookkeeping, task scheduling, I/O operations and inter-task synchronization. tokio seems to be more mature and stable. It also covers more features like select for concurrency, however async-std appears to be faster, so a choice between the two depends on importance of high performance.
 
@@ -203,7 +212,8 @@ handler = async_std::task::spawn(async{
 Tasks have to be spawned in the context of an executor, and produce Futures which then get polled by the executor.
 
 ### 18. Main 功能 usage
-*原文标题：Main function usage*
+
+_原文标题：Main function usage_
 
 The life-cycle of an asynchronous Rust application starts by first creating the async executor instance and having it run a top-level task to completion in a blocking manner. This top-level task can only complete when all of its arbitrarily nested sub-tasks have also completed. The common way is to do this in the main function.
 
@@ -212,15 +222,16 @@ Tokio example:
 fn main() {
 let runtime = tokio::runtime::Runtime::new();
 runtime.block(async {
-    //asynchronous operations
-    });
+//asynchronous operations
+});
 }
 
 For convenience, we can use a macro to create an equivalent structure with simplified code:
 
 #
+
 async fn main() {
-    //asynchronous operations
+//asynchronous operations
 }
 
 Similar declarations could be done for the other packages.
@@ -232,8 +243,9 @@ Async allows for the continuation of program execution during time-consuming ext
 For example async accessing a file:
 
 #
+
 async fn main() -> io::Result<()> {
-    let mut f = File::open("foo.txt").await?;
+let mut f = File::open("foo.txt").await?;
 }
 
 These packages also include features to simplify performing async read/write operations, especially when we have multiple connections assigned to multiple tasks, and all of them could perform reads and/or writes in parallel.
@@ -243,14 +255,14 @@ let (mut rd, mut wr) = io::split(socket);
 
 // Write data in the background
 tokio::spawn(async move {
-    wr.write_all(b"hello\r\n").await?;
-    wr.write_all(b"world\r\n").await?;
+wr.write_all(b"hello\r\n").await?;
+wr.write_all(b"world\r\n").await?;
 })?;
 
 and somewhere else:
 
 loop {
-    let n = rd.read(&mut buf).await?
+let n = rd.read(&mut buf).await?
 }
 
 ### 20. Streams
@@ -260,16 +272,19 @@ A stream is an asynchronous series of values. It is the asynchronous equivalent 
 use tokio_stream::StreamExt;
 
 #
+
 async fn main() {
-    let mut stream = tokio_stream::iter(&);
+let mut stream = tokio_stream::iter(&);
 
     while let Some(v) = stream.next().await {
         println!("GOT = {:?}", v);
     }
+
 }
 
 ### 21. 同步
-*原文标题：Synchronization*
+
+_原文标题：Synchronization_
 
 All async runtime packages provide methods for asynchronous resource sharing and inter-task communication similar to multithreading features (async mutex guards and channels).
 
@@ -278,12 +293,13 @@ Channel communication creates transmitter and receiver (producer and consumer) t
 use tokio::sync::mpsc;
 
 async fn some_computation(input: u32) -> String {
-    format!("the result of computation {}", input)
+format!("the result of computation {}", input)
 }
 
 #
+
 async fn main() {
-    let (tx, mut rx) = mpsc::channel(100);
+let (tx, mut rx) = mpsc::channel(100);
 
     tokio::spawn(async move {
         for i in 0..10 {
@@ -295,13 +311,14 @@ async fn main() {
     while let Some(res) = rx.recv().await {
         println!("got = {}", res);
     }
+
 }
 
 Mutexes could also be used for task synchronization. However, a locked async mutex will yield context of the task and not block the thread. Example:
 
 async fn main() {
-    let data1 = Arc::new(Mutex::new(0));
-    let data2 = Arc::clone(&data1);
+let data1 = Arc::new(Mutex::new(0));
+let data2 = Arc::clone(&data1);
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -309,19 +326,20 @@ async fn main() {
 
 This chapter explains the Adaptive Platform Rust binding for applications.
 
-Section  describes some higher level concepts of the API, section  points to the existing examples and documentation, sections  to  guide through adaptive Rust application code, starting at the basic APIs, then introducing ara::com and finally creating a new ErrorDomain.
+Section describes some higher level concepts of the API, section points to the existing examples and documentation, sections to guide through adaptive Rust application code, starting at the basic APIs, then introducing ara::com and finally creating a new ErrorDomain.
 
 ### 23. AUTOSAR Rust API 概述
-*原文标题：AUTOSAR Rust API overview*
+
+_原文标题：AUTOSAR Rust API overview_
 
 The Adaptive Platform Rust binding is an example of integrating Rust-based applications into Adaptive AUTOSAR ecosystem (APD in this particular case). It can be used to develop AUTOSAR applications in Rust, which could bring enhanced memory safety combined with high performance and modern high-level abstractions. It may prove especially useful when building data processing, network protocols, command line interfaces, security applications or virtually any long-running services with high requirements towards robustness, memory footprint, and availability. Also, it is possible to port existing ARA-based applications to Rust, as it was done with radar and fusion sample applications.
 
 The Rust binding grants access to the most important parts of ARA API, such as:
 
-* Core Types: String, Result, etc.
-* Execution Management
-* Logging
-* Communication
+- Core Types: String, Result, etc.
+- Execution Management
+- Logging
+- Communication
 
 Other clusters could also be added in the future upon request.
 
@@ -330,7 +348,8 @@ The Rust API mostly resembles the existing the C++ counterpart while following R
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 24. Finding the 示例代码
-*原文标题：Finding the example code*
+
+_原文标题：Finding the example code_
 
 The AUTOSAR Adaptive Demonstrator examples have a rust subfolder. Within this folder there is the ara folder containing the Rust adapter for AUTOSAR Adaptive APIs, an examples folder containing several example applications and a UML folder containing styles for Enterprise Architect. Each of these Rust folders have C++ and Rust sources built with CMake and cargo respectively. (cpp and src folders.)
 
@@ -343,11 +362,12 @@ cargo doc --no-deps --open
 Here creating the documentation for dependencies is skipped and the generated documentation is opened in a web browser.
 
 ### 26. Minimal 示例
-*原文标题：Minimal example*
+
+_原文标题：Minimal example_
 
 First, let's install a Rust-enabled version AUTOSAR Adaptive SDK a.k.a. ARA SDK. Here we'll assume it's installed to the directory /opt/sdk. Next, we need to initialize the SDK by running:
 
-source /opt/sdk/environment*
+source /opt/sdk/environment\*
 
 Also, there is an optional dependency on the clang-format that formats the C++ source code. If it is not installed, the generated C++ code will be left unformatted. It can be set up by means of the packet manager of the development machine. For instance, Ubuntu users could use the following command:
 
@@ -365,7 +385,8 @@ Here, core2-32-poky-linux is the target system root directory of a 32-bit Intel 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 27. Writing a simple ara：：com client
-*原文标题：Writing a simple ara::com client*
+
+_原文标题：Writing a simple ara::com client_
 
 In order to communicate with other APD programs, an application is supposed to have ARXML configuration and be integrated into the APD machine configuration. In our case, the easiest option is to simply reuse the configuration of one of existing example applications. The SDK includes a tool called aragen-rs generating Rust projects out of ARA COM wrappers for a particular APD application. Let's generate one for the fusion application:
 
@@ -377,7 +398,7 @@ This will create a new project fusion_gen containing a Rust package and a C++/CM
 cd fusion_gen
 ./build.sh
 
-After that, we will be able to link it to our example project. First, fusion_gen and futures dependencies should be added to Cargo.toml. Also,  path should now point the symlink ara inside the fusion_gen folder:
+After that, we will be able to link it to our example project. First, fusion_gen and futures dependencies should be added to Cargo.toml. Also, path should now point the symlink ara inside the fusion_gen folder:
 
 futures = "0.3.21"
 fusion_gen = { version = "0.1.0", path = "fusion_gen" }
@@ -391,7 +412,8 @@ Now we can implement the client code.
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 28. Implementing an ara：：com 服务
-*原文标题：Implementing an ara::com service*
+
+_原文标题：Implementing an ara::com service_
 
 Services react to method calls and send events.
 
@@ -418,16 +440,16 @@ Now we can start writing the service code. To implement methods, let's create an
 use radar_gen::radar_skeleton;
 use async_trait::async_trait;
 use radar_gen::types::{
-    radar::{AdjustOutput, CalibrateOutput},
-    FusionVariant, Position,
+radar::{AdjustOutput, CalibrateOutput},
+FusionVariant, Position,
 };
 
-struct RadarImp { /* member variables */ }
+struct RadarImp { /_ member variables _/ }
 
 impl RadarImp {
-    fn new() -> Self {
-        Self { /* member variables */ }
-    }
+fn new() -> Self {
+Self { /_ member variables _/ }
+}
 }
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
@@ -444,28 +466,30 @@ use ara::core::ErrorCode;
 use once_cell::sync::Lazy;
 
 #
+
 #
+
 pub(crate) enum MyErrorDomain {
-    NoInstanceFound,
+NoInstanceFound,
 }
 
 impl ara::core::ErrorDomain for MyErrorDomain {
-    type CodeType = MyErrorDomain;
-    extern "C" fn name() -> *const u8 {
-        c_string_ptr!("MyErrorDomain")
-    }
-    extern "C" fn message(elem: i32) -> *const u8 {
-        match MyErrorDomain::from_repr(elem) {
-            Some(MyErrorDomain::NoInstanceFound) => {
-                c_string_ptr!("No Radar instance found")
-            }
-            None => c_string_ptr!("unknown"),
-        }
-    }
-    fn id() -> u64 {
-        // This number is assigned on a vehicle level
-        1234
-    }
+type CodeType = MyErrorDomain;
+extern "C" fn name() -> *const u8 {
+c_string_ptr!("MyErrorDomain")
+}
+extern "C" fn message(elem: i32) -> *const u8 {
+match MyErrorDomain::from_repr(elem) {
+Some(MyErrorDomain::NoInstanceFound) => {
+c_string_ptr!("No Radar instance found")
+}
+None => c_string_ptr!("unknown"),
+}
+}
+fn id() -> u64 {
+// This number is assigned on a vehicle level
+1234
+}
 }
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
@@ -474,14 +498,15 @@ impl ara::core::ErrorDomain for MyErrorDomain {
 
 This chapter briefly describes the internal adapter layers between the Rust application and the C++ stack.
 
-Chapter  describes why a C interface is needed, chapter  describes the basic C interface types, chapter  describes the logic of the Rust to C layer, chapter  describes the ARMXL generated C interface, chapter  discusses program start and termination, chapter  discusses documenting Rust code with UML and chapter  explains ownership, lifetime and event timing.
+Chapter describes why a C interface is needed, chapter describes the basic C interface types, chapter describes the logic of the Rust to C layer, chapter describes the ARMXL generated C interface, chapter discusses program start and termination, chapter discusses documenting Rust code with UML and chapter explains ownership, lifetime and event timing.
 
 ### 31. Application linking
 
-Currently, Rust projects that interact with C++ can utilize the cxx package. However, in our case, it would be really complicated since we have 2 different C++ runtimes involved: Rust is LLVM based while ARA API is build with gcc. This creates an ABI incompatibility issue, which was sorted out by introducing a C API isolation layer in between. Consequently, Rust applications link to the C++ shared libraries: libara_rust.so for general ARA API wrappers and application-specific *_gen.so ARA COM wrappers generated by the aragen-rs tool, see . The C++ code building is managed by CMake and is similar to C++ APD applications. Linking is done by the SDK-provided linker.
+Currently, Rust projects that interact with C++ can utilize the cxx package. However, in our case, it would be really complicated since we have 2 different C++ runtimes involved: Rust is LLVM based while ARA API is build with gcc. This creates an ABI incompatibility issue, which was sorted out by introducing a C API isolation layer in between. Consequently, Rust applications link to the C++ shared libraries: libara_rust.so for general ARA API wrappers and application-specific \*\_gen.so ARA COM wrappers generated by the aragen-rs tool, see . The C++ code building is managed by CMake and is similar to C++ APD applications. Linking is done by the SDK-provided linker.
 
 ### 32. Foreign 功能接口类型
-*原文标题：Foreign Function Interface types*
+
+_原文标题：Foreign Function Interface types_
 
 This section presents the C structures which are used by both Rust and C++ for interoperability. They are defined in Rust code and then exported to C headers by cbindgen.
 
@@ -489,8 +514,8 @@ Wrapping a C++ type requires understanding its lifetime. If it is a read-only re
 
 If a complex result of a function needs to be passed to Rust, a constant size object could be wrapped in a C struct and variable size objects need to be allocated on the heap requiring a destructor to be called on Drop.
 
-* ErrorCode is of a constant size and typically part of Result
-* ResultWrapper wraps the Result generic. It may contain either an ErrorCode or a Value, which has to be referenced from heap as the size is instantiation specific. If obj is nullptr, then the object contains an Error, i.e. HasValue() is false. There is a static dummy_object used for ara::core::Result. If this object is created on the Rust side, the obj pointer will be invalid if nonzero and require correction before use (as the object is directly stored in the ResultWrapper). This works around the missing stable interface to the Pin objects on the stack.
+- ErrorCode is of a constant size and typically part of Result
+- ResultWrapper wraps the Result generic. It may contain either an ErrorCode or a Value, which has to be referenced from heap as the size is instantiation specific. If obj is nullptr, then the object contains an Error, i.e. HasValue() is false. There is a static dummy_object used for ara::core::Result. If this object is created on the Rust side, the obj pointer will be invalid if nonzero and require correction before use (as the object is directly stored in the ResultWrapper). This works around the missing stable interface to the Pin objects on the stack.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -503,14 +528,16 @@ If the value and callback need to be used multiple times (e.g. event reception),
 If the callback is known to happen exactly once (e.g. find_service or method invocation), the callback can use Box::from_raw to access it. It would have to free the allocated Box. For asynchronous waiting, oneshot channels provide a good solution.
 
 ### 34. ara：：com binding generation
-*原文标题：ara::com binding generation*
+
+_原文标题：ara::com binding generation_
 
 Each AUTOSAR Adaptive application is described in the ARXML format being part of an AUTOSAR Machine. The Communication wrappers (a C++ library and a Rust package) are generated by the aragen-rs command line tool, which is part of the SDK. It reads the ARXML configuration of a specified machine and generates all necessary glue code for a particular application. The primary source of ARXML configuration is the current SDK, which must be initialized beforehand, see . It also supports external ARXML sources (i.e. not a part of the SDK) including the whole machine configurations.
 
 It is recommended to place the generated project inside the folder of the application using it. An example of how to link it is provided in .
 
 ### 35. Proxy 代码
-*原文标题：Proxy code*
+
+_原文标题：Proxy code_
 
 To get the function name, replace SVC with the name of a service, MTD with the name of a method, EVT with the name of an event, and FLD with a field name.
 
@@ -518,13 +545,13 @@ To get the function name, replace SVC with the name of a service, MTD with the n
 
 The interface between the Rust and C++ side uses the following functions:
 
-* `SVC_proxy_StartFindService_` starts the search for a service; its arguments consist of the search parameters, a callback on changes to the list, and opaque user data. Generated for each proxy type.
-* `SVC_proxy_StopFindService` stops a running service search (for FindService)
-* call_MTD One function per method; arguments consist of proxy, the arguments to the method, plus a callback on completion and user_data
-* subscribe_EVT registers a callback passing ownership of the sample pointer to Rust
-* unsubscribe_EVT unregisters a registered event callback
-* get_FLD requests the value of FLD
-* set_FLD modifies the value of FLD
+- `SVC_proxy_StartFindService_` starts the search for a service; its arguments consist of the search parameters, a callback on changes to the list, and opaque user data. Generated for each proxy type.
+- `SVC_proxy_StopFindService` stops a running service search (for FindService)
+- call_MTD One function per method; arguments consist of proxy, the arguments to the method, plus a callback on completion and user_data
+- subscribe_EVT registers a callback passing ownership of the sample pointer to Rust
+- unsubscribe_EVT unregisters a registered event callback
+- get_FLD requests the value of FLD
+- set_FLD modifies the value of FLD
 
 ### 37. Rust side
 
@@ -532,7 +559,7 @@ The service discovery function creates an oneshot channel, calls StartFindServic
 
 A Proxy offers member functions for event access, field access/manipulation, and method invocation.
 
-An event is referenced via an Event structure which provides a subscribe method. Subscribing for an event creates an mpsc (MultiPublisherSingleConsumer) channel, which provides a Stream to read from. A callback is registered to forward received OwnedSamplePtrs to the channel. A subscription is kept alive by the handle object returned by a subscribe_ call: dropping the object would automatically unsubscribe the client code from the event.
+An event is referenced via an Event structure which provides a subscribe method. Subscribing for an event creates an mpsc (MultiPublisherSingleConsumer) channel, which provides a Stream to read from. A callback is registered to forward received OwnedSamplePtrs to the channel. A subscription is kept alive by the handle object returned by a subscribe\_ call: dropping the object would automatically unsubscribe the client code from the event.
 
 A field is accessed via the accessor methods of the Field structure. Depending on the field specification, it can support setting, getting, and subscription to field updates. Similarly to events, field subscription produces a subscription handle unsubscribing the client from the field updates upon dropping it.
 

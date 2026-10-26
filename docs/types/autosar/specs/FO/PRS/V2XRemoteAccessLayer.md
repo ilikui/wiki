@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | FO |
-| 类别 | PRS — 协议规范（Protocol Specification） |
-| UID | 1033 |
-| 规范版本 | R25-11 |
+| 属性     | 值                                       |
+| -------- | ---------------------------------------- |
+| 平台     | FO                                       |
+| 类别     | PRS — 协议规范（Protocol Specification） |
+| UID      | 1033                                     |
+| 规范版本 | R25-11                                   |
 
 ## 本地文件
 
@@ -28,38 +28,44 @@ The V2xRAL protocol is a lightweight protocol to provide a minimum set of contro
 ## 章节详细内容
 
 ### 1. 简介 and 概述
-*原文标题：Introduction and overview*
+
+_原文标题：Introduction and overview_
 
 This protocol specification enables to exchange of format, message sequences and semantics of the AUTOSAR Protocol V2XRemoteAccessLayer (V2xRAL).
 
 The protocol allows to exchange information between a node that runs the V2x stack with a node that runs the Remote Access Layer via a communication bus. This allows to separate the Access Layer for radio transmission from the V2x stack. As a result, lightweight devices with standardized interfaces for a smart antenna can be built that communicate with a more powerful node that runs the region-specific V2x stack.
 
 ### 2. 协议目的 and 目标
-*原文标题：Protocol purpose and objectives*
+
+_原文标题：Protocol purpose and objectives_
 
 The Access Layer is used to perform the radio transmission and reception according to the specification of the wireless communication network. The protocol specification supports the radio transmission technologies, LTE-PC5 (specified in ) and ITS-G5 (). It defines the format of the messages that are exchanged between the V2x stack and the Remote Access Layer.
 
 ### 3. Applicability of the 协议
-*原文标题：Applicability of the protocol*
+
+_原文标题：Applicability of the protocol_
 
 The V2xRAL protocol is explicitly designed to exchange the playoad and control data between the V2x stack and the Remote Access Layer within the car domain. The payload corresponds to the actual data sent or received over the radio network whereas the control data contains information collected during the reception or required for the transmission of messages. This protocol specification is applicable in the car domain in the context of V2X.
 
 ### 4. 约束与假设
-*原文标题：Constraints and assumptions*
+
+_原文标题：Constraints and assumptions_
 
 Within this protocol specification, it is assumed that the data communication between the V2x stack and the V2x Access Layer will happen over Ethernet, but any other communication technology can be used. The V2xRAL does not specify further details for communication over Ethernet such as VLAN, TCP or UDP, Ports, EtherType or other media dependent details. Security considerations for the communication channel are also not in the scope. It is assumed that any security protocol such as MACsec, IPsec or TLS could be used, since the V2xRAL is located on top of these layers.
 
 The protocol does not prevent a duplication of V2x messages. Thus, if the V2XRemoteAccessLayer receives for any reason a V2x message twice from the radio network, it will also forward this frame twice on the network. Therefore, a sequence counter or transaction ID or any other means to identify a previously received or transmitted frame via this protocol is not observed or detected.
 
 ### 5. 限制
-*原文标题：Limitations*
+
+_原文标题：Limitations_
 
 The V2xRAL is specified for the car domain and is dedicated to be used with the V2x stack as specified in AUTOSAR. It might be that the usage of the V2xRAL does not provide sufficient parameters. But the protocol should be flexible enough to be extended even beyond this specification.
 
 ### 6. Dependencies
 
 ### 7. Dependencies to other 协议 layers
-*原文标题：Dependencies to other protocol layers*
+
+_原文标题：Dependencies to other protocol layers_
 
 The V2xRAL protocol is a lightweight protocol to provide a minimum set of control data besides the payload to perform radio network communication and does not depend on any other protocols. Due to the minimum set of data it can be exchanged within a raw Ethernet frame, but can also be placed on top of a protocol such as TCP/IP. Usage of TCP/IP may be required if protocols like IPsec or TLS need to be used for security reason.
 
@@ -84,81 +90,92 @@ The V2x stack node generates the V2x messages such as CAM, DENM or BSM and wants
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 12. Use case 定义
-*原文标题：Use case definition*
 
-| ID | Name | Description |
-|---|---|---|
-| UC_0001 | ITS-G5 | Radio network is based on ITS-G5 (IEEE 802.11.p) |
-| UC_0002 | LTE-PC5 | Radio network is based on LTE-PC5. |
+_原文标题：Use case definition_
+
+| ID      | Name    | Description                                      |
+| ------- | ------- | ------------------------------------------------ |
+| UC_0001 | ITS-G5  | Radio network is based on ITS-G5 (IEEE 802.11.p) |
+| UC_0002 | LTE-PC5 | Radio network is based on LTE-PC5.               |
 
 ### 13. UC_0001 "Radio 网络 based on ITS-G5"
-*原文标题：UC_0001 "Radio network based on ITS-G5"*
 
-The protocol is used if ITS stations are communicating according to the standard defined according to . This specification is applied for ITS-stations in  and . Especially the V2x stack for Europe is using this technology. It supports an architecture where the access layer with the antenna can be separated from the actual processing of the V2x stack.
+_原文标题：UC_0001 "Radio network based on ITS-G5"_
+
+The protocol is used if ITS stations are communicating according to the standard defined according to . This specification is applied for ITS-stations in and . Especially the V2x stack for Europe is using this technology. It supports an architecture where the access layer with the antenna can be separated from the actual processing of the V2x stack.
 
 ### 14. UC_0002 "Radio 网络 based on LTE-PC5"
-*原文标题：UC_0002 "Radio network based on LTE-PC5"*
 
-This protocol is applicable if a V2x stack and the access layer shall be separated, due to the vehicle architecture. It is applicable if radio network technology according to  is used, but the access layer and the V2x stack do not reside in the same device.
+_原文标题：UC_0002 "Radio network based on LTE-PC5"_
+
+This protocol is applicable if a V2x stack and the access layer shall be separated, due to the vehicle architecture. It is applicable if radio network technology according to is used, but the access layer and the V2x stack do not reside in the same device.
 
 ### 15. 相关文档
-*原文标题：Related documentation*
+
+_原文标题：Related documentation_
 
 ### 16. 输入文档与相关标准规范
-*原文标题：Input documents & related standards and norms*
+
+_原文标题：Input documents & related standards and norms_
 
 ### 17. 相关规范
-*原文标题：Related specification*
+
+_原文标题：Related specification_
 
 AUTOSAR provides a General Specification on Basic Software modules , which is also valid for the V2XRemoteAccessLayer.
 
 Thus, the specification SWS BSW General shall be considered as additional and required specification for V2xRAL.
 
 ### 18. 协议需求
-*原文标题：Protocol Requirements*
+
+_原文标题：Protocol Requirements_
 
 Not applicable.
 
 ### 19. 术语与缩略语定义
-*原文标题：Definition of terms and acronyms*
+
+_原文标题：Definition of terms and acronyms_
 
 ### 20. 缩略语
-*原文标题：Acronyms and abbreviations*
 
-| Abbreviation / Acronym: | Description: |
-|---|---|
-| 3GPP | The 3rd Generation Partnership Project provides environment to produce the Reports and Specifications that define 3GPP technologies. |
-| 5GAA | The 5G Automotive Association is a global, cross-industry organisation to develop future mobility and transportation services. |
-| C-V2X | Cellular V2X. Communication through a cellular modem. |
-| BSM | Basic Safety Message. |
-| CAM | Cooperative Awareness Message. |
-| CBR | Channel Busy Ratio. |
-| DCC | Decentralized Congestion Control. |
-| DENM | Decentralized Environmental Notification Message. |
-| L2ID | Layer 2 ID (equivalent to a "Message Authentication Code" for Ethernet). |
-| MAC | Medium Access Control. |
-| MDR | Maximum Data Rate. |
-| PHY | Physical Layer. |
-| PPPP | ProSe Per Packet Priority. |
-| V2X | Either vehicle to vehicle (V2V), or vehicle to infrastructure (V2I) and/or infrastructure to vehicle (I2V). This terminology is used for Ad-Hoc networks, not for Vehicle-Backend communication. |
-| V2xRAL | V2x Remote Access Layer |
-| IPC | Inter Process Communication. |
+_原文标题：Acronyms and abbreviations_
+
+| Abbreviation / Acronym: | Description:                                                                                                                                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 3GPP                    | The 3rd Generation Partnership Project provides environment to produce the Reports and Specifications that define 3GPP technologies.                                                             |
+| 5GAA                    | The 5G Automotive Association is a global, cross-industry organisation to develop future mobility and transportation services.                                                                   |
+| C-V2X                   | Cellular V2X. Communication through a cellular modem.                                                                                                                                            |
+| BSM                     | Basic Safety Message.                                                                                                                                                                            |
+| CAM                     | Cooperative Awareness Message.                                                                                                                                                                   |
+| CBR                     | Channel Busy Ratio.                                                                                                                                                                              |
+| DCC                     | Decentralized Congestion Control.                                                                                                                                                                |
+| DENM                    | Decentralized Environmental Notification Message.                                                                                                                                                |
+| L2ID                    | Layer 2 ID (equivalent to a "Message Authentication Code" for Ethernet).                                                                                                                         |
+| MAC                     | Medium Access Control.                                                                                                                                                                           |
+| MDR                     | Maximum Data Rate.                                                                                                                                                                               |
+| PHY                     | Physical Layer.                                                                                                                                                                                  |
+| PPPP                    | ProSe Per Packet Priority.                                                                                                                                                                       |
+| V2X                     | Either vehicle to vehicle (V2V), or vehicle to infrastructure (V2I) and/or infrastructure to vehicle (I2V). This terminology is used for Ad-Hoc networks, not for Vehicle-Backend communication. |
+| V2xRAL                  | V2x Remote Access Layer                                                                                                                                                                          |
+| IPC                     | Inter Process Communication.                                                                                                                                                                     |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 21. 定义 of terms
-*原文标题：Definition of terms*
 
-| Terms: | Description: |
-|---|---|
-| V2x Stack | The V2x stack implements the regional specific requirements for the communication between a vehicle and other road users such as cars, trucks, infrastructures (e.g. traffic light, speed limit), etc. Regions such as China, America or Europe have their own specification. Therefore, there exist several V2x stack implementations. Each one is region-specific. |
-| V2x Message | A V2x message is a message received from another vehicle or Roadside Unit (RSU). The message follows the standard for V2X communication. It is typically encoded in ASN.1 PER coding format. A V2x message is also transmitted by the V2x stack from time to time. |
-| V2x Remote Access Layer | The V2x Remote Access Layer (V2xRAL) is a logical unit that is able to communicate to Off-Board units through LTE-PC5 or ITS-G5. The Remote Access Layer includes the wireless PHY and MAC towards the antenna. This includes channel selection, modulation, congestion control, queuing, priority, QoS, etc. |
+_原文标题：Definition of terms_
+
+| Terms:                  | Description:                                                                                                                                                                                                                                                                                                                                                         |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| V2x Stack               | The V2x stack implements the regional specific requirements for the communication between a vehicle and other road users such as cars, trucks, infrastructures (e.g. traffic light, speed limit), etc. Regions such as China, America or Europe have their own specification. Therefore, there exist several V2x stack implementations. Each one is region-specific. |
+| V2x Message             | A V2x message is a message received from another vehicle or Roadside Unit (RSU). The message follows the standard for V2X communication. It is typically encoded in ASN.1 PER coding format. A V2x message is also transmitted by the V2x stack from time to time.                                                                                                   |
+| V2x Remote Access Layer | The V2x Remote Access Layer (V2xRAL) is a logical unit that is able to communicate to Off-Board units through LTE-PC5 or ITS-G5. The Remote Access Layer includes the wireless PHY and MAC towards the antenna. This includes channel selection, modulation, congestion control, queuing, priority, QoS, etc.                                                        |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 22. 协议规范
-*原文标题：Protocol specification*
+
+_原文标题：Protocol specification_
 
 ### 23. Message format
 
@@ -169,7 +186,8 @@ The protocol does not require any acknowledgement or segmentation.
 Due to restrictions of the payload for V2x messages the V2xRAL message including the additional control header will fit into a single ethernet frame.
 
 ### 24. 控制 Header
-*原文标题：Control Header*
+
+_原文标题：Control Header_
 
 ⌈
 The V2xRAL message is divided into two parts. The first part shall contain control data used by the wireless transport service. The second part shall contain the payload that is used for communication between ITS stations.
@@ -217,32 +235,32 @@ Info: The tolling zone information is defined as a Tag-ID in .
 The control header of the V2xRAL contains information about DCC (see Tag-ID in table below) when sending a packet from the V2x stack to the V2x Remote Access Layer and the CBR when sending a packet from the V2x Remote Access Layer to the V2x stack.
 ⌋
 
-| Name | TAG ID | No. of Bytes | Dir* | Description |
-|---|---|---|---|---|
-| Packet Interval | 0x10 | 1 Byte | Tx | Packet interval for transmission interspace in milliseconds (well-known by the Access Layer for ITS-G5). One increment represents 10 ms. This allows a range of 0..2550 ms for the packet interval in steps of 10 ms. |
+| Name            | TAG ID | No. of Bytes | Dir\* | Description                                                                                                                                                                                                           |
+| --------------- | ------ | ------------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Packet Interval | 0x10   | 1 Byte       | Tx    | Packet interval for transmission interspace in milliseconds (well-known by the Access Layer for ITS-G5). One increment represents 10 ms. This allows a range of 0..2550 ms for the packet interval in steps of 10 ms. |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 27. Radio Transmission Part for LTE-PC5
 
-| Name | TAG ID | No. of Bytes | Dir* | Description |
-|---|---|---|---|---|
-| MDR | 0x30 | 3 Byte | Rx | Maximum data rate in bps (bits per seconds). Value is in the range of 0..1585200. 1585201..16777215: reserved. |
-| CBR | 0x31 | 1 Byte | Rx | Channel busy ratio in the range of 0(=0%) to 100(=100%). 101..255=reserved. |
-| Traffic Period | 0x32 | 1 Byte | Tx | Traffic period. |
+| Name           | TAG ID | No. of Bytes | Dir\* | Description                                                                                                    |
+| -------------- | ------ | ------------ | ----- | -------------------------------------------------------------------------------------------------------------- |
+| MDR            | 0x30   | 3 Byte       | Rx    | Maximum data rate in bps (bits per seconds). Value is in the range of 0..1585200. 1585201..16777215: reserved. |
+| CBR            | 0x31   | 1 Byte       | Rx    | Channel busy ratio in the range of 0(=0%) to 100(=100%). 101..255=reserved.                                    |
+| Traffic Period | 0x32   | 1 Byte       | Tx    | Traffic period.                                                                                                |
 
-* = Traffic Period: 20ms;
-* = Traffic Period: 50ms;
-* = Traffic Period: 100ms;
-* = Traffic Period: 200ms;
-* = Traffic Period: 300ms;
-* = Traffic Period: 400ms;
-* = Traffic Period: 500ms;
-* = Traffic Period: 600ms;
-* = Traffic Period: 700ms;
-* = Traffic Period: 800ms;
-* = Traffic Period: 900ms;
-* = Traffic Period: 1000ms.
+- = Traffic Period: 20ms;
+- = Traffic Period: 50ms;
+- = Traffic Period: 100ms;
+- = Traffic Period: 200ms;
+- = Traffic Period: 300ms;
+- = Traffic Period: 400ms;
+- = Traffic Period: 500ms;
+- = Traffic Period: 600ms;
+- = Traffic Period: 700ms;
+- = Traffic Period: 800ms;
+- = Traffic Period: 900ms;
+- = Traffic Period: 1000ms.
 
 Values 0x0c..0xFF are reserved.
 | PPPP | 0x33 | 1 Byte | Rx/Tx | PPPP: ProSe per Packet Priority in the range of 1..8. 1=highest priority, 8=lowest priority. Values 0 and 9..255 are reserved. |
@@ -251,29 +269,33 @@ Values 0x0c..0xFF are reserved.
 | Dest L2ID | 0x35 | 3 Byte | Rx/Tx | Specifies the destination L2ID of the frame (equiv. to Dst-MAC). |
 | - | 0x00..0x2F, 0x36..0xFF | - | - | Reserved. |
 
-*Dir: Direction of the frame:
+\*Dir: Direction of the frame:
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 28. Message 类型
-*原文标题：Message types*
+
+_原文标题：Message types_
 
 The V2xRAL protocol does not distinguish any message types. Typically, the Control Header comes along with the payload of the V2x message since the control header is pretty small (approx. 20-25 bytes). Combining both, the control and the payload information into the same frame ensures, that the remote access layer always has the adequate control data for the payload. This prevents that the wireless frame is sent with unwanted control data. Considering this, a V2xRAL message without control header is not usable in the context of this protocol. A control header can be sent without payload information but this is rarely applicable. A typical use case is the pseudonym change, where the V2x stack can send a new pseudonym immediately to the V2x Remote Access Layer when commanded.
 
 ### 29. 服务 / Commands
-*原文标题：Services / Commands*
+
+_原文标题：Services / Commands_
 
 There are no services defined for the V2XRemoteAccessLayer protocol. The main use case is the exchange of the payload of V2x messages and its control data between the network layer and the access layer.
 
 One operational service is the change of the pseudonym. In this case, the V2x stack sends a command to the V2XRemoteAccessLayer to change the pseudonym. This information can be triggered by the V2x stack and can be transmitted with or without V2x message payload.
 
 ### 30. Sequences (下层 layer)
-*原文标题：Sequences (lower layer)*
+
+_原文标题：Sequences (lower layer)_
 
 The V2XRemoteAccessLayer protocol is stateless. Therefore, no sequences are specified within this protocol.
 
 ### 31. 错误 messages
-*原文标题：Error messages*
+
+_原文标题：Error messages_
 
 The V2XRemoteAccessLayer does not use any error messages.
 
@@ -284,94 +306,114 @@ The layout of the control header supports backward compatibility. This is achiev
 As a consequence, if the protocol will be extended by new tags and the new tag information is not essential for previous versions of the protocol, the new tags need to be added at the end of the tag fields (not in the middle or at the beginning). For any breaking change of the protocol it is recommended to change the frame type or even the protocol version.
 
 ### 33. 配置 parameters
-*原文标题：Configuration parameters*
+
+_原文标题：Configuration parameters_
 
 There are no configuration items for the V2XRemoteAccessLayer protocol.
 
 ### 34. 协议 usage and 指南
-*原文标题：Protocol usage and guidelines*
+
+_原文标题：Protocol usage and guidelines_
 
 There are no additional guidelines available for this protocol.
 
 ### 35. 附录
-*原文标题：Appendix*
+
+_原文标题：Appendix_
 
 ### 36. History of 规范 Items
-*原文标题：History of Specification Items*
+
+_原文标题：History of Specification Items_
 
 Please note that the lists in this chapter also include specification items that have been removed from the specification in a later version. These specification items do not appear as hyperlinks in the document.
 
 ### 37. 规范 Item History of this document compared to AUTOSAR R25-11.
-*原文标题：Specification Item History of this document compared to AUTOSAR R25-11.*
+
+_原文标题：Specification Item History of this document compared to AUTOSAR R25-11._
 
 ### 38. Added 规范 Items in R26-11
-*原文标题：Added Specification Items in R26-11*
+
+_原文标题：Added Specification Items in R26-11_
 
 none
 
 ### 39. Changed 规范 Items in R26-11
-*原文标题：Changed Specification Items in R26-11*
+
+_原文标题：Changed Specification Items in R26-11_
 
 none
 
 ### 40. Deleted 规范 Items in R26-11
-*原文标题：Deleted Specification Items in R26-11*
+
+_原文标题：Deleted Specification Items in R26-11_
 
 none
 
 ### 41. 规范 Item History of this document compared to AUTOSAR R24-11.
-*原文标题：Specification Item History of this document compared to AUTOSAR R24-11.*
+
+_原文标题：Specification Item History of this document compared to AUTOSAR R24-11._
 
 ### 42. Added 规范 Items in R25-11
-*原文标题：Added Specification Items in R25-11*
+
+_原文标题：Added Specification Items in R25-11_
 
 none
 
 ### 43. Changed 规范 Items in R25-11
-*原文标题：Changed Specification Items in R25-11*
+
+_原文标题：Changed Specification Items in R25-11_
 
 none
 
 ### 44. Deleted 规范 Items in R25-11
-*原文标题：Deleted Specification Items in R25-11*
+
+_原文标题：Deleted Specification Items in R25-11_
 
 none
 
 ### 45. 规范 Item History of this document compared to AUTOSAR R23-11.
-*原文标题：Specification Item History of this document compared to AUTOSAR R23-11.*
+
+_原文标题：Specification Item History of this document compared to AUTOSAR R23-11._
 
 ### 46. Added 规范 Items in R24-11
-*原文标题：Added Specification Items in R24-11*
+
+_原文标题：Added Specification Items in R24-11_
 
 none
 
 ### 47. Changed 规范 Items in R24-11
-*原文标题：Changed Specification Items in R24-11*
+
+_原文标题：Changed Specification Items in R24-11_
 
 none
 
 ### 48. Deleted 规范 Items in R24-11
-*原文标题：Deleted Specification Items in R24-11*
+
+_原文标题：Deleted Specification Items in R24-11_
 
 none
 
 ### 49. 规范 Item History of this document compared to AUTOSAR R22-11.
-*原文标题：Specification Item History of this document compared to AUTOSAR R22-11.*
+
+_原文标题：Specification Item History of this document compared to AUTOSAR R22-11._
 
 ### 50. Added 规范 Items in R23-11
-*原文标题：Added Specification Items in R23-11*
+
+_原文标题：Added Specification Items in R23-11_
 
 | Number | Heading |
-|---|---|
+| ------ | ------- |
 
- |
+|
 
 ### 51. Changed 规范 Items in R23-11
-*原文标题：Changed Specification Items in R23-11*
+
+_原文标题：Changed Specification Items in R23-11_
 
 none
 
 ### 52. Deleted 规范 Items in R23-11
-*原文标题：Deleted Specification Items in R23-11*
+
+_原文标题：Deleted Specification Items in R23-11_
 
 none

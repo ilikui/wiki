@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | AP |
-| 类别 | EXP — 解释性指南（Explanation） |
-| UID | 1071 |
-| 规范版本 | R25-11 |
+| 属性     | 值                              |
+| -------- | ------------------------------- |
+| 平台     | AP                              |
+| 类别     | EXP — 解释性指南（Explanation） |
+| UID      | 1071                            |
+| 规范版本 | R25-11                          |
 
 ## 本地文件
 
@@ -26,7 +26,8 @@ Note that IAM is not a Functional Cluster nor an API. The functionality describe
 ## 章节详细内容
 
 ### 1. 简介
-*原文标题：Introduction*
+
+_原文标题：Introduction_
 
 This document describes the Identity and Access Management (IAM) model used in the AUTOSAR Adaptive Platform. IAM offers a standardized model for AUTOSAR AP components to manage authentication and access operations.
 
@@ -35,17 +36,18 @@ This document also discusses modelling and integration within Adaptive AUTOSAR's
 Note that IAM is not a Functional Cluster nor an API. The functionality described in this document must then be implemented by Functional Clusters and APIs requiring access control. Additional support is provided by the AP Foundation and Services, e.g., Execution Management.
 
 ### 2. 缩略语
-*原文标题：Acronyms and Abbreviations*
+
+_原文标题：Acronyms and Abbreviations_
 
 The glossary below includes acronyms and abbreviations relevant to Identity and Access Management that are not included in the AUTOSAR Glossary.
 
-| Term | Description |
-|---|---|
-| Policy Decision Point (PDP) | The PDP represents the logic in which the access control decision is made. It determines if the application is allowed to perform the requested task. The PDP implementation and setup are not specified in AUTOSAR. |
-| Policy Enforcement Point (PEP) | The PEP represents the logic in which the Access Control Decisions are enforced. It communicates directly with the associated PDP to receive the Access Control Decision. |
-| Access control Policy | Access Control Policies are bound to the targets of calls (i.e., Service interfaces) and are used to express what Identity Information are necessary to access those interfaces. |
-| Access Control Decision | The Access Control Decision is a Boolean value indicating if the requested operation is permitted or not. It is based on the identity of the caller and the Access Control Policy. |
-| Identity | Identity represents properties of an Adaptive Application the access control is decided / enforced upon. |
+| Term                           | Description                                                                                                                                                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Policy Decision Point (PDP)    | The PDP represents the logic in which the access control decision is made. It determines if the application is allowed to perform the requested task. The PDP implementation and setup are not specified in AUTOSAR. |
+| Policy Enforcement Point (PEP) | The PEP represents the logic in which the Access Control Decisions are enforced. It communicates directly with the associated PDP to receive the Access Control Decision.                                            |
+| Access control Policy          | Access Control Policies are bound to the targets of calls (i.e., Service interfaces) and are used to express what Identity Information are necessary to access those interfaces.                                     |
+| Access Control Decision        | The Access Control Decision is a Boolean value indicating if the requested operation is permitted or not. It is based on the identity of the caller and the Access Control Policy.                                   |
+| Identity                       | Identity represents properties of an Adaptive Application the access control is decided / enforced upon.                                                                                                             |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -56,7 +58,8 @@ Identity and Access Management ensures that only the right authorized identities
 More broadly, IAM shall offer a framework that includes processes, policies, and technologies supporting the management of both identities and resources, via authentication and the control of access and permissions.
 
 ### 4. 建模描述
-*原文标题：Model description*
+
+_原文标题：Model description_
 
 The objective of IAM in AUTOSAR AP is essentially to prevent a malfunctioning or compromised Adaptive Application from accessing services or resources that were not intended to be accessed by the application's designer and the integrator.
 
@@ -86,8 +89,8 @@ The application designer can model each interaction point of an application with
 
 Using ara::com 's available meta-model design elements, the application designer can create a model consisting of:
 
-* PortPrototypes referencing a Functional Cluster's PortInterfaces to express the need for using an ARA API,
-* GrantDesigns to request access to specific elements within a Functional Cluster's PortInterface.
+- PortPrototypes referencing a Functional Cluster's PortInterfaces to express the need for using an ARA API,
+- GrantDesigns to request access to specific elements within a Functional Cluster's PortInterface.
 
 The integrator shall accept each requested intent by creating an explicit Grant entity in the deployment model.
 
@@ -102,48 +105,51 @@ AUTOSAR does not fully specify the identification of Adaptive Applications. The 
 The Adaptive Platform implementation's IPC mechanism can encapsulate this functionality and transfer the information to the Policy Enforcement Point. The Policy Enforcement Point shall translate the actual runtime identity (i.e., the Unix user ID) to the model's representation (i.e., the Process). The Policy Decision Point shall then use the reference to the model's runtime instance and the associated Grants to allow or deny access.
 
 ### 9. IAM 集成
-*原文标题：IAM Integration*
+
+_原文标题：IAM Integration_
 
 The IAM model presented above describes the necessary elements needed to enable the description of permissions by developers, and their acknowledgment by integrators during deployment. This, however, will be adapted to each Functional Cluster, and new modelling elements might be specified. Table 4.1 shows the functional clusters for which solutions have already been developed.
 
-| Functional cluster | Description | Reference |
-|---|---|---|
-| Communication Management (COM) | Modelling elements to specify access control to Local and Remote access control instances | SWS_Communication_Management |
-| Firewall | Modelling elements to specify access control to Switch between firewall states | SWS_Firewall |
-| Cryptography | Modelling elements to specify access control for certificates and key slots | SWS_Cryptography |
-| Diagnostics | Modelling elements to specify access control to ara::diag interfaces | SWS_Diagnostics |
-| IDSM | Modelling elements to specify access control to generation of security events, modification of context data, and provision of timestamps | SWS_Intrusion_Detection_System_Manager |
-| PHM | Modelling elements to specify access control to reporting of checkpoints | SWS_Platform_Health_Management |
+| Functional cluster             | Description                                                                                                                              | Reference                              |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| Communication Management (COM) | Modelling elements to specify access control to Local and Remote access control instances                                                | SWS_Communication_Management           |
+| Firewall                       | Modelling elements to specify access control to Switch between firewall states                                                           | SWS_Firewall                           |
+| Cryptography                   | Modelling elements to specify access control for certificates and key slots                                                              | SWS_Cryptography                       |
+| Diagnostics                    | Modelling elements to specify access control to ara::diag interfaces                                                                     | SWS_Diagnostics                        |
+| IDSM                           | Modelling elements to specify access control to generation of security events, modification of context data, and provision of timestamps | SWS_Intrusion_Detection_System_Manager |
+| PHM                            | Modelling elements to specify access control to reporting of checkpoints                                                                 | SWS_Platform_Health_Management         |
 
 ### 10. 错误
-*原文标题：Errors*
+
+_原文标题：Errors_
 
 During the process of granting access to resources, the inability of the PDP to allow access or the subject to reach the PDP or PEP might be the result of insufficient access permissions, invalid requests, unexpected input data, or the non-availability of supporting services. These errors should be specified in ara::core or the Operating System Interface to be applicable in a consistent way across the board.
 
-| Errors | Description |
-|---|---|
-| AccessDenied | The application does not have permission to either access or perform a task on the requested resource. |
-| ServiceUnavailable | The authorization process cannot be completed, e.g., PDP or PEP cannot be reached. |
+| Errors             | Description                                                                                            |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| AccessDenied       | The application does not have permission to either access or perform a task on the requested resource. |
+| ServiceUnavailable | The authorization process cannot be completed, e.g., PDP or PEP cannot be reached.                     |
 
 ### 11. References
 
 Documents which contain IAM specific information are referenced here:
 
 ### 12. Contents of the AUTOSAR 规范
-*原文标题：Contents of the AUTOSAR specification*
+
+_原文标题：Contents of the AUTOSAR specification_
 
 The following table represents which parts of the IAM framework will be defined by AUTOSAR and which parts are up to the developer implementation-wise.
 
-| Description | Affiliated to | Part of |
-|---|---|---|
-| Behavioral description of the IAM framework (regarding interfaces) | AUTOSAR Specification | EXP_IdentityAndAccessManagement |
-| API for communication between Functional clusters implementing a PDP and the PEP in the Adaptive Platform. | Not specified by AUTOSAR |  |
-| The application intents and Access control policies (Manifest file information). | AUTOSAR Specification | TPS_Manifest_Specification |
-| Warnings/error messages that the applications receive on failed authorization. | AUTOSAR Specification | EXP_IdentityAndAccessManagement |
-| API for activity logging. | AUTOSAR Specification | Not yet decided |
-| Contents of the logging information. | AUTOSAR Specification | Not yet decided |
-| Interface between Adaptive Application and Functional Clusters | Not specified by AUTOSAR |  |
-| Identification of Adaptive Applications during runtime | Not specified by AUTOSAR |  |
+| Description                                                                                                | Affiliated to            | Part of                         |
+| ---------------------------------------------------------------------------------------------------------- | ------------------------ | ------------------------------- |
+| Behavioral description of the IAM framework (regarding interfaces)                                         | AUTOSAR Specification    | EXP_IdentityAndAccessManagement |
+| API for communication between Functional clusters implementing a PDP and the PEP in the Adaptive Platform. | Not specified by AUTOSAR |                                 |
+| The application intents and Access control policies (Manifest file information).                           | AUTOSAR Specification    | TPS_Manifest_Specification      |
+| Warnings/error messages that the applications receive on failed authorization.                             | AUTOSAR Specification    | EXP_IdentityAndAccessManagement |
+| API for activity logging.                                                                                  | AUTOSAR Specification    | Not yet decided                 |
+| Contents of the logging information.                                                                       | AUTOSAR Specification    | Not yet decided                 |
+| Interface between Adaptive Application and Functional Clusters                                             | Not specified by AUTOSAR |                                 |
+| Identification of Adaptive Applications during runtime                                                     | Not specified by AUTOSAR |                                 |
 
 ### 13. PEP Implementation
 
@@ -153,9 +159,9 @@ Table 4.1 shows the functional clusters for which implementations have been defi
 
 ### 14. Assumptions
 
-* The integrator can configure an authentic channel between Policy Decision Points and Policy Enforcement Points. This could be done through the operating system's access rights for example.
-* Applications are designed/configured to have intents (properties that allow them to access certain resources).
-* Each intent will be acknowledged during deployment.
-* Applications are deployed together with an Application Manifest containing intents.
-* An Adaptive Application that wants to access a resource protected by IAM has to be started authentically, and its manifest has to be authenticated during deployment.
-* The PEP and PDP should not be a part of the Subject ( Adaptive Application that is requesting a resource protected by IAM).
+- The integrator can configure an authentic channel between Policy Decision Points and Policy Enforcement Points. This could be done through the operating system's access rights for example.
+- Applications are designed/configured to have intents (properties that allow them to access certain resources).
+- Each intent will be acknowledged during deployment.
+- Applications are deployed together with an Application Manifest containing intents.
+- An Adaptive Application that wants to access a resource protected by IAM has to be started authentically, and its manifest has to be authenticated during deployment.
+- The PEP and PDP should not be a part of the Subject ( Adaptive Application that is requesting a resource protected by IAM).
