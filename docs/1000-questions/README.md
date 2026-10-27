@@ -27,3 +27,5 @@
 - [AUTOSAR 答案集：通信栈、E2E 与 SecOC](autosar/answers-communication-security.md) — COM/PduR/CanIf/Can、PDU 路由、Port Connector、端到端保护与 SecOC。
 
 - [AUTOSAR 答案集：PDU、CanTp 与网络管理](autosar/answers-pdu-cantp-network-management.md) — Signal/PDU、CanTp 分段流控、NM Bus-Sleep。
+
+- [AI 1000问：全景导航与问题清单](ai/README.md) — 基础 AI、机器学习、深度学习、Transformer/LLM、RAG、Agent、多模态、部署与 AI 安全等。
