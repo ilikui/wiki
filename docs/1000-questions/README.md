@@ -47,3 +47,6 @@
 - [马尔可夫链工程应用：BswM、网络管理与刷写流程](math/markov-chain-automotive-applications.md)
 - [考研数学应试方法论：堆问题法分轮次实战](math/math-exam-study-method.md)
 - [考研数学 15 项自检清单](math/math-15-point-self-check.md)
+
+- [历史专题：军事与对外——从牧野之战到西学东渐](history/military-and-foreign-relations.md)
+- [历史上下五千年：15项自检清单](history/history-15-point-self-check.md)
