@@ -8,6 +8,7 @@
 - AUTOSAR — [答案集：基础架构、RTE 与 IOC](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/autosar/answers-rte-ioc.md)
 - AUTOSAR — [答案集：RTE、生成代码与工程实践](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/autosar/answers-rte-engineering.md)
 - AUTOSAR — [答案集：SW-C、Runnable 与接口设计](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/autosar/answers-swc-runnable.md)
+- AUTOSAR — [答案集：NvM、通信链路与诊断栈](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/autosar/answers-nvm-communication-diagnostics.md)
 - 嵌入式 — [全景导航与问题清单](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/embedded/README.md)
 - C语言 — [全景导航与问题清单](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/c/README.md)
 - AI
