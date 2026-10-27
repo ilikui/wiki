@@ -492,3 +492,5 @@
 
 
 #Area/技术/AUTOSAR
+
+- [通信栈深度问答：CanIf 硬件对象与 PduR 路由排障](answers-communication-stack-deep-dive.md) — HRH/HTH、PDU 映射、Tx/Rx 路由与分层排障。
