@@ -507,6 +507,7 @@
 
 - [NvM 关机保存时序与掉电预算](nvm-shutdown-save-timing.md) — BswM Action、NvM 异步作业完成判据、EcuM 关机超时及断电注入排查。
 - [NvM RAM、ROM 与 NV Block 数据模型](nvm-ram-rom-nv-block-model.md) — 区分运行时 RAM 镜像、默认值与非易失保存数据，并提供启动恢复和掉电排障步骤。
+- [AUTOSAR V 模型开发与验证流程](v-model-development-and-verification.md) — 将需求、架构、ARXML/BSW 配置、代码生成与分层测试建立双向追踪。
 
 
 ## NvM 数据模型：RAM、ROM Default 与 NV Block
