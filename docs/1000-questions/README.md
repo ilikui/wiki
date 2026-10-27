@@ -66,3 +66,15 @@
 - [考研英语 10000 问](english/postgraduate-english-10000-questions.md) — 词汇辨析、长难句、阅读、完形、新题型、翻译、写作与背景知识。
 - [硬件从 0 到精通](hardware/README.md) — 软件工程师的硬件全景导航；14 篇正文仍需逐篇迁移。
 - [嵌入式通信协议全景](embedded-communication/README.md) — SPI/I2C/UART/RS-485/USB/SENT 及 LIN、SDIO、车载以太网；14 篇正文仍需逐篇迁移。
+
+### 硬件专题正文
+- [运放实战](hardware/op-amp-practice.md)
+- [EMC 与整改](hardware/emc-troubleshooting.md)
+- [电源深入：纹波、环路与稳定性](hardware/power-integrity-and-stability.md)
+- [焊接与首板验证](hardware/assembly-and-first-board-validation.md)
+
+### 嵌入式通信专题正文
+- [LIN 总线](embedded-communication/lin-bus.md)
+- [SDIO](embedded-communication/sdio.md)
+- [信号完整性](embedded-communication/signal-integrity.md)
+- [车载以太网：从 CAN 到 100BASE-T1](embedded-communication/automotive-ethernet.md)
