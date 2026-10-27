@@ -1,0 +1,43 @@
+# EcuM 启动完成与 RUN 状态：BSW 初始化失败怎么判断？
+
+> 来源：Flomo 原文：[EcuM 状态机深入 Q1](https://v.flomoapp.com/mine/?memo_id=MjU1MjU1NzUw)。本文整理为工程排查清单，不替代项目 OEM 安全策略和所用 AUTOSAR 版本规范。
+
+## 1. RUN 前通常完成什么
+
+典型顺序是启动代码完成最小硬件初始化后进入 EcuM 启动流程，再按配置与依赖关系初始化 OS、MCAL 和 BSW，最后完成 RTE/应用启动。常见模块包括：
+
+- **MCAL**：Mcu、Port、Dio、Adc、Spi、Pwm 等（按 ECU 实际配置）。
+- **通信栈**：Can、CanIf、PduR、Com，以及 ComM / CanNm 等相关模块。
+- **存储与诊断**：NvM、MemIf、Fee/Fls、Dem、Dcm 等。
+- **运行环境**：OS、RTE，以及应用 SW-C 的启动与 Runnable 调度。
+
+这只是常见示意，不能把它当成所有项目固定的初始化顺序；具体顺序取决于配置、模块依赖、生成代码和供应商实现。
+
+## 2. Init 失败时的排查顺序
+
+1. **确认失败点**：定位 EcuM Startup 阶段、模块 InitFunction、返回值与调用顺序。
+2. **确认错误是否可见**：检查 DET/开发错误记录、调试器断点、日志和模块自身状态；不要假定所有 Init 失败都会自动进入 DEM 或产生 DTC。
+3. **查依赖链**：例如 Can 未就绪会影响 CanIf/PduR/Com 的后续功能；检查依赖模块是否已初始化、配置是否一致。
+4. **查项目策略**：确认错误回调、启动错误处理、Shutdown Target、看门狗及安全状态策略。不要假定“关键模块失败必然复位”或“非关键失败必然继续”。
+5. **验证实际结果**：记录失败模块、错误码、当时 ECU 状态、后续是否启动 RTE/应用、是否触发降级/复位/关机。
+
+## 3. 现场快速检查清单
+
+- [ ] Startup 阶段和 InitFunction 顺序与配置一致
+- [ ] 模块初始化返回值和错误记录已捕获
+- [ ] 上下游模块依赖和生成配置已核对
+- [ ] 错误处理回调、复位/关机策略已从项目配置确认
+- [ ] RTE 初始化、Runnable 调度与通信栈状态已分别验证
+
+## 4. 常见误区
+
+- RUN 不应被简单理解为“所有可选模块在任何项目中都必须成功”；需按项目定义的状态迁移与安全策略判断。
+- DET 是开发错误跟踪机制，不等同于 DEM 的量产诊断事件存储；是否记录 DTC 需看实际集成。
+- AUTOSAR 规范定义机制和接口，不能单凭通用描述推断 OEM 的故障处置策略。
+
+## 5. 参考资料
+
+- [AUTOSAR Classic Platform 官方架构与版本](https://www.autosar.org/standards/classic-platform)
+- [原始 Flomo 笔记](https://v.flomoapp.com/mine/?memo_id=MjU1MjU1NzUw)
+
+#Area/技术/AUTOSAR
