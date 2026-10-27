@@ -23,3 +23,5 @@
 
 当前文件仅是入口索引；各专题原文尚需逐批搬运和核验。
 - [AUTOSAR 答案集：NvM 存储服务与诊断](autosar/answers-nvm-diagnostics.md) — NvM、FEE、异步回调、DTC/Dem/Dcm、诊断会话与配置生成。
+
+- [AUTOSAR 答案集：通信栈、E2E 与 SecOC](autosar/answers-communication-security.md) — COM/PduR/CanIf/Can、PDU 路由、Port Connector、端到端保护与 SecOC。
