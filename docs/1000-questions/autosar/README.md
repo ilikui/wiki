@@ -494,3 +494,5 @@
 #Area/技术/AUTOSAR
 
 - [通信栈深度问答：CanIf 硬件对象与 PduR 路由排障](answers-communication-stack-deep-dive.md) — HRH/HTH、PDU 映射、Tx/Rx 路由与分层排障。
+
+- [诊断栈实战：Dcm、Dem、DET、DTC 与 UDS](answers-diagnostics-dcm-dem-det.md) — DTC 全链路、Dem 防抖/状态位、Dcm 三层架构与 DET/DEM 边界。
