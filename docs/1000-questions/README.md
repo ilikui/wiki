@@ -61,3 +61,8 @@
 ## 软考高级 1000 问
 - [系统架构师：核心知识 1000 问](software-exam/system-architect-1000-questions.md)
 - [信息系统项目管理师：核心知识 1000 问](software-exam/information-systems-pm-1000-questions.md)
+
+## 英语与硬件 / 通信专题
+- [考研英语 10000 问](english/postgraduate-english-10000-questions.md) — 词汇辨析、长难句、阅读、完形、新题型、翻译、写作与背景知识。
+- [硬件从 0 到精通](hardware/README.md) — 软件工程师的硬件全景导航；14 篇正文仍需逐篇迁移。
+- [嵌入式通信协议全景](embedded-communication/README.md) — SPI/I2C/UART/RS-485/USB/SENT 及 LIN、SDIO、车载以太网；14 篇正文仍需逐篇迁移。
