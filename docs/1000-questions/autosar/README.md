@@ -504,3 +504,5 @@
 - [EcuM 启动与 Init 失败排查](ecum-startup-init-failure.md) — Startup/RUN 阶段、初始化依赖、错误记录与项目级降级/复位策略。
 
 - [EcuM 唤醒验证与醒后重睡排查](ecum-wakeup-validation.md) — 检查唤醒源、验证窗口、模式仲裁和电源/通信恢复时序。
+
+- [NvM 关机保存时序与掉电预算](nvm-shutdown-save-timing.md) — BswM Action、NvM 异步作业完成判据、EcuM 关机超时及断电注入排查。
