@@ -502,3 +502,5 @@
 - [RTE / Runnable 快速检查清单](rte-runnable-checklist.md) — 从 ARXML 事件、Runnable 调度与 OS Task 映射，排查 Rte_Read/Rte_Write 和数据访问问题。
 
 - [EcuM 启动与 Init 失败排查](ecum-startup-init-failure.md) — Startup/RUN 阶段、初始化依赖、错误记录与项目级降级/复位策略。
+
+- [EcuM 唤醒验证与醒后重睡排查](ecum-wakeup-validation.md) — 检查唤醒源、验证窗口、模式仲裁和电源/通信恢复时序。
