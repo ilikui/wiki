@@ -54,3 +54,10 @@
 - 历史 — [文化与典籍：从诗经楚辞到四库全书](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/history/culture-and-classics.md)
 - 考研数学 — [堆问题法：先列问题还是先学原理](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/math/question-first-learning-method.md)
 - 考研数学 — [课本定义与工程实际：最短路径和特征分解](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/math/textbook-vs-engineering-math.md)
+## 历史专题补充
+- [制度与官制：从三公九卿到军机处](history/institutions-and-officialdom.md) — 中央官制、地方行政、选官、法律与监察。
+- [经济与商业：从井田制到海上丝绸之路](history/economy-and-commerce.md) — 土地、赋税、货币、商业与经济重心南移。
+- [思想与宗教：从百家争鸣到三教合流](history/thought-and-religion.md) — 诸子思想、儒学、佛教、道教与信仰。
+## 软考高级 1000 问
+- [系统架构师：核心知识 1000 问](software-exam/system-architect-1000-questions.md)
+- [信息系统项目管理师：核心知识 1000 问](software-exam/information-systems-pm-1000-questions.md)
