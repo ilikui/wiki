@@ -5,7 +5,7 @@
 ## 主题
 
 - AUTOSAR — [问题总表（Flomo 迁移）](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/autosar/README.md)
-- 嵌入式
+- 嵌入式 — [全景导航与问题清单](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/embedded/README.md)
 - C语言
 - AI
 - 考研数学
