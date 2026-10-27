@@ -35,3 +35,7 @@
 - [考研数学 1000问](math/README.md) — 高等数学、线性代数、概率论与嵌入式工程应用。
 - [历史 1000问](history/README.md) — 历史时间线、制度史、专题索引与史料方法。
 - [儿童教育 1000问](child-education/README.md) — 从小学到大学的学习方法与家庭实践。
+
+- [线性代数 1000问：全量问题库](math/linear-algebra-full-question-bank.md) — 向量空间、矩阵分解、数值线代、图与网络矩阵、控制理论等。
+- [历史朝代脉络问题库（上）](history/dynasty-timeline-question-bank-part-1.md) · [（中）](history/dynasty-timeline-question-bank-part-2.md) · [（下）](history/dynasty-timeline-question-bank-part-3.md) — 原始分卷分段迁移，保留来源链接。
+- [儿童教育：从小学到大学学习系列](child-education/core-learning-series.md) · [分科实战方法手册](child-education/subject-practice-handbook.md) · [年级衔接指南](child-education/grade-transition-guide.md) — 原始系列笔记。
