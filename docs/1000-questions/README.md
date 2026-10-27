@@ -50,3 +50,7 @@
 
 - [历史专题：军事与对外——从牧野之战到西学东渐](history/military-and-foreign-relations.md)
 - [历史上下五千年：15项自检清单](history/history-15-point-self-check.md)
+
+- 历史 — [文化与典籍：从诗经楚辞到四库全书](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/history/culture-and-classics.md)
+- 考研数学 — [堆问题法：先列问题还是先学原理](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/math/question-first-learning-method.md)
+- 考研数学 — [课本定义与工程实际：最短路径和特征分解](https://github.com/ilikui/wiki/blob/master/docs/1000-questions/math/textbook-vs-engineering-math.md)
