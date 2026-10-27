@@ -496,3 +496,5 @@
 - [通信栈深度问答：CanIf 硬件对象与 PduR 路由排障](answers-communication-stack-deep-dive.md) — HRH/HTH、PDU 映射、Tx/Rx 路由与分层排障。
 
 - [诊断栈实战：Dcm、Dem、DET、DTC 与 UDS](answers-diagnostics-dcm-dem-det.md) — DTC 全链路、Dem 防抖/状态位、Dcm 三层架构与 DET/DEM 边界。
+
+- [FIM 功能抑制与 UDS 刷写](answers-diagnostics-fim-uds-flashing.md) — 功能抑制条件、0x34/0x36/0x37 下载流程与刷写故障排查。
