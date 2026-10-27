@@ -510,6 +510,7 @@
 - [NvM Immediate 与 Periodic 写入策略](nvm-immediate-periodic-strategy.md) — 按数据丢失风险、更新频率、擦写寿命和关机预算选择策略，并定义掉电验证场景。
 - [AUTOSAR V 模型开发与验证流程](v-model-development-and-verification.md) — 将需求、架构、ARXML/BSW 配置、代码生成与分层测试建立双向追踪。
 - [Dcm Session、Security、DID 与 Routine 配置排查](dcm-configuration-session-security-did-routine.md) — 检查诊断连接、会话/安全条件、数据接口、Routine 回调和 NRC。
+- [Dcm 多诊断传输路径：CAN 与 DoIP](dcm-can-doip-multiprotocol-routing.md) — 检查多入口的传输层、PduR、Dcm 连接映射与响应回路。
 - [诊断配置集成自检清单](diagnostics-integration-preflight-checklist.md) — 覆盖 Dcm/PduR 路由、S3Server、DTC/NvM、刷写时序和启动就绪检查。
 
 
