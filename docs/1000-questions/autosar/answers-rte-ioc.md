@@ -177,3 +177,95 @@
 📎 AUTOSAR 1000问总表 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)
 
 #Area/技术/AUTOSAR
+
+
+---
+
+## 基础/架构 Q3：SW-C 如何被调度？Runnable 与普通 C 函数有什么区别？
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMjY4) · 1027 字
+
+**SW-C 不是一个独立入口，而是一组 Runnable（可运行实体）**。每个 Runnable 最终是 C 函数，但它何时执行由 RTE/OS 的配置与事件决定，而不是由 SW-C 自己的主循环决定。
+
+- 周期型 Runnable：由生成的调度配置和 OS 定时任务驱动，例如 10 ms / 100 ms。
+- 事件型 Runnable：可由数据接收、Client-Server 操作调用等事件触发。
+- 触发源可能来自 OS 任务、通信栈回调或 RTE 事件机制。
+- 普通 C 函数通常由调用方显式调用；Runnable 则依赖配置好的触发机制，调用关系不一定直接体现在业务代码中。
+- 调试 Runnable 时，除调用栈外，还应检查 OS Task、Event、Runnable-Task 映射及 RTE 生成入口。
+
+**一句话总结**：SW-C 没有自己的 main；它由一组 Runnable 构成，RTE/OS 按周期或事件触发它们。
+
+## RTE 深入 Q2：Runnable 的触发事件类型
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjUzOTEzNDYz) · 1139 字
+
+- **TimingEvent**：固定周期触发，适用于周期控制、采样、心跳和周期计算。
+- **DataReceivedEvent**：S/R 端口收到新数据时触发，适用于传感器数据到达后的响应处理。
+- **OperationInvokedEvent**：Client-Server 接口的 Operation 被调用时触发，适用于查询或服务型 SW-C。
+- **ModeSwitchEvent**：模式切换时触发，可用于状态切换后的处理。
+- **InitEvent**：SW-C 初始化时执行一次。
+- **ExternalTriggerEvent**：由外部触发源触发。
+
+选择原则是看业务逻辑的时间语义：到点就运行选 TimingEvent；有新数据才处理选 DataReceivedEvent；被请求时提供服务选 OperationInvokedEvent。实际可用事件类型及生成形式应以项目采用的 AUTOSAR 版本和工具链为准。
+
+## 生成代码解读 Q1：Rte_Read / Rte_Write 如何实现？
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjU0MTU5NDE4) · 1310 字
+
+Rte_Read / Rte_Write 通常是 RTE 生成的 API、宏或内联实现，访问由配置生成的缓冲区；具体实现随工具、通信语义和配置而变化。跨核场景可能转入 IOC 路径，队列型通信则涉及队列缓冲。
+
+阅读生成代码时建议依次检查：
+
+1. RTE 初始化函数，确认缓冲区与初始化值。
+2. 对应 SW-C 的 Runnable 入口，确认实际读写的端口。
+3. Rte_Data / Rte_PBcfg 等生成数据结构及槽位。
+4. 对照 Rte_Read 与 Rte_Write 对应的变量、索引和映射。
+5. 检查 Rte_Cfg.h、Rte_Type.h 等配置宏、类型与端口映射。
+
+**一句话总结**：用生成代码核对配置映射，不要只因代码生成成功就认定端口连接正确。
+
+## 生成代码解读 Q3：SchM 如何调度模块函数？
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjU0MTU5NjMy) · 1546 字
+
+SchM（Schedule Manager）相关生成代码用于把 OS 调度与 BSW 模块的周期性处理衔接起来。常见检查对象包括：
+
+- OS Task、Alarm 或 Schedule Table 的配置与触发关系。
+- SchM 生成的模块入口及其调用链。
+- BSW 模块的 MainFunction，例如 Com_MainFunction、CanIf_MainFunction，以及项目生成的对应封装。
+- SW-C Runnable 的 RTE 入口与其 Task 映射。
+
+不要把 SchM 简化成唯一的全局 Runnable 调度器：Classic AUTOSAR 中，BSW 的 SchM 入口、RTE 生成的 SW-C Runnable 调用以及 OS Task 的关系应结合项目生成代码确认。
+
+**调试路径**：从 OS Task / 调度表开始，追到 SchM 或模块 MainFunction，再确认周期、优先级和调用周期是否与配置一致。
+
+## 工程问题 Q3：多核 MCU 下如何分配 SW-C？
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3) · 1236 字
+
+SW-C 分核需要综合四项因素：
+
+1. **信号流内聚**：数据交互频繁、强相关的 SW-C 尽量放在同一核，减少跨核通信。
+2. **负载均衡**：避免一个核过载、另一个核长期低负载。
+3. **安全隔离**：根据 ASIL/QM、内存保护与 Freedom from Interference 要求规划核和 OS-Application。
+4. **外设归属**：确认外设访问权限、中断归属及驱动所在核，避免不必要的跨核访问。
+
+跨核数据通信可由 RTE 生成代码使用 IOC 等机制承载；事件通知可能涉及核间中断（IPI）。共享数据必须采用与平台、OS 和缓存一致性设计相匹配的同步机制，不能假设普通全局变量天然具备跨核一致性。
+
+**一句话总结**：分核看信号流、负载、安全和外设；设计时应把跨核通信开销、同步和可验证性纳入实时性分析。
+
+## AUTOSAR 三问·其三：AUTOSAR 解决了什么本质问题？
+
+> 来源：[Flomo 原笔记](https://v.flomoapp.com/mine/?memo_id=MjQ5MDI0OTgy) · 1451 字
+
+1. **统一接口合同**：让不同供应商、团队和 ECU 的软件模块能够按标准接口协作，而不是各自定义互不兼容的接口。
+2. **分离功能与硬件**：通过分层架构、SW-C、RTE、BSW 和 MCAL 等机制，把应用功能与芯片寄存器、底层驱动和通信实现隔离。
+3. **提供共同的集成坐标系**：标准化接口、ARXML 与配置/代码生成流程，让 OEM、Tier 1、芯片厂商和工具链可以围绕同一套模型协作。
+
+AUTOSAR 并不会自动消除集成问题。真实工程中的问题往往出在层与层之间的接口、配置、时序和边界条件；因此既要理解单个模块，也要理解模块交接时的行为。
+
+**一句话总结**：AUTOSAR 的核心价值是标准化接口与分层边界，让大规模汽车软件能够被拆分、替换、集成和验证。
+
+---
+
+原始标签：`#Area/技术/AUTOSAR`。以上内容保留各条 Flomo 来源链接，属于从原笔记整理迁移的学习资料。
