@@ -308,6 +308,10 @@
 
 2. 知识图谱的"补全"（Knowledge Graph Completion）是在解决什么问题？知识图谱通常是不完整的——如果已知（姚明，妻子，\_\_\_）缺了尾实体，怎么用已有的三元组推断出缺失的部分？TransE 模型的思路是把每个实体和关系都投影到向量空间，通过"头实体向量+关系向量≈尾实体向量"来预测缺失联系？
 
+相关的链接：
+
+* [awesome-knowledge-graph](https://github.com/husthuke/awesome-knowledge-graph)
+
 
 ▎ **异常检测（Anomaly Detection）**
 
