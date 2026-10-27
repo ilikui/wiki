@@ -78,3 +78,16 @@
 - [SDIO](embedded-communication/sdio.md)
 - [信号完整性](embedded-communication/signal-integrity.md)
 - [车载以太网：从 CAN 到 100BASE-T1](embedded-communication/automotive-ethernet.md)
+
+## 自动驾驶专题（专栏⑳）
+- [自动驾驶全景导航](autonomous-driving/README.md) — 感知、决策、执行、通信、计算平台、功能安全与网络安全。
+- [第 1 篇：分级与系统架构](autonomous-driving/system-architecture-levels.md)
+- [第 2 篇：感知层与传感器](autonomous-driving/perception-sensors.md)
+- [第 3 篇：多传感器融合](autonomous-driving/sensor-fusion.md)
+- [第 4 篇：决策与规划](autonomous-driving/decision-planning.md)
+- [第 5 篇：线控底盘执行层](autonomous-driving/by-wire-chassis.md)
+- [第 6 篇：车载以太网、TSN 与 SOME/IP](autonomous-driving/vehicle-networking-tsn-someip.md)
+- [第 7 篇：计算平台与 Adaptive AUTOSAR](autonomous-driving/compute-platform-adaptive-autosar.md)
+- [第 8 篇：功能安全 ISO 26262 / ASIL](autonomous-driving/functional-safety-iso26262.md)
+- [第 9 篇：网络安全、SecOC、HSM 与 OTA](autonomous-driving/cybersecurity-secoc-hsm-ota.md)
+- [第 10 篇：自动驾驶 15 项自检清单](autonomous-driving/15-point-readiness-checklist.md)
