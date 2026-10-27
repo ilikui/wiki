@@ -31,3 +31,7 @@
 - [AI 1000问：全景导航与问题清单](ai/README.md) — 基础 AI、机器学习、深度学习、Transformer/LLM、RAG、Agent、多模态、部署与 AI 安全等。
 
 - [数据结构与算法 1000问：问题清单](data-structures-algorithms/README.md) — 基础概念、数组与链表、复杂度、动态规划等。
+
+- [考研数学 1000问](math/README.md) — 高等数学、线性代数、概率论与嵌入式工程应用。
+- [历史 1000问](history/README.md) — 历史时间线、制度史、专题索引与史料方法。
+- [儿童教育 1000问](child-education/README.md) — 从小学到大学的学习方法与家庭实践。
