@@ -39,3 +39,11 @@
 - [线性代数 1000问：全量问题库](math/linear-algebra-full-question-bank.md) — 向量空间、矩阵分解、数值线代、图与网络矩阵、控制理论等。
 - [历史朝代脉络问题库（上）](history/dynasty-timeline-question-bank-part-1.md) · [（中）](history/dynasty-timeline-question-bank-part-2.md) · [（下）](history/dynasty-timeline-question-bank-part-3.md) — 原始分卷分段迁移，保留来源链接。
 - [儿童教育：从小学到大学学习系列](child-education/core-learning-series.md) · [分科实战方法手册](child-education/subject-practice-handbook.md) · [年级衔接指南](child-education/grade-transition-guide.md) — 原始系列笔记。
+
+- [概率论与数理统计 1000问：全量问题库](math/probability-statistics-full-question-bank.md) — 随机事件、条件概率、分布、估计与检验等。
+- [马尔可夫链：无后效性的力量](math/markov-chain-deep-dive.md)
+- [矩阵变换＝坐标系转换：线代与嵌入式](math/matrix-transform-coordinate-systems.md)
+- [概率论实战：贝叶斯与诊断故障推理](math/probability-bayes-diagnostics.md)
+- [马尔可夫链工程应用：BswM、网络管理与刷写流程](math/markov-chain-automotive-applications.md)
+- [考研数学应试方法论：堆问题法分轮次实战](math/math-exam-study-method.md)
+- [考研数学 15 项自检清单](math/math-15-point-self-check.md)
