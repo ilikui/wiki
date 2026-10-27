@@ -500,3 +500,5 @@
 - [FIM 功能抑制与 UDS 刷写](answers-diagnostics-fim-uds-flashing.md) — 功能抑制条件、0x34/0x36/0x37 下载流程与刷写故障排查。
 
 - [RTE / Runnable 快速检查清单](rte-runnable-checklist.md) — 从 ARXML 事件、Runnable 调度与 OS Task 映射，排查 Rte_Read/Rte_Write 和数据访问问题。
+
+- [EcuM 启动与 Init 失败排查](ecum-startup-init-failure.md) — Startup/RUN 阶段、初始化依赖、错误记录与项目级降级/复位策略。
