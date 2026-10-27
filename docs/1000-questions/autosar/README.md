@@ -507,6 +507,7 @@
 
 - [NvM 关机保存时序与掉电预算](nvm-shutdown-save-timing.md) — BswM Action、NvM 异步作业完成判据、EcuM 关机超时及断电注入排查。
 - [NvM RAM、ROM 与 NV Block 数据模型](nvm-ram-rom-nv-block-model.md) — 区分运行时 RAM 镜像、默认值与非易失保存数据，并提供启动恢复和掉电排障步骤。
+- [NvM Immediate 与 Periodic 写入策略](nvm-immediate-periodic-strategy.md) — 按数据丢失风险、更新频率、擦写寿命和关机预算选择策略，并定义掉电验证场景。
 - [AUTOSAR V 模型开发与验证流程](v-model-development-and-verification.md) — 将需求、架构、ARXML/BSW 配置、代码生成与分层测试建立双向追踪。
 - [Dcm Session、Security、DID 与 Routine 配置排查](dcm-configuration-session-security-did-routine.md) — 检查诊断连接、会话/安全条件、数据接口、Routine 回调和 NRC。
 - [诊断配置集成自检清单](diagnostics-integration-preflight-checklist.md) — 覆盖 Dcm/PduR 路由、S3Server、DTC/NvM、刷写时序和启动就绪检查。
