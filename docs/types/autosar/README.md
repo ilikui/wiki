@@ -518,3 +518,24 @@
 - 原始 Flomo 笔记保留不动；本页是 Wiki 副本。
 - 后续回答请按专题拆分到同目录的子页面，并从问题标题链接过去。
 - 答案需标注适用的 AUTOSAR 版本、工具链、验证方式与来源；未经验证的经验不要标成规范要求。
+
+---
+
+## 已补充的工程实践专题
+
+以下专题用于把 AUTOSAR 1000 问中的高频工程问题落到可执行的检查与验证步骤；问题总表仍保留原始问题，不代表每道题都已完整作答。
+
+- [NvM：RAM、ROM Default 与 NV Block 数据模型](../../1000-questions/autosar/nvm-ram-rom-nv-block-model.md)
+- [NvM：Immediate 与 Periodic 写入策略](../../1000-questions/autosar/nvm-immediate-periodic-strategy.md)
+- [NvM：关机保存时序与完成判据](../../1000-questions/autosar/nvm-shutdown-save-timing.md)
+- [诊断配置集成自检清单](../../1000-questions/autosar/diagnostics-integration-preflight-checklist.md)
+- [Dcm：CAN 与 DoIP 多诊断传输路径](../../1000-questions/autosar/dcm-can-doip-multiprotocol-routing.md)
+- [AUTOSAR V 模型开发与验证流程](../../1000-questions/autosar/v-model-development-and-verification.md)
+- [Dcm Session、Security、DID 与 Routine 配置排查](../../1000-questions/autosar/dcm-configuration-session-security-did-routine.md)
+
+### 逐题维护规则
+
+1. 从本目录的问题条目出发，优先链接到已有专题答案，避免重复复制正文。
+2. 标明适用的 AUTOSAR 版本、供应商工具/实现差异、复现步骤与验证证据。
+3. “调用 API”“配置已生成”或“编译成功”不能单独作为运行时行为正确的证据。
+4. 原始 Flomo 仅在副本和索引核验完成后再考虑标记归档；不得自动删除原始笔记。
