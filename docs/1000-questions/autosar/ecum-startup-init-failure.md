@@ -1,6 +1,6 @@
 # EcuM 启动完成与 RUN 状态：BSW 初始化失败怎么判断？
 
-> 来源：Flomo 原文：[EcuM 状态机深入 Q1](https://v.flomoapp.com/mine/?memo_id=MjU1MjU1NzUw)。本文整理为工程排查清单，不替代项目 OEM 安全策略和所用 AUTOSAR 版本规范。
+> 本文整理为工程排查清单，不替代项目 OEM 安全策略和所用 AUTOSAR 版本规范。
 
 ## 1. RUN 前通常完成什么
 
@@ -38,6 +38,5 @@
 ## 5. 参考资料
 
 - [AUTOSAR Classic Platform 官方架构与版本](https://www.autosar.org/standards/classic-platform)
-- [原始 Flomo 笔记](https://v.flomoapp.com/mine/?memo_id=MjU1MjU1NzUw)
 
 #Area/技术/AUTOSAR
