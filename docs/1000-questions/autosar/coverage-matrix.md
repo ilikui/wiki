@@ -6,7 +6,7 @@
 
 | 主题 | 已有答案 / 工程清单 | 当前覆盖边界 |
 |---|---|---|
-| 基础架构、RTE、SW-C、CAN 通信 | [基础架构与通信栈第一批答案](../../types/autosar/answers/基础架构与通信栈第一批答案.md) | 已覆盖分层架构、RTE、Runnable、Signal/PDU、COM/PduR/CanIf/Can 基础；需继续补齐事件类型、缓冲区语义、任务映射与时序验证 |
+| 基础架构、RTE、SW-C、CAN 通信 | [基础架构与通信栈第一批答案](../../types/autosar/answers/基础架构与通信栈第一批答案.md)；[RTE Event、Runnable 调度与跨核 IOC 实战](rte-events-runnable-scheduling-ioc.md) | 已覆盖分层架构、RTE 事件、Runnable 映射、周期时序、DataReceivedEvent、OperationInvokedEvent 与跨核 IOC 排查；仍需按项目生成代码与配置验证 |
 | NvM 数据模型 | [RAM/ROM Default 与 NV Block](nvm-ram-rom-nv-block-model.md) | 数据块与初始化模型；后续补齐冗余块、CRC、恢复路径及掉电一致性验证 |
 | NvM 写入策略 | [Immediate 与 Periodic](nvm-immediate-periodic-strategy.md) | 写入策略与取舍；需补齐写入触发、队列/取消、作业状态与持久化验证 |
 | NvM 关机保存 | [关机保存时序与完成判据](nvm-shutdown-save-timing.md) | 关机预算和异步完成判据；需结合具体 EcuM/BswM/供应商实现验证 |
