@@ -11,19 +11,75 @@
 
 1. 什么是AUTOSAR？请说出其全称并解释含义。
 
-2. AUTOSAR联盟成立于哪一年？最初由哪些公司发起？
+---
 
+> AUTOSAR 的全称是 AUTomotive Open System ARchitecture，中文翻译为“汽车开放系统架构”。
+> 它既指由全球主要整车厂（OEM）、一级供应商（Tier 1）及半导体厂商共同建立的全球合作联盟，
+> 也指由该联盟所制定的开放式、标准化的汽车电子软件架构规范。
+
+2. AUTOSAR联盟成立于哪一年？最初由哪些公司发起？
 
 **基础 / 架构**
 
 1. AUTOSAR的分层架构（应用层/RTE/BSW/MCAL）各层之间通过什么接口通信？谁依赖谁？
+   
+---
+```mermaid
+graph TD
+    %% 节点定义
+    subgraph ASW [应用软件层 - Application Software Layer]
+        SWC1[软件组件 SWC A]
+        SWC2[软件组件 SWC B]
+    end
+
+    subgraph RTE_Layer [运行时环境 - Runtime Environment]
+        RTE[RTE 虚拟软件总线]
+    end
+
+    subgraph BSW [基础软件层 - Basic Software]
+        Services[服务层 Services Layer <br> OS / 诊断 / 内存管理]
+        EcuAbs[ECU 抽象层 ECU Abstraction <br> 板级外设抽象]
+    end
+
+    subgraph MCAL_Layer [微控制器抽象层 - MCAL]
+        MCAL[MCAL 驱动模块 <br> ADC / DIO / CAN 驱动]
+    end
+
+    subgraph HW [物理硬件 - Microcontroller]
+        MCU[MCU 芯片 / 寄存器]
+    end
+
+    %% 通信接口 (双向或横向数据流)
+    SWC1 <--> |AUTOSAR 接口 <br> 端口 Port| RTE
+    SWC2 <--> |AUTOSAR 接口| RTE
+    SWC1 -.-> |组件间虚拟通信| SWC2
+    RTE <--> |标准 AUTOSAR 接口 <br> API 调用| Services
+    Services <--> |标准接口| EcuAbs
+    EcuAbs <--> |标准接口| MCAL
+    MCAL <--> |寄存器直接读写| MCU
+
+    %% 依赖关系 (严格单向向下)
+    ASW ==> |1. 仅依赖| RTE
+    RTE ==> |2. 依赖| BSW
+    BSW ==> |3. 依赖| MCAL
+    MCAL ==> |4. 仅依赖| HW
+
+    %% 样式调整
+    style ASW fill:#E1F5FE,stroke:#0288D1,stroke-width:2px;
+    style RTE_Layer fill:#FFF9C4,stroke:#FBC02D,stroke-width:2px;
+    style BSW fill:#E8F5E9,stroke:#388E3C,stroke-width:2px;
+    style MCAL_Layer fill:#FFE0B2,stroke:#F57C00,stroke-width:2px;
+    style HW fill:#ECEFF1,stroke:#455A64,stroke-width:2px;
+    
+    classDef sepArrow stroke-width:4px,stroke-dasharray: 5 5;
+
+```
 
 2. RTE在AUTOSAR架构中解决的核心问题是什么？如果没有RTE，会怎样？
 
 3. 一个SW-C（软件组件）在运行时是怎么被调度的？它跟普通C函数有什么区别？
 
 4. AUTOSAR方法论中的"配置"和"代码生成"两个步骤，为什么拆开？合在一起行不行？
-
 
 **通信栈**
 
@@ -35,7 +91,6 @@
 
 4. 为什么需要PduR（PDU Router）？直接让COM层发到CanIf不行吗？
 
-
 **网络管理**
 
 1. 节点唤醒≠网络唤醒——这句话在什么场景下成立？
@@ -46,7 +101,6 @@
 
 4. 如果网络管理中一个节点没有按时进入Bus-Sleep Mode，会发生什么？
 
-
 **诊断**
 
 1. UDS over CAN在AUTOSAR中经过Dcm→PduR→CanTp→CanIf→Can的路径，每层分别处理了什么？
@@ -54,7 +108,6 @@
 2. 诊断请求和响应在同一个CAN报文里还是分开发送的？谁决定走CAN TP（传输协议）？
 
 3. 为什么需要DoIP（Diagnostic over IP）？它与UDS over CAN在架构上有什么不同？
-
 
 **存储栈（Memory Stack）**
 
@@ -68,7 +121,6 @@
 
 5. NvM提供同步写和异步写两种接口，什么时候该用哪种？
 
-
 **OS & 调度**
 
 1. AUTOSAR OS和普通RTOS（如FreeRTOS）的核心区别是什么？
@@ -81,7 +133,6 @@
 
 5. AUTOSAR的中断分类（Category 1 / Category 2）的区别在哪里？
 
-
 **Debug & 工具**
 
 1. 用Vector Davinci / EB tresos配置BSW时，配置项之间经常有交叉依赖——怎么系统性地排查一个配置项的依赖链？
@@ -89,7 +140,6 @@
 2. 一个生成的RTE代码里，如果某个SW-C的端口映射错了，一般怎么定位？看生成代码还是看.arxml？
 
 3. BSW的PostBuild和PreCompile模式下，调试策略有什么不同？
-
 
 **功能安全（Functional Safety / ISO 26262）**
 
@@ -103,7 +153,6 @@
 
 5. 在同一MCU上混合部署QM和ASIL应用时，AUTOSAR的自由度干扰（Freedom from Interference）怎么保证？
 
-
 **信息安全 & OTA**
 
 1. AUTOSAR的SecOC（Secure On-board Communication）解决什么问题？它是怎么防止CAN总线上的重放攻击和伪造报文的？
@@ -115,7 +164,6 @@
 4. UDS的诊断会话（Diagnostic Session）和安全访问（Security Access）之间是什么关系？刷写时走的是哪条路径？
 
 5. 如果OTA更新了一半断电了，AUTOSAR怎么保证还能恢复而不是变砖？
-
 
 **工程问题**
 
@@ -129,7 +177,6 @@
 
 5. 生成代码后发现某个PDU的收发出错了，第一步应该检查配置中的哪些地方？
 
-
 **C语言基础（AUTOSAR语境下的C）**
 
 1. volatile在AUTOSAR里最典型用在哪些场景？去掉会出什么错？
@@ -141,7 +188,6 @@
 4. 什么是MISRA C？AUTOSAR项目中违反MISRA C最常见的几条规则是哪些？
 
 5. AUTOSAR的BSW代码里经常看到pragma，它通常用来控制什么？不同编译器之间移植时要注意什么？
-
 
 **AUTOSAR思考 & 感悟**
 
@@ -155,7 +201,6 @@
 
 5. 如果重新设计AUTOSAR，你觉得最应该砍掉或简化的是哪一部分？
 
-
 **RTE深入**
 
 1. RTE生成的代码里，一个Sender-Receiver通信走的是什么机制？如果发送方和接收方在不同的核上，生成的代码有什么不同？
@@ -165,7 +210,6 @@
 3. RTE是怎么把一个SW-C的Port数据路由到另一个SW-C的？如果两个SW-C都在同一个ECU上，数据是拷贝还是引用？
 
 4. 如果某个Runnable执行超时了，RTE会怎么处理？这跟Watchdog的监控有什么关系？
-
 
 **BSW模块深探**
 
@@ -177,7 +221,6 @@
 
 4. DLT（Diagnostic Log and Trace）是用来做什么的？它在实际量产车上开着还是关着？什么时候你会用它代替普通的printf调试？
 
-
 **诊断栈深入**
 
 1. UDS的0x22（ReadDataByIdentifier）和0x2E（WriteDataByIdentifier）在实际项目中标识符（DID）是怎么分配的？DID的范围划分背后有什么约定？
@@ -185,7 +228,6 @@
 2. 一个诊断请求从CAN报文到Dcm再到SW-C的DataElement——如果你要让某个诊断请求最终触发一个SW-C的Runnable，需要在配置工具里串起哪几层？
 
 3. 0x19（ReadDTCInformation）的子功能那么多——在实际排查故障时，你最常用的子功能是哪几个？它们各查出什么信息？
-
 
 **集成与编译**
 
@@ -195,7 +237,6 @@
 
 3. 如果你把某个BSW模块从PreCompile切换到PostBuild配置——除了配置工具里的操作，代码层面会发生什么变化？
 
-
 **工具链与工程化**
 
 1. 用Vector Davinci Configurator或EB tresos时，一个模块依赖另一个模块的配置——怎么在工具里追踪这种横跨多个模块的依赖链？
@@ -203,7 +244,6 @@
 2. ARXML文件可以直接被工程化手段（如diff、脚本修改、CI检查）处理——有没有用脚本或工具在ARXML上做自动化检查或修改？
 
 3. 在项目里做AUTOSAR基线升级（如从R20-11升到R21-11）时，最头疼的是哪类变化？配置迁移还是生成的代码行为变了？
-
 
 **Adaptive AUTOSAR**
 
@@ -213,7 +253,6 @@
 
 3. ara::com（Adaptive中的通信中间件接口）和Classic的RTE/SWC概念有什么对应关系？一个曾经在Classic上写SW-C的人，转到Adaptive后最需要改掉的是什么习惯？
 
-
 **SOME/IP 与通信中间件**
 
 1. SOME/IP的Service Discovery（服务发现）是怎么让一个节点动态发现另一个节点提供的服务的？为什么说这是从"静态配置"到"动态协作"的转变？
@@ -221,7 +260,6 @@
 2. SOME/IP的Request/Response模式和Fire&Forget模式分别适合什么场景？在AUTOSAR里怎么配置一个SW-C用SOME/IP和远程ECU通信？
 
 3. DDS（Data Distribution Service）和SOME/IP在设计哲学上的核心区别是什么？什么时候该选DDS而不是SOME/IP？
-
 
 **复杂驱动（CDD）**
 
@@ -231,26 +269,23 @@
 
 3. 写CDD时怎么保证它不破坏AUTOSAR的时序和调度？如果一个CDD访问了某个BSW模块共享的资源，谁来保证互斥？
 
-
 **生成代码解读**
 
-1. RTE生成的头文件里，Rte\_Read和Rte\_Write是如何实现的？打开一个RTE生成的.c文件，通常先看哪几个函数来判断配置是否正确？
+1. RTE生成的头文件里，Rte_Read和Rte_Write是如何实现的？打开一个RTE生成的.c文件，通常先看哪几个函数来判断配置是否正确？
 
-2. BSW生成的配置文件（如Can\_Cfg.h, Can\_PBcfg.c）里，那些巨大的配置结构体是怎么组织的？为什么不像手写代码那样用简单的if-else？
+2. BSW生成的配置文件（如Can_Cfg.h, Can_PBcfg.c）里，那些巨大的配置结构体是怎么组织的？为什么不像手写代码那样用简单的if-else？
 
 3. 生成代码里的SchM（Schedule Manager）是怎么调用各个Runnable的？它在生成的代码里对应哪个函数？
 
-
 **测试与验证**
 
-1. AUTOSAR项目中，对SW-C做单元测试时，RTE生成的接口函数（Rte\_Read/Rte\_Write）怎么模拟？桩函数（stub）怎么设计？
+1. AUTOSAR项目中，对SW-C做单元测试时，RTE生成的接口函数（Rte_Read/Rte_Write）怎么模拟？桩函数（stub）怎么设计？
 
 2. SIL（Software-in-the-Loop）和HIL（Hardware-in-the-Loop）在AUTOSAR项目里各自适合测试哪类问题？一个通信栈问题你会在哪个环境里先测？
 
 3. 诊断协议栈的测试——怎么验证Dcm对一个UDS请求的响应是正确的？手动发CAN报文还是用测试工具（如CANoe）？
 
 4. 多ECU集成时，A节点的SW-C发信号给B节点的SW-C——如果B收到数据不对，是A发错了、路由错了、还是B解析错了？怎么拆？
-
 
 **XCP / 标定**
 
@@ -262,13 +297,11 @@
 
 4. 标定（calibration）和测量（measurement）在XCP里是两个不同的概念——ECU一侧分别需要什么支持才能实现？
 
-
 **时间同步**
 
 1. AUTOSAR的Global Time Synchronization（全局时间同步）是怎么让多个ECU共享同一个时间基准的？
 
 2. 为什么时间同步对分布式系统和XCP测量那么重要？如果两个ECU的时间差了几毫秒，会出什么问题？
-
 
 **项目实践**
 
@@ -280,13 +313,11 @@
 
 4. AUTOSAR的复杂配置带来了大量"配置错误"而不是"代码错误"——有没有什么经验帮你减少这类问题？
 
-
 **VFB（Virtual Functional Bus）深入**
 
 1. VFB（Virtual Functional Bus）在AUTOSAR方法论里到底代表什么概念？它和最终的RTE实现之间是什么关系？
 
 2. 在VFB视图下，两个SW-C之间的通信看起来是"直接连接"的——实际部署到ECU上后，这个"直接连接"变成了什么？
-
 
 **SWC 类型与设计**
 
@@ -296,13 +327,11 @@
 
 3. Sender-Receiver接口和Client-Server接口各自适用什么通信模式？如果把一个"请求-响应"的场景错误地用S/R来实现，会出什么问题？
 
-
 **BSW 更多模块 & CAN XL**
 
 1. LinIf和FrIf（FlexRay Interface）在架构上跟CanIf有什么相似和不同？为什么CAN是主导但LIN和FlexRay仍然在某些ECU上存在？
 
 2. CAN XL在帧格式和速率上和CAN FD有什么关键区别？它会取代CAN FD吗？
-
 
 **Crypto Stack 深入**
 
@@ -312,13 +341,11 @@
 
 3. 如果MCU没有硬件密码学加速模块，Crypto Stack还能工作吗？软件实现的性能和安全性跟硬件实现差多少？
 
-
 **Partial Networking（部分网络）**
 
 1. "部分网络"（Partial Networking）解决了什么问题？为什么一个ECU在不该做某事的时候还要被唤醒是一种浪费？
 
 2. Partial Network Cluster是怎么配置的？一个支持PN的ECU怎么知道哪些报文跟自己有关、哪些可以忽略继续睡？
-
 
 **多核通信与OS深入**
 
@@ -328,20 +355,17 @@
 
 3. AUTOSAR OS的Memory Protection（MPU配置）是怎么做的？Trusted Function和Non-Trusted Function在内存访问上具体有什么不同？
 
-
 **ECU 提取与系统级设计**
 
 1. VFB层面的System Description是怎么"提取"出单个ECU的配置的？ECU Extract of System Description是在做裁剪还是做映射？
 
 2. 同一组SW-C部署到不同的ECU上，RTE生成的代码会有多不同？哪些部分要重配、哪些可以复用？
 
-
 **AUTOSAR 版本差异与演进**
 
 1. AUTOSAR R4.0、R4.2、R4.4、R20-11、R21-11——这几个主要版本的模块接口或配置方式有什么关键变化？
 
 2. 在项目上从哪个基线开始用的？换基线时，最让人头疼的是规范改了还是工具改了？
-
 
 **工具配置实战（Davinci / EB tresos）**
 
@@ -353,24 +377,21 @@
 
 4. PostBuild配置生成的是.c还是.arxml？如果你的项目在运行时需要修改某个PDU的路由，PreCompile和PostBuild哪个支持？
 
-
 **生成代码分析与集成**
 
 1. 生成代码后，编译报了"undefined reference"——通常是因为模块没配全还是链接脚本没加源文件？第一步会查什么？
 
 2. BSW生成的代码里大量使用宏来控制条件编译——怎么确定某个配置参数对应的宏是ENABLED还是DISABLED？
 
-3. RTE生成的头文件里Rte\_Type.h定义了哪些类型？如果应用层的类型和RTE生成的类型不一致，谁说了算？
-
+3. RTE生成的头文件里Rte_Type.h定义了哪些类型？如果应用层的类型和RTE生成的类型不一致，谁说了算？
 
 **运行时问题定位**
 
-1. 程序跑起来后，发现某路CAN报文没发出来——从应用层接口（Rte\_Write）开始顺藤摸瓜，依次检查哪几个函数返回值来确定是哪一层卡住了？
+1. 程序跑起来后，发现某路CAN报文没发出来——从应用层接口（Rte_Write）开始顺藤摸瓜，依次检查哪几个函数返回值来确定是哪一层卡住了？
 
 2. 某路PDU在COM层配置了周期发送（如100ms发一次），但示波器上看实际发送间隔是乱的——可能的原因有哪些？从哪开始查？
 
-3. 一个SW-C在运行时调用了Rte\_Read但读到的数据是上次的值——数据有没有刷新？RTE的DataReceivedEvent触发了吗？怎么确认？
-
+3. 一个SW-C在运行时调用了Rte_Read但读到的数据是上次的值——数据有没有刷新？RTE的DataReceivedEvent触发了吗？怎么确认？
 
 **SW-C设计与应用层实践**
 
@@ -380,13 +401,11 @@
 
 3. Client-Server接口中，一个Client调用了Server的Operation——如果在Server还没返回时Client被抢占了，会不会出问题？
 
-
 **AUTOSAR 性能优化**
 
 1. RTE生成的代码里，大量的函数调用会不会影响运行性能？在运行时，一个PDU从应用到总线，四层接口调用的总开销大概是多少？
 
 2. 一个ECU上部署了大量SW-C（比如50个以上）——RTE生成的Schedule Table会变成什么样？Runnable的执行顺序怎么保证实时性？
-
 
 **BswM 模式管理深入**
 
@@ -394,13 +413,11 @@
 
 2. BswM 的 Action List 能触发哪些操作？仅仅修改一个模式值，还是真的能调用其他 BSW 模块的接口（如切换 PduR 路由表）？
 
-
 **变体管理（Variant Handling）**
 
 1. 同一套 AUTOSAR 代码要适配高配车和低配车——高配有 CAN FD 但低配只有 CAN 2.0，高配有 8 个传感器但低配只有 4 个。AUTOSAR 的"变体管理"（Variant Handling）怎么在不维护两套配置的前提下做到？
 
 2. PreCompile、Link、PostBuild 三种变体处理方式——在什么阶段决定用哪个变体？如果一个变体的决策只能在实车上通过诊断指令来切换，选哪种？
-
 
 **E2E / 端到端通信保护深入**
 
@@ -408,13 +425,11 @@
 
 2. E2E 保护的报文如果到达了但 CRC 校验失败——接收方 SW-C 应该怎么处理这个数据？直接丢弃还是用上次的有效值？AUTOSAR 有没有推荐的做法？
 
-
 **SW-C 生命周期与状态管理**
 
 1. 一个 Application SW-C 从 ECU 上电到正常运行，它的生命周期是什么？SW-C 在什么时候开始执行 Runnable、什么时候被停止——这些生命周期节点是 SW-C 自身控制的，还是由 EcuM/BswM 等外部模块管理的？
 
 2. SW-C 可以感知到自身所在的 ECU 正在"唤醒"、"运行"、"休眠"、"关机"吗？如果能，它是通过什么接口收到的？
-
 
 **ARXML 解析与自动化脚本**
 
@@ -422,13 +437,11 @@
 
 2. 两个版本的 ARXML 之间做 diff——除了文本层面的差异（XML 行号变了），哪些才是真正影响行为的"语义差异"？怎么在 CI 里自动检测这些差异？
 
-
 **AUTOSAR 与 J1939 集成**
 
 1. 商用车和工程机械常用 J1939（基于 CAN 的上层协议），而乘用车用 AUTOSAR 的 CAN 通信栈——如果把 J1939 的应用层搬到 AUTOSAR 架构上，J1939 的 PGN 和 AUTOSAR 的哪个概念对应？是在 COM 层兼容还是在应用层另写？
 
 2. J1939 的多帧传输（BAM/CMDT）和 AUTOSAR 的 CanTp 在处理大包传输上的机制有什么不同？如果在一个同时跑 J1939 和 UDS 的 CAN 网络上，两者的传输协议会冲突吗？
-
 
 **AUTOSAR 与 ROS 2 对比**
 
@@ -436,11 +449,9 @@
 
 2. ROS 2 的"节点"（Node）和 AUTOSAR Adaptive 的"进程"（Process / Execution Cluster）在架构思维上的最大区别是什么？一个 ROS 2 开发者转 AUTOSAR Adaptive，最需要适应的是什么？
 
-
 **工具链自动化构建**
 
 1. 在大项目里，AUTOSAR 配置工具（Davinci / EB）和代码构建（make/cmake）是怎么衔接的？如果每次改配置都要手动点"生成代码"，怎么跟 CI 集成？有没有"命令行无头模式"（headless mode）来做到自动配置生成+编译？
-
 
 **Dcm 协议多路复用（同一诊断栈支持 CAN + DoIP）**
 
@@ -448,13 +459,11 @@
 
 2. 如果用 DoIP 刷写和用 CAN TP 刷写同一个 ECU——两个刷写路径在 Dcm 层的处理逻辑是一样的吗？刷写速率谁快？如果 CAN 路径刷一半断电了，恢复后能接着刷，那 DoIP 路径也支持同样的恢复机制吗？
 
-
 **NvM 块管理策略深入**
 
 1. NvM 的 Block 有 Native 和 Redundant 两种类型——Redundant 存了两份数据，一份坏了还能从另一份恢复。那问题来了：怎么判断"哪一份是好的"？NvM 用什么机制来判断一份数据的完整性？
 
 2. NvM 的 Write Block 有"立即写"（Immediate）和"周期写"（Periodic）两种策略。如果一个关键参数（如转向角偏移校准值）被 SW-C 改写了，应该用 Immediate 还是 Periodic 来触发 NvM 写？如果用 Periodic，掉电了会不会丢数据？
-
 
 **EcuM 状态机深入（Run / PostRun / Shutdown）**
 
@@ -462,13 +471,11 @@
 
 2. PostRun 状态是干什么用的？如果所有 SW-C 都停止运行了但 EcuM 还在 PostRun——这期间通常哪些模块还在工作？正在 NvM 写数据的时候收到 Shutdown 请求，EcuM 会强制掉电还是等写完？
 
-
 **CAN 错误处理与 Bus-off 恢复**
 
 1. CAN 控制器进入 Bus-off 状态后，不能再收发任何报文。AUTOSAR 的 Can 驱动和 CanIf 是怎么处理 Bus-off 的？驱动检测到 Bus-off 后，会上报到哪一层来决定什么时候恢复？
 
 2. Bus-off 恢复策略通常有三种：立即恢复、延迟恢复、手动恢复。在实际项目中（比如动力域 ECU），选哪种策略？如果选了"延迟恢复"，这个延迟是谁来计时——Can 驱动自身的定时器还是 BswM？
-
 
 **AUTOSAR 的数据一致性与 RTE Buffer 管理**
 
@@ -476,20 +483,17 @@
 
 2. RTE 的 Buffer 有 queued 和 non-queued 两种模式。queued 模式（队列）能存多条历史数据，non-queued（最后一个）只保留最新值。那如果一个周期 5ms 发送的信号，接收方周期是 100ms——用 queued 还是 non-queued？如果选错了，接收方每次读到的会是什么？
 
-
 **AUTOSAR 启动依赖与 BSW 模块初始化顺序**
 
 1. EcuM 的 Startup Sequence 里注册了多个 BSW 模块的 InitFunction——这些 InitFunction 的执行顺序谁决定的？如果一个模块（比如 Can）依赖另一个模块（比如 IoHwAb 的端口配置），依赖关系在哪声明？
 
 2. 假设 PduR 的初始化在 CanIf 之前，但 PduR 在初始化时需要知道已经有哪些通信接口（CAN、LIN、FlexRay）可用——那 PduR 先初始化了、CanIf 还没初始化，PduR 怎么知道后面还会有个 CAN 接口加进来？
 
-
 **AUTOSAR 与 Linux 共存（同 SoC 混合部署）**
 
 1. 现在的域控制器和高性能 SoC（如 TDA4、S32G、R-Car）上经常 Linux 跑非实时应用（导航、HMI）、AUTOSAR 跑实时控制（制动、转向）。那 Linux 和 AUTOSAR 之间怎么通信？共享内存？RPMSG？还是走 Ethernet 的 SOME/IP？
 
 2. 两个 OS 共存的场景下，时间同步问题怎么解决——Linux 那边的 PTP 时间域和 AUTOSAR 的 Global Time 域是同一个吗？如果 Linux 那边 NTP 调整了系统时间，会不会把 AUTOSAR 的调度时间也带偏？
-
 
 #Area/技术/AUTOSAR
 
@@ -513,18 +517,17 @@
 - [Dcm 多诊断传输路径：CAN 与 DoIP](dcm-can-doip-multiprotocol-routing.md) — 检查多入口的传输层、PduR、Dcm 连接映射与响应回路。
 - [诊断配置集成自检清单](diagnostics-integration-preflight-checklist.md) — 覆盖 Dcm/PduR 路由、S3Server、DTC/NvM、刷写时序和启动就绪检查。
 
-
 ## NvM 数据模型：RAM、ROM Default 与 NV Block
 
 这部分补充两个常见问题：**修改 RAM 数据是否等于写入 Flash？**以及**RAM、ROM 默认值和 NV Block 分别承担什么职责？**
 
 ### 三类数据不要混为一谈
 
-| 对象 | 作用 | 典型生命周期 | 常见误区 |
-|---|---|---|---|
-| RAM Block / RAM 镜像 | 应用或 BSW 当前运行时读写的数据 | 本次上电期间 | 改了 RAM 就以为已持久化 |
-| ROM Default | 配置提供的默认值，供缺省恢复或初始化策略使用 | 随软件镜像发布 | 认为它一定会在每次启动时覆盖有效 NV 数据 |
-| NV Block | NvM 管理的非易失数据逻辑块，经 MemIf 访问底层存储 | 跨掉电保存 | 把逻辑 Block 与 Flash 物理扇区当成一回事 |
+| 对象                 | 作用                                              | 典型生命周期   | 常见误区                                 |
+| -------------------- | ------------------------------------------------- | -------------- | ---------------------------------------- |
+| RAM Block / RAM 镜像 | 应用或 BSW 当前运行时读写的数据                   | 本次上电期间   | 改了 RAM 就以为已持久化                  |
+| ROM Default          | 配置提供的默认值，供缺省恢复或初始化策略使用      | 随软件镜像发布 | 认为它一定会在每次启动时覆盖有效 NV 数据 |
+| NV Block             | NvM 管理的非易失数据逻辑块，经 MemIf 访问底层存储 | 跨掉电保存     | 把逻辑 Block 与 Flash 物理扇区当成一回事 |
 
 具体行为由 NvM Block 配置、初始化策略、默认值配置、校验/冗余设置和供应商实现共同决定，不能仅凭“有 ROM 默认值”推断启动时一定使用默认值。
 
@@ -555,12 +558,12 @@ flowchart TD
 
 Immediate（立即请求写入）和 Periodic（周期性写入）是策略选择，不是“关键数据永远 Immediate”的简单规则。应结合数据丢失后果、更新频率、Flash 擦写寿命、关机时序预算、底层异步作业行为与掉电恢复能力评估。
 
-| 评估维度 | Immediate 倾向 | Periodic 倾向 |
-|---|---|---|
-| 数据丢失后果 | 丢失最新值可能带来严重后果，且架构允许立即请求 | 可接受有限时间窗口内的数据回退 |
-| 更新频率 | 更新较少、每次变更值得持久化 | 高频更新，合并写入有助于控制擦写次数 |
-| 掉电窗口 | 仍需验证作业能否在掉电前完成 | 必须明确周期窗口内掉电可能丢失最新更新 |
-| 系统约束 | 需要预留调度和关机预算 | 需要定义周期、最大可丢失窗口及关机补写策略 |
+| 评估维度     | Immediate 倾向                                 | Periodic 倾向                              |
+| ------------ | ---------------------------------------------- | ------------------------------------------ |
+| 数据丢失后果 | 丢失最新值可能带来严重后果，且架构允许立即请求 | 可接受有限时间窗口内的数据回退             |
+| 更新频率     | 更新较少、每次变更值得持久化                   | 高频更新，合并写入有助于控制擦写次数       |
+| 掉电窗口     | 仍需验证作业能否在掉电前完成                   | 必须明确周期窗口内掉电可能丢失最新更新     |
+| 系统约束     | 需要预留调度和关机预算                         | 需要定义周期、最大可丢失窗口及关机补写策略 |
 
 **关键边界：**调用写入 API 不等于物理介质已经可靠保存。要检查返回值、作业完成状态、底层存储状态，以及项目规定的最终完成判据；具体判据应按所用 AUTOSAR 版本、供应商实现和集成设计确认。
 
@@ -578,4 +581,3 @@ Immediate（立即请求写入）和 Periodic（周期性写入）是策略选�
 - [AUTOSAR CP NvRAM Manager Specification（R24-11）](https://www.autosar.org/fileadmin/standards/R24-11/CP/AUTOSAR_CP_SWS_NVRAMManager.pdf)
 
 > 本页用于建立排查框架。NvM API、Block 配置字段、作业状态及底层 Fee/Ea 行为，请以项目实际采用的 AUTOSAR 版本和供应商文档为准。
-
