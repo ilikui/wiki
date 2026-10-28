@@ -29,8 +29,8 @@
 
 **一句话总结**：AUTOSAR 是汽车软件界的统一度量衡——用标准接口和生成流程，让五花八门的模块能互相通信而不吵架。
 
-📎 1000问题目 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
-📎 三问·其三（AUTOSAR 解决了什么本质问题）→ [https://v.flomoapp.com/mine/?memo\_id=MjQ5MDI0OTgy](https://v.flomoapp.com/mine/?memo_id=MjQ5MDI0OTgy)
+📎 1000问题目 → [https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
+📎 三问·其三（AUTOSAR 解决了什么本质问题）→ [https://v.flomoapp.com/mine/?memo_id=MjQ5MDI0OTgy](https://v.flomoapp.com/mine/?memo_id=MjQ5MDI0OTgy)
 
 #Area/技术/AUTOSAR
 
@@ -53,7 +53,7 @@
 
 **层间接口**
 
-- SW-C ↔ RTE：Rte\_Read / Rte\_Write / Rte\_Call 等（RTE 生成的标准接口）
+- SW-C ↔ RTE：Rte_Read / Rte_Write / Rte_Call 等（RTE 生成的标准接口）
 - RTE ↔ BSW：通过标准接口调用 BSW 服务（Com、NvM、Dcm 的服务）
 - BSW 内部：层间用标准接口（Com→PduR→CanIf→Can），层内模块间也走标准接口
 - BSW ↔ MCAL：通过 MCAL 抽象接口（CanIf 调 Can 驱动）
@@ -67,8 +67,8 @@
 
 **一句话总结**：应用→RTE→BSW→MCAL→硬件，依赖严格向下；RTE 是应用的唯一通道，MCAL 是硬件的唯一入口。
 
-📎 1000问题目 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
-📎 基础概念Q1（什么是 AUTOSAR）→ [https://v.flomoapp.com/mine/?memo\_id=MjUyNDgyMTM0](https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMTM0)
+📎 1000问题目 → [https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
+📎 基础概念Q1（什么是 AUTOSAR）→ [https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMTM0](https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMTM0)
 
 #Area/技术/AUTOSAR
 
@@ -97,13 +97,13 @@
 
 **RTE 生成的本质**
 
-- Rte\_Read / Rte\_Write 是生成的，不是手写的：配置（端口映射、通信类型）决定生成什么
-- 调试技巧：看 Rte\_Read 的实现，就知道这条数据链路实际走了哪条路径（直接 / 队列 / IOC / COM）
+- Rte_Read / Rte_Write 是生成的，不是手写的：配置（端口映射、通信类型）决定生成什么
+- 调试技巧：看 Rte_Read 的实现，就知道这条数据链路实际走了哪条路径（直接 / 队列 / IOC / COM）
 
 **一句话总结**：RTE 把「通信和调度的细节」从应用手里收走，让 SW-C 只认接口不认平台——它是 AUTOSAR 解耦哲学的实体。
 
-📎 1000问题目 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
-📎 基础/架构Q1（分层接口）→ [https://v.flomoapp.com/mine/?memo\_id=MjUyNDgyMjA1](https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMjA1)
+📎 1000问题目 → [https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)<br>
+📎 基础/架构Q1（分层接口）→ [https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMjA1](https://v.flomoapp.com/mine/?memo_id=MjUyNDgyMjA1)
 
 #Area/技术/AUTOSAR
 
@@ -119,22 +119,22 @@
 
 **同核（同一个 ECU、同一个核）的机制**
 
-- Sender SW-C 调 Rte\_Write\_ _；Receiver 调 Rte\_Read_\_
-- 生成代码里，两者指向同一个 RTE buffer（Rte\_Data 变量 / Rte\_PBcfg 里的槽位）——本质是共享内存：写方往里写，读方从同一处读
+- Sender SW-C 调 Rte_Write\_ _；Receiver 调 Rte_Read_\_
+- 生成代码里，两者指向同一个 RTE buffer（Rte_Data 变量 / Rte_PBcfg 里的槽位）——本质是共享内存：写方往里写，读方从同一处读
 - 数据一致性：RTE 保证跨 Runnable 读写不撕裂（通常用临时拷贝、锁或禁止抢占的机制）
 - 开销小：一次内存拷贝 \+ 一致性保护
 
 **跨核（发送方在核 A、接收方在核 B）的不同**
 
-- 生成代码不再直接共享变量——Rte\_Write 生成调用 IOC 发送（IocSend），Rte\_Read 走 IOC 接收（IocReceive）
+- 生成代码不再直接共享变量——Rte_Write 生成调用 IOC 发送（IocSend），Rte_Read 走 IOC 接收（IocReceive）
 - 数据要跨核搬运：一次「拷贝 \+ 同步」打底（消息传递式）
 - 一致性靠 IOC 的同步机制（锁 / 消息队列），而不是共享内存直接读
-- 生成代码引用的是 Ioc 模块的 API，Rte\_Cfg.h 里的映射也不同
+- 生成代码引用的是 Ioc 模块的 API，Rte_Cfg.h 里的映射也不同
 
-**核心对比一句话**：同核 = 共享内存 buffer（拷贝 + 一致性保护，轻）；跨核 = 走 IOC 消息传递（拷贝 + 同步，重）——RTE 生成的函数和底层调用完全不同，但上层 SW-C 用的 Rte\_Write / Rte\_Read 接口不变，屏蔽了这一层的区别。
+**核心对比一句话**：同核 = 共享内存 buffer（拷贝 + 一致性保护，轻）；跨核 = 走 IOC 消息传递（拷贝 + 同步，重）——RTE 生成的函数和底层调用完全不同，但上层 SW-C 用的 Rte_Write / Rte_Read 接口不变，屏蔽了这一层的区别。
 
-📎 工程问题Q3（多核分配）→ [https://v.flomoapp.com/mine/?memo\_id=MjUzNzAyNDQ3](https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3)<br>
-📎 AUTOSAR 1000问总表 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)
+📎 工程问题Q3（多核分配）→ [https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3](https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3)<br>
+📎 AUTOSAR 1000问总表 → [https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)
 
 #Area/技术/AUTOSAR
 
@@ -160,24 +160,23 @@
 
 **支2：和普通 RTE 通信的差异**
 
-- 数据路径：普通 RTE 同核是「直接共享 RTE buffer」（Rte\_Write/Read 指向同一变量）；IOC 是「拷贝到 IOC 缓冲」跨核搬运
+- 数据路径：普通 RTE 同核是「直接共享 RTE buffer」（Rte_Write/Read 指向同一变量）；IOC 是「拷贝到 IOC 缓冲」跨核搬运
 - 同步机制：普通 RTE 靠「禁止抢占 / 锁」保护；IOC 靠 Spinlock / 信号量（没法关别的核）
 - 拷贝开销：普通 RTE 可隐式引用（不拷贝）；IOC 必拷贝
 - 触发：普通 RTE 的 DataReceivedEvent 在核内；IOC 靠 IocSetEvent → IPI 触发跨核事件
 
 **支3：关系**
 
-- RTE 跨核通信底层走 IOC——SW-C 上层 Rte\_Write / Rte\_Read 接口不变，RTE 生成代码底层改调 Ioc
+- RTE 跨核通信底层走 IOC——SW-C 上层 Rte_Write / Rte_Read 接口不变，RTE 生成代码底层改调 Ioc
 - 接 RTE深入Q1（跨核走 IOC）、工程Q3（多核分配）、多核通信专题
 
 **一句话总结**：IOC 是「跨核版的通信」——同核直接共享 RTE buffer 靠禁抢占保护，跨核就得靠「IOC 拷贝 + Spinlock / 信号量 + IPI」这套显式机制；上层 Rte 接口不变，底层换成 IOC 传递。
 
-📎 RTE深入Q1（跨核走 IOC）→ [https://v.flomoapp.com/mine/?memo\_id=MjUzOTExNjMx](https://v.flomoapp.com/mine/?memo_id=MjUzOTExNjMx)<br>
-📎 工程问题Q3（多核分配）→ [https://v.flomoapp.com/mine/?memo\_id=MjUzNzAyNDQ3](https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3)<br>
-📎 AUTOSAR 1000问总表 → [https://v.flomoapp.com/mine/?memo\_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)
+📎 RTE深入Q1（跨核走 IOC）→ [https://v.flomoapp.com/mine/?memo_id=MjUzOTExNjMx](https://v.flomoapp.com/mine/?memo_id=MjUzOTExNjMx)<br>
+📎 工程问题Q3（多核分配）→ [https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3](https://v.flomoapp.com/mine/?memo_id=MjUzNzAyNDQ3)<br>
+📎 AUTOSAR 1000问总表 → [https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4](https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4)
 
 #Area/技术/AUTOSAR
-
 
 ---
 

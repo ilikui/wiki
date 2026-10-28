@@ -22,8 +22,9 @@
 **基础 / 架构**
 
 1. AUTOSAR的分层架构（应用层/RTE/BSW/MCAL）各层之间通过什么接口通信？谁依赖谁？
-   
+
 ---
+
 ```mermaid
 graph TD
     %% 节点定义
@@ -70,7 +71,7 @@ graph TD
     style BSW fill:#E8F5E9,stroke:#388E3C,stroke-width:2px;
     style MCAL_Layer fill:#FFE0B2,stroke:#F57C00,stroke-width:2px;
     style HW fill:#ECEFF1,stroke:#455A64,stroke-width:2px;
-    
+
     classDef sepArrow stroke-width:4px,stroke-dasharray: 5 5;
 
 ```
@@ -219,7 +220,52 @@ graph TD
 
 3. DET（Default Error Tracer）和DEM（Diagnostic Event Manager）的区别是什么？一个运行时错误从DET上报到最终进入DEM的事件存储器，经过了哪几步？
 
-4. DLT（Diagnostic Log and Trace）是用来做什么的？它在实际量产车上开着还是关着？什么时候你会用它代替普通的printf调试？
+| 特性     | DET (Default Error Tracer)                                                         | DEM (Diagnostic Event Manager)                                                               |
+| -------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 主要定位 | 软件内部错误追踪器。主要用于软件开发阶段的调试和运行时的软件防错。                 | 诊断事件管理器。面向售后维保、法规合规（如 OBD），负责车辆故障码管理。                       |
+| 错误类型 | 开发错误（Development Errors，如空指针、参数越界）及运行时错误（Runtime Errors）。 | 诊断事件（Diagnostic Events，如传感器短路、信号丢失、硬件失效）。                            |
+| 存储机制 | 通常不进行非易失性存储。错误发生时直接触发回调、记录日志或进入死循环挂起。         | 持久化存储（NVRAM）。将故障码（DTC）、冻结帧（Freeze Frame）和扩展数据存储在非易失性内存中。 |
+| 处理对象 | BSW（基础软件）模块和 SW-C（应用软件组件）。                                       | 主要是与整车诊断相关的 ECU 内部或外部故障。                                                  |
+| 交互对象 | 主要是开发人员（通过调试器或 Log 日志）。                                          | 售后技师（通过诊断仪/UDS协议）、仪表盘（MIL灯）和整车网络。                                  |
+
+```mermaid
+flowchart TD
+    %% 错误触发阶段
+    subgraph Detection [1. 错误检测与上报]
+        A[BSW / SW-C 运行异常] -->|调用 Det_ReportRuntimeError| B(DET 模块)
+    end
+
+    %% DET 处理阶段
+    subgraph DET_Process [2. DET 过滤与联动]
+        B --> C{是否配置了\nDEM 联动功能?}
+        C -->|否| D[仅打印 Log / 触发开发回调]
+        C -->|是| E[调用 Dem_SetEventStatus\n将错误转换为诊断事件]
+    end
+
+    %% DEM 处理阶段
+    subgraph DEM_Process [3. DEM 去抖与确认]
+        E --> F(DEM 模块)
+        F --> G[事件去抖处理\nDebouncing]
+        G --> H{满足故障确认条件\nConfirmed?}
+        H -->|否| I[维持当前状态\n暂不存储]
+    end
+
+    %% 最终存储阶段
+    subgraph Storage [4. 存储器写入]
+        H -->|是| J[锁定 Event Memory 槽位]
+        J --> K[捕获 Snapshot / Freeze Frame 数据]
+        K --> L[结合 NvM 模块\n正式写入 DEM 事件存储器]
+    end
+
+    %% 样式调整
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style F fill:#bfb,stroke:#333,stroke-width:2px
+    style L fill:#fbb,stroke:#333,stroke-width:2px
+
+```
+
+1. DLT（Diagnostic Log and Trace）是用来做什么的？它在实际量产车上开着还是关着？什么时候你会用它代替普通的printf调试？
 
 **诊断栈深入**
 
@@ -498,17 +544,11 @@ graph TD
 #Area/技术/AUTOSAR
 
 - [通信栈深度问答：CanIf 硬件对象与 PduR 路由排障](answers-communication-stack-deep-dive.md) — HRH/HTH、PDU 映射、Tx/Rx 路由与分层排障。
-
 - [诊断栈实战：Dcm、Dem、DET、DTC 与 UDS](answers-diagnostics-dcm-dem-det.md) — DTC 全链路、Dem 防抖/状态位、Dcm 三层架构与 DET/DEM 边界。
-
 - [FIM 功能抑制与 UDS 刷写](answers-diagnostics-fim-uds-flashing.md) — 功能抑制条件、0x34/0x36/0x37 下载流程与刷写故障排查。
-
 - [RTE / Runnable 快速检查清单](rte-runnable-checklist.md) — 从 ARXML 事件、Runnable 调度与 OS Task 映射，排查 Rte_Read/Rte_Write 和数据访问问题。
-
 - [EcuM 启动与 Init 失败排查](ecum-startup-init-failure.md) — Startup/RUN 阶段、初始化依赖、错误记录与项目级降级/复位策略。
-
 - [EcuM 唤醒验证与醒后重睡排查](ecum-wakeup-validation.md) — 检查唤醒源、验证窗口、模式仲裁和电源/通信恢复时序。
-
 - [NvM 关机保存时序与掉电预算](nvm-shutdown-save-timing.md) — BswM Action、NvM 异步作业完成判据、EcuM 关机超时及断电注入排查。
 - [NvM RAM、ROM 与 NV Block 数据模型](nvm-ram-rom-nv-block-model.md) — 区分运行时 RAM 镜像、默认值与非易失保存数据，并提供启动恢复和掉电排障步骤。
 - [NvM Immediate 与 Periodic 写入策略](nvm-immediate-periodic-strategy.md) — 按数据丢失风险、更新频率、擦写寿命和关机预算选择策略，并定义掉电验证场景。
