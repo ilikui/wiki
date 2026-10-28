@@ -543,3 +543,5 @@
 - [RTE Event、Runnable 调度与跨核 IOC 实战](../../1000-questions/autosar/rte-events-runnable-scheduling-ioc.md) — 事件触发、周期抖动、数据接收、Client-Server 与跨核通信排查。
 
 - [RTE Buffer 与数据一致性：Queued / Non-queued、数据快照、新鲜度与队列溢出](../../1000-questions/autosar/rte-buffer-data-consistency-queued-nonqueued.md)。
+
+- [COM / PduR / CanIf 发送与接收回调链：TxConfirmation、RxIndication 与分层排查](../../1000-questions/autosar/com-pdur-canif-tx-rx-callback-chain.md)。
