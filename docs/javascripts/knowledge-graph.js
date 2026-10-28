@@ -237,16 +237,54 @@
     }
     network.on("afterDrawing", ctx => { try { drawLabels(ctx); } catch (e) {} });
 
-    let settled = false;
+    let initiallySettled = false;
     function settle() {
-      if (settled) return;
-      settled = true;
+      if (initiallySettled) return;
+      initiallySettled = true;
       network.setOptions({ physics: { enabled: false } });
       network.fit({ animation: false });
     }
     network.once("stabilized", settle);
     /* 兜底：物理迟迟不收敛时（超大 hub 常见）强制收敛并回到全图视野 */
     setTimeout(settle, 7000);
+
+    let freezeAfterDrag = false;
+    let expansionFrame = null;
+    let suppressClickUntil = 0;
+    let settleTimer = null;
+    function stabilizeAndFreeze() {
+      if (settleTimer !== null) clearTimeout(settleTimer);
+      settleTimer = null;
+      freezeAfterDrag = true;
+      network.stabilize(90);
+      settleTimer = setTimeout(() => {
+        if (!freezeAfterDrag) return;
+        freezeAfterDrag = false;
+        settleTimer = null;
+        network.setOptions({ physics: { enabled: false } });
+      }, 1800);
+    }
+    network.on("dragStart", params => {
+      if (!params.nodes.length) return;
+      if (expansionFrame !== null) cancelAnimationFrame(expansionFrame);
+      expansionFrame = null;
+      if (settleTimer !== null) clearTimeout(settleTimer);
+      settleTimer = null;
+      freezeAfterDrag = false;
+      network.setOptions({ physics: { enabled: true } });
+    });
+    network.on("dragEnd", params => {
+      if (!params.nodes.length) return;
+      suppressClickUntil = performance.now() + 250;
+      stabilizeAndFreeze();
+    });
+    network.on("stabilized", () => {
+      if (!freezeAfterDrag) return;
+      freezeAfterDrag = false;
+      if (settleTimer !== null) clearTimeout(settleTimer);
+      settleTimer = null;
+      network.setOptions({ physics: { enabled: false } });
+    });
 
     /* ---- 主题切换（浅色/深色/跟随系统，持久化） ---- */
     function themePref() {
@@ -326,10 +364,80 @@
       }
       document.getElementById("info-content").innerHTML = html;
     }
+    function expandNeighborhood(nodeId) {
+      const neighborIds = network.getConnectedNodes(nodeId)
+        .filter(id => {
+          const node = nodesDS.get(id);
+          return node && !node.hidden;
+        })
+        .sort((a, b) => String(a).localeCompare(String(b)));
+      const ids = [nodeId, ...neighborIds];
+      const starts = network.getPositions(ids);
+      const center = starts[nodeId];
+      if (!center) return;
+
+      freezeAfterDrag = false;
+      network.setOptions({ physics: { enabled: false } });
+      if (!neighborIds.length) {
+        network.focus(nodeId, { scale: 1.4, animation: { duration: 360, easingFunction: "easeInOutQuad" } });
+        return;
+      }
+
+      const ringSize = 64;
+      const targets = new Map();
+      let outerRadius = 0;
+      neighborIds.forEach((neighborId, index) => {
+        const ring = Math.floor(index / ringSize);
+        const first = ring * ringSize;
+        const inRing = Math.min(ringSize, neighborIds.length - first);
+        const from = starts[neighborId];
+        if (!from) return;
+        const dx = from.x - center.x;
+        const dy = from.y - center.y;
+        const currentRadius = Math.hypot(dx, dy);
+        const fallbackAngle = (2 * Math.PI * (index - first)) / inRing + ring * 0.18;
+        const angle = currentRadius > 1 ? Math.atan2(dy, dx) : fallbackAngle;
+        const radius = Math.max(82 + ring * 72 + Math.sqrt(inRing) * 8, currentRadius * 1.28);
+        outerRadius = Math.max(outerRadius, radius);
+        targets.set(neighborId, {
+          x: center.x + Math.cos(angle) * radius,
+          y: center.y + Math.sin(angle) * radius,
+        });
+      });
+
+      const fitScale = (Math.min(container.clientWidth, container.clientHeight) * 0.42) / outerRadius;
+      network.focus(nodeId, {
+        scale: Math.max(0.22, Math.min(network.getScale(), fitScale)),
+        animation: { duration: 420, easingFunction: "easeInOutQuad" },
+      });
+
+      const started = performance.now();
+      const duration = 560;
+      function animateExpansion(now) {
+        const progress = Math.min(1, (now - started) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        targets.forEach((target, neighborId) => {
+          const from = starts[neighborId];
+          if (!from) return;
+          network.moveNode(neighborId,
+            from.x + (target.x - from.x) * eased,
+            from.y + (target.y - from.y) * eased);
+        });
+        network.redraw();
+        if (progress < 1) {
+          expansionFrame = requestAnimationFrame(animateExpansion);
+          return;
+        }
+        expansionFrame = null;
+        network.setOptions({ physics: { enabled: true } });
+        stabilizeAndFreeze();
+      }
+      expansionFrame = requestAnimationFrame(animateExpansion);
+    }
     function focusNode(nodeId) {
-      network.focus(nodeId, { scale: 1.4, animation: true });
       network.selectNodes([nodeId]);
       showInfo(nodeId);
+      expandNeighborhood(nodeId);
       if (isMobile()) setSidebarOpen(true);
     }
     document.addEventListener("click", e => {
@@ -341,8 +449,10 @@
     network.on("hoverNode", p => { hoveredNodeId = p.node; container.style.cursor = "pointer"; });
     network.on("blurNode", () => { hoveredNodeId = null; container.style.cursor = "default"; });
     network.on("click", params => {
+      if (performance.now() < suppressClickUntil) return;
       if (params.nodes.length > 0) {
         showInfo(params.nodes[0]);
+        expandNeighborhood(params.nodes[0]);
         if (isMobile()) setSidebarOpen(true);
       }
       else if (hoveredNodeId === null) {
