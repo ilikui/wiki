@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | CP |
-| 类别 | SWS — 软件模块规范（Software Specification） |
-| UID | 011 |
-| 规范版本 | R26-11 |
+| 属性     | 值                                           |
+| -------- | -------------------------------------------- |
+| 平台     | CP                                           |
+| 类别     | SWS — 软件模块规范（Software Specification） |
+| UID      | 011                                          |
+| 规范版本 | R26-11                                       |
 
 ## 本地文件
 
@@ -22,23 +22,25 @@ This specification specifies the functionality, API and the configuration of the
 ## 章节详细内容
 
 ### 1. 简介与功能概述
-*原文标题：Introduction and functional Overview*
+
+_原文标题：Introduction and functional Overview_
 
 This specification specifies the functionality, API and the configuration of the AUTOSAR Basic Software module CAN Driver (called "Can module" in this document). The Can module is part of the lowest layer, performs the hardware access and offers a hardware independent API to the upper layer. The only upper layer that has access to the Can module is the CanIf module (see also ). The Can module provides services for initiating transmissions and calls the callback functions of the CanIf module for notifying events, independently from the hardware. Furthermore, it provides services to control the behavior and state of the CAN controllers that are belonging to the same CAN Hardware Unit. Several CAN controllers can be controlled by a single Can module as long as they belong to the same CAN Hardware Unit. For a closer description of CAN controller and CAN Hardware Unit see chapter Acronyms and abbreviations and a diagram in .
 
 ### 2. 缩略语
-*原文标题：Acronyms and Abbreviations*
 
-| Abbreviation / Acronym: | Description: |
-|---|---|
-| CAN controller | A CAN controller serves exactly one physical channel. |
-| CAN Hardware Unit | A CAN Hardware Unit may consists of one or multiple CAN controllers of the same type and one or multiple CAN RAM areas. The CAN Hardware Unit is either on-chip, or an external device. The CAN Hardware Unit is represented by one CAN driver. |
-| CAN L-PDU | Data Link Layer Protocol Data Unit. Consists of Identifier, Data Length and Data (SDU). (see) |
-| CAN L-SDU | Data Link Layer Service Data Unit. Data that is transported inside the L-PDU. (see) |
-| DLC | Data Length Code (part of CAN message describes the SDU length) |
-| Hardware Object | A CAN hardware object is defined as a PDU buffer inside the CAN RAM of the CAN hardware unit / CAN controller. A Hardware Object is defined as L-PDU buffer inside the CAN RAM of the CAN Hardware Unit. |
-| Hardware Receive Handle (HRH) | The Hardware Receive Handle (HRH) is defined and provided by the CAN Driver. Each HRH typically represents just one hardware object. The HRH can be used to optimize software filtering. |
-| Hardware Transmit Handle (HTH) | The Hardware Transmit Handle (HTH) is defined and provided by the CAN Driver. |
+_原文标题：Acronyms and Abbreviations_
+
+| Abbreviation / Acronym:        | Description:                                                                                                                                                                                                                                    |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CAN controller                 | A CAN controller serves exactly one physical channel.                                                                                                                                                                                           |
+| CAN Hardware Unit              | A CAN Hardware Unit may consists of one or multiple CAN controllers of the same type and one or multiple CAN RAM areas. The CAN Hardware Unit is either on-chip, or an external device. The CAN Hardware Unit is represented by one CAN driver. |
+| CAN L-PDU                      | Data Link Layer Protocol Data Unit. Consists of Identifier, Data Length and Data (SDU). (see)                                                                                                                                                   |
+| CAN L-SDU                      | Data Link Layer Service Data Unit. Data that is transported inside the L-PDU. (see)                                                                                                                                                             |
+| DLC                            | Data Length Code (part of CAN message describes the SDU length)                                                                                                                                                                                 |
+| Hardware Object                | A CAN hardware object is defined as a PDU buffer inside the CAN RAM of the CAN hardware unit / CAN controller. A Hardware Object is defined as L-PDU buffer inside the CAN RAM of the CAN Hardware Unit.                                        |
+| Hardware Receive Handle (HRH)  | The Hardware Receive Handle (HRH) is defined and provided by the CAN Driver. Each HRH typically represents just one hardware object. The HRH can be used to optimize software filtering.                                                        |
+| Hardware Transmit Handle (HTH) | The Hardware Transmit Handle (HTH) is defined and provided by the CAN Driver.                                                                                                                                                                   |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -55,55 +57,63 @@ This specification specifies the functionality, API and the configuration of the
 The CAN Hardware Unit combines one or several CAN controllers, which may be located on-chip or as external standalone devices of the same type, with common or separate Hardware Objects. Following figure shows a CAN Hardware Unit consisting of two CAN controllers connected to two Physical Channels:
 
 ### 5. 相关文档
-*原文标题：Related Documentation*
+
+_原文标题：Related Documentation_
 
 ### 6. 相关规范
-*原文标题：Related specification*
 
-AUTOSAR provides a General Specification on Basic Software modules  (SWS BSW General), which is also valid for CAN Driver.
+_原文标题：Related specification_
+
+AUTOSAR provides a General Specification on Basic Software modules (SWS BSW General), which is also valid for CAN Driver.
 
 Thus, the specification SWS BSW General shall be considered as additional and required specification for CAN Driver.
 
 ### 7. 约束与假设
-*原文标题：Constraints and assumptions*
+
+_原文标题：Constraints and assumptions_
 
 ### 8. 限制
-*原文标题：Limitations*
+
+_原文标题：Limitations_
 
 A CAN controller always corresponds to one physical channel. It is allowed to connect physical channels on bus side. Regardless the CanIf module will treat the concerned CAN controllers separately. A few CAN hardware units support the possibility to combine several CAN controllers by using the CAN RAM, to extend the number of message objects for one CAN controller. These combined CAN controller are handled as one controller by the Can module. The Can module does not support CAN remote frames.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The Can module shall not transmit messages triggered by remote transmission requests.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The Can module shall initialize the CAN HW to ignore any remote transmission requests.
 ⌋
 
 ### 9. 适用的车型领域
-*原文标题：Applicability to car domains*
+
+_原文标题：Applicability to car domains_
 
 The Can module can be used for any application, where the CAN protocol is used.
 
 ### 10. 对其他模块的依赖
-*原文标题：Dependencies to other modules*
+
+_原文标题：Dependencies to other modules_
 
 ### 11. Static 配置
-*原文标题：Static Configuration*
 
-The configuration elements described in Chapter  can be referenced by other BSW modules for their configuration.
+_原文标题：Static Configuration_
+
+The configuration elements described in Chapter can be referenced by other BSW modules for their configuration.
 
 ### 12. 驱动服务
-*原文标题：Driver Services*
+
+_原文标题：Driver Services_
 
 Upstream requirements:
 ⌈
 If the CAN controller is on-chip, the Can module shall not use any service of other drivers.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The function `Can_Init` shall initialize all on-chip hardware resources that are used by the CAN controller. The only exception to this is the digital I/O pin configuration (of pins used by CAN), which is done by the port driver.
 ⌋
@@ -114,7 +124,7 @@ The Mcu module (SPAL see ) shall configure register settings that are 'shared' w
 
 Implementation hint: The Mcu module shall be initialized before initializing the Can module.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 If an off-chip CAN controller is used, the Can module shall use services of other MCAL drivers (e.g. SPI).
 ⌋
@@ -128,7 +138,8 @@ The Can module shall use the synchronous APIs of the underlying MCAL drivers and
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 13. 系统服务
-*原文标题：System Services*
+
+_原文标题：System Services_
 
 ⌈
 In special hardware cases, the Can module shall poll for events of the hardware.
@@ -141,7 +152,8 @@ The Can module shall use the OsCounter provided by the system service for timeou
 Implementation hint: The blocking time of the Can module function that is waiting for hardware reaction shall be shorter than the CAN main function (i.e. `Can_MainFunction_Read`) trigger period, because the CAN main functions can't be used for that purpose.
 
 ### 14. Can 模块 Users
-*原文标题：Can module Users*
+
+_原文标题：Can module Users_
 
 Upstream requirements:
 ⌈
@@ -149,39 +161,42 @@ The Can module interacts among other modules (eg. Default Error Tracer (DET), Ec
 ⌋
 
 ### 15. 文件结构
-*原文标题：File Structure*
+
+_原文标题：File Structure_
 
 ⌈
 `Can_GeneralTypes`.h shall contain all types and constants that are shared among the AUTOSAR CAN modules Can, CanIf and CanTrcv.
 ⌋
 
 ### 16. 需求追踪
-*原文标题：Requirements Tracing*
 
-| Requirement | Description | Satisfied by |
-|---|---|---|
-| Basic SW security events |  |  |
-| Modules of the \muC Abstraction Layer (MCAL) may not have hard coded horizontal interfaces |  |  |
-| All Basic SW Modules written in C language shall conform to the MISRA C 2025 Standard. |  |  |
-| The Basic Software Module shall be able to initialize variables and hardware in a separate initialization function |  |  |
-| All modules of the AUTOSAR Basic Software shall support a tool based configuration |  |  |
-| The Implementation of interrupt service routines shall be done by the Operating System, complex drivers or modules |  |  |
-| All AUTOSAR Basic Software Modules shall provide configuration rules and constraints to enable plausibility checks |  |  |
-| AUTOSAR Basic Software Modules shall be compiler and platform independent |  |  |
-| AUTOSAR Basic Software Modules shall not define global data in their header files, but in the C file |  |  |
-| All AUTOSAR Basic Software Modules shall indicate all global data with read-only purposes by explicitly assigning the const keyword |  |  |
-| Shared code shall be reentrant |  |  |
-| All AUTOSAR Basic Software Modules shall check passed API parameters for validity |  |  |
-| It shall be allowed to use macros instead of |  |  |
+_原文标题：Requirements Tracing_
+
+| Requirement                                                                                                                         | Description | Satisfied by |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------ |
+| Basic SW security events                                                                                                            |             |              |
+| Modules of the \muC Abstraction Layer (MCAL) may not have hard coded horizontal interfaces                                          |             |              |
+| All Basic SW Modules written in C language shall conform to the MISRA C 2025 Standard.                                              |             |              |
+| The Basic Software Module shall be able to initialize variables and hardware in a separate initialization function                  |             |              |
+| All modules of the AUTOSAR Basic Software shall support a tool based configuration                                                  |             |              |
+| The Implementation of interrupt service routines shall be done by the Operating System, complex drivers or modules                  |             |              |
+| All AUTOSAR Basic Software Modules shall provide configuration rules and constraints to enable plausibility checks                  |             |              |
+| AUTOSAR Basic Software Modules shall be compiler and platform independent                                                           |             |              |
+| AUTOSAR Basic Software Modules shall not define global data in their header files, but in the C file                                |             |              |
+| All AUTOSAR Basic Software Modules shall indicate all global data with read-only purposes by explicitly assigning the const keyword |             |              |
+| Shared code shall be reentrant                                                                                                      |             |              |
+| All AUTOSAR Basic Software Modules shall check passed API parameters for validity                                                   |             |              |
+| It shall be allowed to use macros instead of                                                                                        |             |              |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 17. 功能规范
-*原文标题：Functional Specification*
+
+_原文标题：Functional Specification_
 
 On L-PDU transmission, the Can module writes the L-PDU in an appropriate buffer inside the CAN controller hardware. See chapter 7.5 for closer description of L-PDU transmission. On L-PDU reception, the Can module calls the RX indication callback function with ID, Data Length and pointer to L-SDU as parameter. See chapter 7.6 for closer description of L-PDU reception. The Can module provides an interface that serves as periodical processing function, and which must be called by the Basic Software Scheduler module periodically. Furthermore, the Can module provides services to control the state of the CAN controllers. Bus-off and Wake-up events are notified by means of callback functions. The Can module is a Basic Software Module that accesses hardware resources. Therefore, it is designed to fulfill the requirements for Basic Software Modules specified in `AUTOSAR_SRS_SPAL` (see ).
 
-  Upstream requirements: ,
+Upstream requirements: ,
 ⌈
 The Can module shall implement the interrupt service routines for all CAN Hardware Unit interrupts that are needed.
 ⌋
@@ -193,11 +208,12 @@ The Can module shall disable all unused interrupts in the CAN controller.
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 18. 驱动范围
-*原文标题：Driver Scope*
+
+_原文标题：Driver Scope_
 
 One Can module provides access to one CAN Hardware Unit that may consist of several CAN controllers.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 For CAN Hardware Units of different type, different Can modules shall be implemented.
 ⌋
@@ -210,7 +226,7 @@ The naming convention is as follows:
 
 <Can module name>_<vendorID>_<Vendor specific API name><driver abbreviation>()
 
- specifies the naming convention.
+specifies the naming convention.
 
 ⌈
 The naming conventions shall be used only in that case, if multiple different CAN controller types on one ECU have to be supported.
@@ -220,31 +236,32 @@ The naming conventions shall be used only in that case, if multiple different CA
 If only one controller type is used, the original naming conventions without any driver abbreviation extensions are sufficient.
 ⌋
 
-See  for description how several Can modules are handled by the CanIf module.
+See for description how several Can modules are handled by the CanIf module.
 
 ### 19. 驱动状态 Machine
-*原文标题：Driver State Machine*
 
-The Can module has a very simple state machine, with the two states `CAN_UNINIT` and `CAN_READY`.  shows the state machine.
+_原文标题：Driver State Machine_
 
-  Upstream requirements:
+The Can module has a very simple state machine, with the two states `CAN_UNINIT` and `CAN_READY`. shows the state machine.
+
+Upstream requirements:
 ⌈
 After power-up/reset, the Can module shall be in the state `CAN_UNINIT`.
 ⌋
 
-  Upstream requirements: ,
+Upstream requirements: ,
 ⌈
 The function `Can_Init` shall change the module state to `CAN_READY`, after initializing all controllers inside the HW Unit.
 ⌋
 
-  Upstream requirements: ,
+Upstream requirements: ,
 ⌈
 The function `Can_Init` shall initialize all CAN controllers according to their configuration.
 ⌋
 
 Each CAN controller must then be started separately by calling the function `Can_SetControllerMode`(`CAN_CS_STARTED`). Implementation hint: Hardware register settings that have impact on all CAN controllers inside the HW Unit can only be set in the function `Can_Init`. Implementation hint: The ECU State Manager module shall call `Can_Init` at most once during runtime.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The function `Can_DeInit` shall change the module state to `CAN_UNINIT` before de-initializing all controllers inside the HW unit
 ⌋
@@ -252,19 +269,21 @@ The function `Can_DeInit` shall change the module state to `CAN_UNINIT` before d
 Refer to .
 
 ### 20. CAN Controller 状态 Machine
-*原文标题：CAN Controller State Machine*
+
+_原文标题：CAN Controller State Machine_
 
 Each CAN controller has complex state machines implemented in hardware. For simplification, the number of states is reduced to the following four basic states in this description: UNINIT, STOPPED, STARTED and SLEEP. Any CAN hardware access is encapsulated by functions of the Can module, but the Can module does not memorize the state changes. The Can module offers the services `Can_Init`, `Can_SetBaudrate` and `Can_SetControllerMode`. These services perform the necessary register settings that cause the required change of the hardware CAN controller state. There are two possibilities for triggering state changes by external events:
 
-* Bus-off event
-* HW wakeup event
+- Bus-off event
+- HW wakeup event
 
 These events are indicated either by an interrupt or by a status bit that is polled in the `Can_MainFunction_BusOff` or `Can_MainFunction_Wakeup`. The Can module does the register settings that are necessary to fulfill the required behavior (i.e. no hardware recovery in case of bus off). Then it notifies the CanIf module with the corresponding callback function. The software state is then changed inside this callback function.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 21. CAN Controller 状态描述
-*原文标题：CAN Controller State Description*
+
+_原文标题：CAN Controller State Description_
 
 This chapter describes the required hardware behavior for the different controller states.
 
@@ -287,16 +306,18 @@ The hardware settings only differ from state STOPPED for CAN hardware that suppo
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 22. CAN Controller 状态 Transitions
-*原文标题：CAN Controller State Transitions*
 
-A state transition is triggered by software with the function `Can_SetControllerMode` with the required transition as parameter. A successful state transition triggered by software is notified by the callback function (`CanIf_ControllerModeIndication`). The monitoring whether the requested state is achieved is part of an upper layer module and is not part of the Can module. Some transitions are triggered by events on the bus (hardware). These transitions cause a notification by means of a callback function. The behavior for invalid transitions in production code is undefined.  shows all valid state transitions.
+_原文标题：CAN Controller State Transitions_
+
+A state transition is triggered by software with the function `Can_SetControllerMode` with the required transition as parameter. A successful state transition triggered by software is notified by the callback function (`CanIf_ControllerModeIndication`). The monitoring whether the requested state is achieved is part of an upper layer module and is not part of the Can module. Some transitions are triggered by events on the bus (hardware). These transitions cause a notification by means of a callback function. The behavior for invalid transitions in production code is undefined. shows all valid state transitions.
 
 ### 23. 状态 transition caused by 功能 Can_Init
-*原文标题：State transition caused by function Can_Init*
 
-* UNINIT -> STOPPED (for all controllers in HW unit)
-* software triggered by the function call `Can_Init`
-* does configuration for all CAN controllers inside HW Unit
+_原文标题：State transition caused by function Can_Init_
+
+- UNINIT -> STOPPED (for all controllers in HW unit)
+- software triggered by the function call `Can_Init`
+- does configuration for all CAN controllers inside HW Unit
 
 All control registers are set according to the static configuration.
 
@@ -304,14 +325,14 @@ All control registers are set according to the static configuration.
 The function `Can_Init` shall set all CAN controllers in the state STOPPED.
 ⌋
 
-When the function `Can_Init` is entered and the Can module is not in state `CAN_UNINIT` or the CAN controllers are not in state UNINIT, it shall raise the error `CAN_E_TRANSITION` (Compare to  and ).
+When the function `Can_Init` is entered and the Can module is not in state `CAN_UNINIT` or the CAN controllers are not in state UNINIT, it shall raise the error `CAN_E_TRANSITION` (Compare to and ).
 
 ### 24. 状态 transition caused by 功能 Can_SetBaudrate
-*原文标题：State transition caused by function Can_SetBaudrate*
 
-*[-] STOPPED -> STOPPED; SLEEP -> SLEEP; STARTED -> STARTED
-*[-] software triggered by the function call `Can_SetBaudrate`
-*[-] changes the CAN controller configuration
+_原文标题：State transition caused by function Can_SetBaudrate_
+
+_[-] STOPPED -> STOPPED; SLEEP -> SLEEP; STARTED -> STARTED
+_[-] software triggered by the function call `Can_SetBaudrate` \*[-] changes the CAN controller configuration
 
 CAN controller registers are set according to the static configurations.
 
@@ -328,7 +349,8 @@ If re-initialization is necessary the function `Can_SetBaudrate` shall ensure th
 ⌋
 
 ### 25. 状态 transition caused by 功能 Can_SetControllerMode
-*原文标题：State transition caused by function Can_SetControllerMode*
+
+_原文标题：State transition caused by function Can_SetControllerMode_
 
 The software can trigger a CAN controller state transition with the function `Can_SetControllerMode`. Depending on the CAN hardware, a change of a register setting to transition to a new CAN controller state may take over only after a delay. The Can module notifies the upper layer (`CanIf_ControllerModeIndication`) after a successful state transition about the new state. The monitoring whether the requested state is achieved is part of an upper layer module and is not part of the Can module.
 
@@ -343,13 +365,14 @@ The function `Can_SetControllerMode` shall use the system service GetCounterValu
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 26. 状态 transition caused by Hardware Events
-*原文标题：State transition caused by Hardware Events*
+
+_原文标题：State transition caused by Hardware Events_
 
 State transition caused by Hardware Wakeup (triggered by wake-up event from CAN bus)
 
-* SLEEP -> STOPPED
-* triggered by incoming L-PDUs
-* The ECU Statemanager module is notified with the function `EcuM_CheckWakeup`
+- SLEEP -> STOPPED
+- triggered by incoming L-PDUs
+- The ECU Statemanager module is notified with the function `EcuM_CheckWakeup`
 
 This state transition will only occur when sleep mode is supported by hardware.
 
@@ -357,7 +380,7 @@ This state transition will only occur when sleep mode is supported by hardware.
 On hardware wakeup (triggered by a wake-up event from CAN bus), the CAN controller shall transition into the state STOPPED.
 ⌋
 
-  Upstream requirements: , ,
+Upstream requirements: , ,
 ⌈
 On hardware wakeup (triggered by a wake-up event from CAN bus), the Can module shall call the function `EcuM_CheckWakeup` either in interrupt context or in the context of `Can_MainFunction_Wakeup`.
 ⌋
@@ -366,7 +389,7 @@ On hardware wakeup (triggered by a wake-up event from CAN bus), the Can module s
 The Can module shall not further process the L-PDU that caused a wake-up.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 In case of a CAN bus wake-up during sleep transition, the function `Can_SetControllerMode`(`CAN_CS_STOPPED`) shall return E_NOT_OK.
 ⌋
@@ -376,42 +399,44 @@ State transition caused by Bus-Off (triggered by state change of CAN controller)
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 27. 状态 transition caused by 功能 Can_DeInit
-*原文标题：State transition caused by function Can_DeInit*
 
-*[-] STOPPED -> UNINIT; SLEEP -> UNINIT (for all controllers in HW unit)
-*[-] software triggered by the function call `Can_DeInit`
-*[-] prepares all CAN controllers inside HW Unit to be re-configured
+_原文标题：State transition caused by function Can_DeInit_
 
-  Upstream requirements: ,
+_[-] STOPPED -> UNINIT; SLEEP -> UNINIT (for all controllers in HW unit)
+_[-] software triggered by the function call `Can_DeInit` \*[-] prepares all CAN controllers inside HW Unit to be re-configured
+
+Upstream requirements: ,
 ⌈
 The function `Can_DeInit` shall set all CAN controllers in the state UNINIT
 ⌋
 
-When the function `Can_DeInit` is entered and the Can module is not in state `CAN_READY` or any of the CAN controllers is in state STARTED, it shall raise the error `CAN_E_TRANSITION` (Refer to  and ).
+When the function `Can_DeInit` is entered and the Can module is not in state `CAN_READY` or any of the CAN controllers is in state STARTED, it shall raise the error `CAN_E_TRANSITION` (Refer to and ).
 
 ### 28. Can 模块/Controller 初始化
-*原文标题：Can module/Controller Initialization*
+
+_原文标题：Can module/Controller Initialization_
 
 The ECU State Manager module shall initialize the Can module during startup phase by calling the function `Can_Init` before using any other functions of the Can module.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The function `Can_Init` shall initialize: static variables, including flags, Common setting for the complete CAN HW unit, CAN controller specific settings for each CAN controller
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 `Can_Init` shall not change registers of CAN controller Hardware resources that are not used.
 ⌋
 
 The Can module shall apply the following rules regarding initialization of controller registers:
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
-* If the hardware allows for only one usage of the register, the Can module implementing that functionality is responsible initializing the register.
-* If the register can affect several hardware modules and if it is an I/O register it shall be initialized by the PORT driver.
-* If the register can affect several hardware modules and if it is not an I/O register it shall be initialized by the MCU driver.
-* One-time writable registers that require initialization directly after reset shall be initialized by the startup code.
+
+- If the hardware allows for only one usage of the register, the Can module implementing that functionality is responsible initializing the register.
+- If the register can affect several hardware modules and if it is an I/O register it shall be initialized by the PORT driver.
+- If the register can affect several hardware modules and if it is not an I/O register it shall be initialized by the MCU driver.
+- One-time writable registers that require initialization directly after reset shall be initialized by the startup code.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -419,7 +444,7 @@ The Can module shall apply the following rules regarding initialization of contr
 
 On L-PDU transmission, the Can module converts the L-PDU contents ID and Data Length to a hardware specific format (if necessary) and triggers the transmission.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 Data mapping by CAN to memory is defined in a way that the CAN data byte which is sent out first is array element 0, the CAN data byte which is sent out last is array element 7 or 63 in case of CAN FD.
 ⌋
@@ -428,7 +453,7 @@ Data mapping by CAN to memory is defined in a way that the CAN data byte which i
 If the presentation inside the CAN Hardware buffer differs from AUTOSAR definition, the Can module must provide an adapted SDU-Buffer for the upper layers.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 Several TX hardware objects with unique HTHs may be configured. The CanIf module provides the HTH as parameter of the TX request. See Figure 7.3 for a possible configuration.
 ⌋
@@ -437,9 +462,9 @@ Several TX hardware objects with unique HTHs may be configured. The CanIf module
 The function `Can_Write` shall store the swPduHandle that is given inside the parameter PduInfo until the Can module calls the `CanIf_TxConfirmation` for this request where the swPduHandle is given as parameter.
 ⌋
 
-The feature of  is used to reduce time for searching in the CanIf module implementation.
+The feature of is used to reduce time for searching in the CanIf module implementation.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The Can module shall call `CanIf_TxConfirmation` to indicate a successful transmission.
 
@@ -449,37 +474,38 @@ The Can module shall call `CanIf_TxConfirmation` to indicate a successful transm
 
 Multiplexed transmission can be used to avoid outer/inner priority inversion (see chapter ).
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 | The Can module shall allow that the functionality "Multiplexed Transmission" is statically configurable (ON | OFF) at pre-compile time. |
 |---|---|
 
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 Several transmit hardware objects (defined by "CanHwObjectCount") shall be assigned by one HTH to represent one transmit entity to the upper layer.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The Can module shall support multiplexed transmission mechanisms for devices where either
 
-* Multiple transmit hardware objects, which are grouped to a transmit entity can be filled over the same register set, and the microcontroller stores the L-PDU into a free buffer autonomously, or
-* The Hardware provides registers or functions to identify a free transmit hardware object within a transmit entity.
-⌋
+- Multiple transmit hardware objects, which are grouped to a transmit entity can be filled over the same register set, and the microcontroller stores the L-PDU into a free buffer autonomously, or
+- The Hardware provides registers or functions to identify a free transmit hardware object within a transmit entity.
+  ⌋
 
   Upstream requirements:
-⌈
-The Can module shall support multiplexed transmission for devices, which send L-PDUs in order of L-PDU priority.
-⌋
+  ⌈
+  The Can module shall support multiplexed transmission for devices, which send L-PDUs in order of L-PDU priority.
+  ⌋
 
 Note: Ordering of L-PDUs by priority avoids inner priority inversion of the L-PDUs assigned to a Basic-CAN configured for multiplexed transmission.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 31. Transmit 数据 Consistency
-*原文标题：Transmit Data Consistency*
+
+_原文标题：Transmit Data Consistency_
 
 No content.
 
@@ -494,19 +520,20 @@ On L-PDU reception, the Can module shall call the RX indication callback functio
 In case of an Extended CAN frame, the Can module shall convert the ID to a standardized format since the Upper layer (CANIF) does not know whether the received CAN frame is a Standard CAN frame or Extended CAN frame. In case of an Extended CAN frame, MSB of a received CAN frame ID needs to be made as '1' to mark the received CAN frame as Extended.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The RX-interrupt service routine of the corresponding HW resource or the function `Can_MainFunction_Read` in case of polling mode shall call the callback function `CanIf_RxIndication`.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 Data mapping by CAN to memory is defined in a way that the CAN data byte which is received first is array element 0, the CAN data byte which is received last is array element 7 or 63 in case of CAN FD.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 33. Receive 数据 Consistency
-*原文标题：Receive Data Consistency*
+
+_原文标题：Receive Data Consistency_
 
 To prevent loss of received messages, some controllers support a FIFO built from a set of hardware objects, while on other controllers it is possible to configure another hardware object with the same properties that works as a shadow buffer and steps in when the main object is busy.
 
@@ -531,11 +558,12 @@ The complete RX processing (including copying to destination layer, e.g. COM) is
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 34. 唤醒 Concept
-*原文标题：Wakeup Concept*
+
+_原文标题：Wakeup Concept_
 
 The Can module handles wakeups that can be detected by the Can controller itself and not via the Can transceiver. There are two possible scenarios: wakeup by interrupt and wakeup by polling. For wakeup by interrupt, an ISR of the Can module is called when the hardware detects the wakeup.
 
-  Upstream requirements: , ,
+Upstream requirements: , ,
 ⌈
 If the ISR for wakeup events is called, it shall call `EcuM_CheckWakeup` in turn. The parameter passed to `EcuM_CheckWakeup` shall be the ID of the wakeup source referenced by the CanWakeupSourceRef configuration parameter.
 ⌋
@@ -545,7 +573,8 @@ The ECU State Manager will then set up the MCU and call the Can module back via 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 35. CAN Controller with selective 唤醒 functionality
-*原文标题：CAN Controller with selective wakeup functionality*
+
+_原文标题：CAN Controller with selective wakeup functionality_
 
 This section describes requirements for CAN controller with selective wakeup functionality. Partial Networking is a state in a CAN system where some nodes are in low power mode while other nodes are communicating. This reduces the power consumption by the entire network. Nodes in the low-power modes are woken up by predefined wakeup frames. CAN Controller which support selective wakeup can be woken up by predefined wakeup frames.
 
@@ -557,9 +586,9 @@ If selective wakeup is supported by the CAN controller hardware, it shall be ind
 If selective wakeup is supported, CAN controller shall be configured to wake up on a particular CAN frame or a group of CAN frames using the parameters CanPnFrameCanId, CanPnFrameCanIdMask and CanPnFrameDataMask.
 ⌋
 
- For API `Can_SetCanPnFrameDataMask`
+For API `Can_SetCanPnFrameDataMask`
 ⌈
-If selective wakeup is supported, `Can_SetCanPnFrameDataMask`  is called and Length parameter matches configuration parameter CanPnFrameDlc, CAN controller shall be re-configured to wake up on a accordingly configured CAN frames (see  ) and data mask provided with DataMaskArrayPtr.
+If selective wakeup is supported, `Can_SetCanPnFrameDataMask` is called and Length parameter matches configuration parameter CanPnFrameDlc, CAN controller shall be re-configured to wake up on a accordingly configured CAN frames (see ) and data mask provided with DataMaskArrayPtr.
 ⌋
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
@@ -616,7 +645,7 @@ If selective wakeup is supported, `Can_SetCanPnFrameDataMask`  is called and Len
 83. Call-out 功能
 84. Enabling/Disabling 唤醒通知
 85. Scheduled functions
-86. 
+86.
 87. Can_MainFunction_Write
 88. Can_MainFunction_Read
 89. Can_MainFunction_BusOff
@@ -630,47 +659,47 @@ If selective wakeup is supported, `Can_SetCanPnFrameDataMask`  is called and Len
 97. Interaction between Can and CanIf 模块
 98. 唤醒 sequence
 99. 配置规范
-100. How to read this chapter
-101. Containers and 配置 parameters
-102. Can
-103. CanGeneral
-104. CanController
-105. CanControllerBaudrateConfig
-106. CanControllerFdBaudrateConfig
-107. CanPartialNetwork
-108. CanPnFrameDataMaskSpec
-109. CanHardwareObject
-110. CanHwFilter
-111. CanConfigSet
-112. CanMainFunctionRWPeriods
-113. CanXLGeneral
-114. CanXLController
-115. CanXLHardwareObject
-116. CanXLHwFilter
-117. CanXLBaudrateConfig
-118. CanXLEthEgressFifo
-119. CanXLEthIngressFifo
-120. 不适用需求
-121. 附录
-122. Change history of AUTOSAR traceable items
-123. Traceable item history of this document according to AUTOSAR Release R24-11
-124. Added Constraints in R24-11
-125. Changed Constraints in R24-11
-126. Deleted Constraints in R24-11
-127. Added 规范 Items in R24-11
-128. Changed 规范 Items in R24-11
-129. Deleted 规范 Items in R24-11
-130. Traceable item history of this document according to AUTOSAR Release R25-11
-131. Added Constraints in R25-11
-132. Changed Constraints in R25-11
-133. Deleted Constraints in R25-11
-134. Added 规范 Items in R25-11
-135. Changed 规范 Items in R25-11
-136. Deleted 规范 Items in R25-11
-137. Traceable item history of this document according to AUTOSAR Release R26-11
-138. Added 规范 Items in R26-11
-139. Changed 规范 Items in R26-11
-140. Deleted 规范 Items in R26-11
-141. Added Constraints in R26-11
-142. Changed Constraints in R26-11
-143. Deleted Constraints in R26-11
+100.  How to read this chapter
+101.  Containers and 配置 parameters
+102.  Can
+103.  CanGeneral
+104.  CanController
+105.  CanControllerBaudrateConfig
+106.  CanControllerFdBaudrateConfig
+107.  CanPartialNetwork
+108.  CanPnFrameDataMaskSpec
+109.  CanHardwareObject
+110.  CanHwFilter
+111.  CanConfigSet
+112.  CanMainFunctionRWPeriods
+113.  CanXLGeneral
+114.  CanXLController
+115.  CanXLHardwareObject
+116.  CanXLHwFilter
+117.  CanXLBaudrateConfig
+118.  CanXLEthEgressFifo
+119.  CanXLEthIngressFifo
+120.  不适用需求
+121.  附录
+122.  Change history of AUTOSAR traceable items
+123.  Traceable item history of this document according to AUTOSAR Release R24-11
+124.  Added Constraints in R24-11
+125.  Changed Constraints in R24-11
+126.  Deleted Constraints in R24-11
+127.  Added 规范 Items in R24-11
+128.  Changed 规范 Items in R24-11
+129.  Deleted 规范 Items in R24-11
+130.  Traceable item history of this document according to AUTOSAR Release R25-11
+131.  Added Constraints in R25-11
+132.  Changed Constraints in R25-11
+133.  Deleted Constraints in R25-11
+134.  Added 规范 Items in R25-11
+135.  Changed 规范 Items in R25-11
+136.  Deleted 规范 Items in R25-11
+137.  Traceable item history of this document according to AUTOSAR Release R26-11
+138.  Added 规范 Items in R26-11
+139.  Changed 规范 Items in R26-11
+140.  Deleted 规范 Items in R26-11
+141.  Added Constraints in R26-11
+142.  Changed Constraints in R26-11
+143.  Deleted Constraints in R26-11

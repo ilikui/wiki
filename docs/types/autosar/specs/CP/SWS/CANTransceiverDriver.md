@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | CP |
-| 类别 | SWS — 软件模块规范（Software Specification） |
-| UID | 071 |
-| 规范版本 | R26-11 |
+| 属性     | 值                                           |
+| -------- | -------------------------------------------- |
+| 平台     | CP                                           |
+| 类别     | SWS — 软件模块规范（Software Specification） |
+| UID      | 071                                          |
+| 规范版本 | R26-11                                       |
 
 ## 本地文件
 
@@ -31,20 +31,21 @@ Latest developments include System Basis Chips (SBCs) where power supply control
 
 ## 模块依赖
 
-| Module | Dependencies |
-|---|---|
-| CanIf | All CAN transceiver drivers are arranged below CanIf. |
-| ComM | ComM steers CAN transceiver driver communication modes via CanIf. Each CAN transceiver driver is steered independently. |
-| DET | DET gets development error information from CAN transceiver driver. |
-| DEM | DEM gets production error information from CAN transceiver driver. |
-| DIO | DIO module is used to access CAN transceiver device connected via ports. |
-| EcuM | EcuM gets information about wake up events from CAN transceiver driver via CanIf. |
-| SPI | SPI module is used to access CAN transceiver device connected via SPI. |
+| Module | Dependencies                                                                                                            |
+| ------ | ----------------------------------------------------------------------------------------------------------------------- |
+| CanIf  | All CAN transceiver drivers are arranged below CanIf.                                                                   |
+| ComM   | ComM steers CAN transceiver driver communication modes via CanIf. Each CAN transceiver driver is steered independently. |
+| DET    | DET gets development error information from CAN transceiver driver.                                                     |
+| DEM    | DEM gets production error information from CAN transceiver driver.                                                      |
+| DIO    | DIO module is used to access CAN transceiver device connected via ports.                                                |
+| EcuM   | EcuM gets information about wake up events from CAN transceiver driver via CanIf.                                       |
+| SPI    | SPI module is used to access CAN transceiver device connected via SPI.                                                  |
 
 ## 章节详细内容
 
 ### 1. 简介
-*原文标题：Introduction*
+
+_原文标题：Introduction_
 
 This specification describes the functionality, APIs and configuration of CAN Transceiver Driver module. The CAN Transceiver Driver module is responsible for handling the CAN transceiver hardware chips on an ECU.
 
@@ -59,14 +60,16 @@ Within the automotive environment, there are mainly three different CAN bus phys
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 2. Goal of CAN 收发器驱动
-*原文标题：Goal of CAN Transceiver Driver*
+
+_原文标题：Goal of CAN Transceiver Driver_
 
 The target of this document is to specify the interfaces and behavior which are applicable to most current and future CAN transceiver devices.
 
 The CAN transceiver driver abstracts the CAN transceiver hardware. It offers a hardware independent interface to the higher layers. It abstracts from the ECU layout by using APIs of MCAL layer to access the CAN transceiver hardware.
 
 ### 3. Explicitly uncovered CAN 收发器 functionality
-*原文标题：Explicitly uncovered CAN transceiver functionality*
+
+_原文标题：Explicitly uncovered CAN transceiver functionality_
 
 Some CAN bus transceivers offer additional functionality, for example, ECU self test or error detection capability for diagnostics.
 
@@ -77,53 +80,59 @@ ECU self test and error detection are not defined within AUTOSAR and requiring s
 Single wire CAN according SAE J2411 is not supported by AUTOSAR.
 
 ### 5. 缩略语
-*原文标题：Acronyms and Abbreviations*
+
+_原文标题：Acronyms and Abbreviations_
 
 The glossary below includes acronyms and abbreviations relevant to the CAN Transceiver Driver module that are not included in the .
 
-| Abbreviation: | Description: |
-|---|---|
-| ComM | Communication Manager |
-| DEM | Diagnostic Event Manager |
-| DET | Default Error Tracer |
-| DIO | Digital Input Output (SPAL module) |
-| EB | Externally Buffered channels. Buffers containing data to transfer are outside the SPI Handler/Driver. |
-| EcuM | ECU State Manager |
-| IB | Internally Buffered channels. Buffers containing data to transfer are inside the SPI Handler/Driver. |
-| ISR | Interrupt Service Routine |
-| MCAL | The MCAL, Microcontroller Abstraction Layer, is defined in AUTOSAR Layered Software Architecture |
-| Port | Port module (SPAL module) |
-| n/a | Not Applicable |
-| SBC | System Basis Chip; a device, which integrates e.g. CAN and/or LIN transceiver, watchdog and power control. |
-| SPAL | Standard Peripheral Abstraction Layer |
+| Abbreviation: | Description:                                                                                               |
+| ------------- | ---------------------------------------------------------------------------------------------------------- |
+| ComM          | Communication Manager                                                                                      |
+| DEM           | Diagnostic Event Manager                                                                                   |
+| DET           | Default Error Tracer                                                                                       |
+| DIO           | Digital Input Output (SPAL module)                                                                         |
+| EB            | Externally Buffered channels. Buffers containing data to transfer are outside the SPI Handler/Driver.      |
+| EcuM          | ECU State Manager                                                                                          |
+| IB            | Internally Buffered channels. Buffers containing data to transfer are inside the SPI Handler/Driver.       |
+| ISR           | Interrupt Service Routine                                                                                  |
+| MCAL          | The MCAL, Microcontroller Abstraction Layer, is defined in AUTOSAR Layered Software Architecture           |
+| Port          | Port module (SPAL module)                                                                                  |
+| n/a           | Not Applicable                                                                                             |
+| SBC           | System Basis Chip; a device, which integrates e.g. CAN and/or LIN transceiver, watchdog and power control. |
+| SPAL          | Standard Peripheral Abstraction Layer                                                                      |
 
 SPI
 
 | Channel | A channel is a software exchange medium for data that are defined with the same criteria: configuration parameters, number of data elements with same size and data pointers (source & destination) or location. See specification of SPI driver for more details. |
-|---|---|
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
 SPI
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 6. 相关文档
-*原文标题：Related documentation*
+
+_原文标题：Related documentation_
 
 ### 7. 输入文档与相关标准规范
-*原文标题：Input documents & related standards and norms*
+
+_原文标题：Input documents & related standards and norms_
 
 ### 8. 相关规范
-*原文标题：Related specification*
+
+_原文标题：Related specification_
 
 AUTOSAR provides a General Specification on Basic Software modules , which is also valid for CAN Transceiver Driver.
 
 Thus, the specification SWS BSW General shall be considered as additional and required specification for CAN Transceiver Driver.
 
 ### 9. 约束与假设
-*原文标题：Constraints and assumptions*
+
+_原文标题：Constraints and assumptions_
 
 ### 10. 限制
-*原文标题：Limitations*
+
+_原文标题：Limitations_
 
 Upstream requirements:
 ⌈
@@ -133,28 +142,32 @@ The CAN bus transceiver hardware shall provide the functionality and an interfac
 See also Chapter [].
 
 ### 11. 适用的车型领域
-*原文标题：Applicability to car domains*
+
+_原文标题：Applicability to car domains_
 
 This driver might be applicable in all car domains using CAN for communication.
 
 ### 12. 对其他模块的依赖
-*原文标题：Dependencies to other modules*
 
-| Module | Dependencies |
-|---|---|
-| CanIf | All CAN transceiver drivers are arranged below CanIf. |
-| ComM | ComM steers CAN transceiver driver communication modes via CanIf. Each CAN transceiver driver is steered independently. |
-| DET | DET gets development error information from CAN transceiver driver. |
-| DEM | DEM gets production error information from CAN transceiver driver. |
-| DIO | DIO module is used to access CAN transceiver device connected via ports. |
-| EcuM | EcuM gets information about wake up events from CAN transceiver driver via CanIf. |
-| SPI | SPI module is used to access CAN transceiver device connected via SPI. |
+_原文标题：Dependencies to other modules_
+
+| Module | Dependencies                                                                                                            |
+| ------ | ----------------------------------------------------------------------------------------------------------------------- |
+| CanIf  | All CAN transceiver drivers are arranged below CanIf.                                                                   |
+| ComM   | ComM steers CAN transceiver driver communication modes via CanIf. Each CAN transceiver driver is steered independently. |
+| DET    | DET gets development error information from CAN transceiver driver.                                                     |
+| DEM    | DEM gets production error information from CAN transceiver driver.                                                      |
+| DIO    | DIO module is used to access CAN transceiver device connected via ports.                                                |
+| EcuM   | EcuM gets information about wake up events from CAN transceiver driver via CanIf.                                       |
+| SPI    | SPI module is used to access CAN transceiver device connected via SPI.                                                  |
 
 ### 13. 文件结构
-*原文标题：File structure*
+
+_原文标题：File structure_
 
 ### 14. 代码文件结构
-*原文标题：Code file structure*
+
+_原文标题：Code file structure_
 
 Upstream requirements:
 ⌈
@@ -170,32 +183,35 @@ The naming convention prescribed by AUTOSAR is applied to all files of the CanTr
 ⌋
 
 ### 15. 需求 Tracability
-*原文标题：Requirements Tracability*
 
-| Requirement | Description | Satisfied by |
-|---|---|---|
-| The Basic Software Module shall be able to initialize variables and hardware in a separate initialization function |  |  |
-| Configuration files of AUTOSAR Basic SW module shall be readable for human beings |  |  |
-| Optional functionality of a Basic-SW component that is not required in the ECU shall be configurable at pre-compile-time |  |  |
-| The scheduling strategy that is built inside the Basic Software Modules shall be compatible with the strategy used in the system |  |  |
-| Unique Name of Basic Software Modules |  |  |
-| API naming convention |  |  |
-| Error values naming convention |  |  |
-| All Basic Software Modules shall strictly separate error and status information |  |  |
-| Basic SW module shall be able to shutdown |  |  |
-| Classification of development errors |  |  |
-| Reporting of production relevant error status |  |  |
-| The unit of time for specification and configuration of Basic SW modules shall be preferably in physical time unit |  |  |
-| A Naming seperation of different instances of BSW drivers shall be in place |  |  |
-| All AUTOSAR Basic Software Modules shall allow the enabling/disabling of detection and reporting of development errors. |  |  |
+_原文标题：Requirements Tracability_
+
+| Requirement                                                                                                                      | Description | Satisfied by |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------ |
+| The Basic Software Module shall be able to initialize variables and hardware in a separate initialization function               |             |              |
+| Configuration files of AUTOSAR Basic SW module shall be readable for human beings                                                |             |              |
+| Optional functionality of a Basic-SW component that is not required in the ECU shall be configurable at pre-compile-time         |             |              |
+| The scheduling strategy that is built inside the Basic Software Modules shall be compatible with the strategy used in the system |             |              |
+| Unique Name of Basic Software Modules                                                                                            |             |              |
+| API naming convention                                                                                                            |             |              |
+| Error values naming convention                                                                                                   |             |              |
+| All Basic Software Modules shall strictly separate error and status information                                                  |             |              |
+| Basic SW module shall be able to shutdown                                                                                        |             |              |
+| Classification of development errors                                                                                             |             |              |
+| Reporting of production relevant error status                                                                                    |             |              |
+| The unit of time for specification and configuration of Basic SW modules shall be preferably in physical time unit               |             |              |
+| A Naming seperation of different instances of BSW drivers shall be in place                                                      |             |              |
+| All AUTOSAR Basic Software Modules shall allow the enabling/disabling of detection and reporting of development errors.          |             |              |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 16. 功能规范
-*原文标题：Functional specification*
+
+_原文标题：Functional specification_
 
 ### 17. CAN 收发器驱动 operation modes
-*原文标题：CAN transceiver driver operation modes*
+
+_原文标题：CAN transceiver driver operation modes_
 
 Upstream requirements: , ,
 ⌈
@@ -205,14 +221,14 @@ The CanTrcv module shall implement the state diagram shown below, independently 
 The main idea intended by this diagram, is to support a lot of up to now available CAN bus transceivers in a generic view. Depending on the CAN transceiver hardware, the model may have one or two states more than necessary for a given CAN transceiver hardware but this will clearly decouple the ComM and EcuM from the used hardware.
 
 ⌈
-The function `CanTrcv_Init` causes a state change to either `CANTRCV_TRCVMODE_SLEEP` or `CANTRCV_TRCVMODE` _STANDBY. This depends on the configuration and is independently configurable for each transceiver.
+The function `CanTrcv_Init` causes a state change to either `CANTRCV_TRCVMODE_SLEEP` or `CANTRCV_TRCVMODE` \_STANDBY. This depends on the configuration and is independently configurable for each transceiver.
 ⌋
 
-| State | Description |
-|---|---|
-| POWER_ON | ECU is fully powered. |
+| State      | Description                                                                                                                                                             |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| POWER_ON   | ECU is fully powered.                                                                                                                                                   |
 | NOT_ACTIVE | State of CAN transceiver hardware depends on ECU hardware and on Dio and Port driver configuration. CAN transceiver driver is not initialized and therefore not active. |
-| ACTIVE | The function CanTrcv_Init has been called. It carries CAN transceiver driver to active state. |
+| ACTIVE     | The function CanTrcv_Init has been called. It carries CAN transceiver driver to active state.                                                                           |
 
 Depending on configuration CAN transceiver driver enters the state `CANTRCV_TRCVMODE_SLEEP` or `CANTRCV_TRCVMODE_STANDBY`.
 | CANTRCV_TRCVMODE_NORMAL | Full bus communication. |
@@ -221,7 +237,8 @@ Depending on configuration CAN transceiver driver enters the state `CANTRCV_TRCV
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 18. Operation 模式 switching
-*原文标题：Operation mode switching*
+
+_原文标题：Operation mode switching_
 
 A mode switch is requested with a call to the function `CanTrcv_SetOpMode`.
 
@@ -234,68 +251,76 @@ The CanTrcv module shall invoke the callback function `CanIf_TrcvModeIndication`
 ⌋
 
 ### 19. CAN 收发器 hardware operation modes
-*原文标题：CAN transceiver hardware operation modes*
+
+_原文标题：CAN transceiver hardware operation modes_
 
 The CAN transceiver hardware may support more mode transitions than shown in the state diagram above. The dependencies and the recommended implementations behaviour are explained in this chapter.
 
 It is implementation specific to decide which CAN transceiver hardware state is covered by which CAN transceiver driver software state. An implementation has to guarantee that the whole functionality of the described CAN transceiver driver software state is realized by the implementation.
 
 ### 20. 示例 for temporary "Go-To-Sleep" 模式
-*原文标题：Example for temporary "Go-To-Sleep" mode*
+
+_原文标题：Example for temporary "Go-To-Sleep" mode_
 
 The mode often referred to as "Go-to-sleep" is a temporary mode when switching from Normal to Sleep. The driver encapsulates such a temporary mode within one of the CAN transceiver driver software states. In addition, the CAN transceiver driver switches first from Normal to Standby and then with an additional API call from Standby to Sleep.
 
 ### 21. 示例 for "PowerOn/ListenOnly" 模式
-*原文标题：Example for "PowerOn/ListenOnly" mode*
+
+_原文标题：Example for "PowerOn/ListenOnly" mode_
 
 The mode often referred to as "PowerOn" or "ListenOnly" is a mode where the CAN transceiver hardware is only able to receive messages but not able to send messages. Also, transmission of the acknowledge bit during reception of a message is suppressed. This mode is not supported because it is outside of the CAN standard and not supported by all CAN transceiver hardware chips.
 
 ### 22. CAN 收发器 wake up 类型
-*原文标题：CAN transceiver wake up types*
+
+_原文标题：CAN transceiver wake up types_
 
 There are three different scenarios which are often called wake up:
 
 ### 23. Scenario 1：
-*原文标题：Scenario 1:*
 
-* MCU is not powered.
-* Parts of ECU including CAN transceiver hardware are powered.
-* The considered CAN transceiver is in SLEEP mode.
-* A wake up event on CAN bus is detected by CAN transceiver hardware.
-* The CAN transceiver hardware causes powering of MCU.
+_原文标题：Scenario 1:_
+
+- MCU is not powered.
+- Parts of ECU including CAN transceiver hardware are powered.
+- The considered CAN transceiver is in SLEEP mode.
+- A wake up event on CAN bus is detected by CAN transceiver hardware.
+- The CAN transceiver hardware causes powering of MCU.
 
 In terms of AUTOSAR, this is kept as a cold start and NOT as a wake up.
 
 ### 24. Scenario 2：
-*原文标题：Scenario 2:*
 
-* MCU is in low power mode.
-* Parts of ECU including CAN transceiver hardware are powered.
-* The considered CAN transceiver is in STANDBY mode.
-* A wake up event on CAN bus is detected by CAN transceiver hardware.
-* The CAN transceiver hardware causes a SW interrupt for waking up.
+_原文标题：Scenario 2:_
+
+- MCU is in low power mode.
+- Parts of ECU including CAN transceiver hardware are powered.
+- The considered CAN transceiver is in STANDBY mode.
+- A wake up event on CAN bus is detected by CAN transceiver hardware.
+- The CAN transceiver hardware causes a SW interrupt for waking up.
 
 In terms of AUTOSAR, this is kept as a wake up of the CAN channel and of the MCU.
 
 ### 25. Scenario 3：
-*原文标题：Scenario 3:*
 
-* MCU is in full power mode.
-* At least parts of ECU including CAN transceiver hardware are powered.
-* The considered CAN transceiver is in STANDBY mode.
-* A wake up event on CAN is detected by CAN transceiver hardware.
-* The CAN transceiver hardware either causes a SW interrupt for waking up or is polled cyclically for wake up events.
+_原文标题：Scenario 3:_
+
+- MCU is in full power mode.
+- At least parts of ECU including CAN transceiver hardware are powered.
+- The considered CAN transceiver is in STANDBY mode.
+- A wake up event on CAN is detected by CAN transceiver hardware.
+- The CAN transceiver hardware either causes a SW interrupt for waking up or is polled cyclically for wake up events.
 
 In terms of AUTOSAR, this is kept as a wake up of the CAN channel.
 
 ### 26. Enabling/Disabling 唤醒通知
-*原文标题：Enabling/Disabling wakeup notification*
+
+_原文标题：Enabling/Disabling wakeup notification_
 
 ⌈
 CanTrcv driver shall use the following APIs provided by ICU driver, to enable and disable the wakeup event notification:
 
-* `Icu_EnableNotification`
-* `Icu_DisableNotification`
+- `Icu_EnableNotification`
+- `Icu_DisableNotification`
 
 CanTrcv driver shall enable/disable ICU channels only if reference is configured for the parameter CanTrcvIcuChannelRef.
 ⌋
@@ -311,18 +336,19 @@ It shall disable the ICU channels when the transceiver transitions to the Normal
 ⌋
 
 ### 27. CAN 收发器 wake up modes
-*原文标题：CAN transceiver wake up modes*
+
+_原文标题：CAN transceiver wake up modes_
 
 CAN transceiver driver offers two wake up modes:
 
-  Upstream requirements: , , , , , , , , ,
+Upstream requirements: , , , , , , , , ,
 ⌈
 `NOT_SUPPORTED` mode
 ⌋
 
 In mode `NOT_SUPPORTED`, no wake ups are generated by CAN transceiver driver. This mode is supported by all CAN transceiver hardware types.
 
-  Upstream requirements: , , , , , , , , ,
+Upstream requirements: , , , , , , , , ,
 ⌈
 POLLING mode
 ⌋
@@ -340,17 +366,19 @@ Implementation Hint:
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 28. 错误分类
-*原文标题：Error Classification*
 
-Chapter  describes the error handling of the Basic Software in detail. Above all, it constitutes a classification scheme consisting of five error types which may occur in BSW modules.
+_原文标题：Error Classification_
+
+Chapter describes the error handling of the Basic Software in detail. Above all, it constitutes a classification scheme consisting of five error types which may occur in BSW modules.
 
 Based on this foundation, the following section specifies particular errors arranged in the respective subsections below.
 
 ### 29. Development 错误
-*原文标题：Development Errors*
+
+_原文标题：Development Errors_
 
 Definition of development errors in module CanTrcv
-  Upstream requirements: , , ,
+Upstream requirements: , , ,
 ⌈
 | Type of error | Related error code | Error value |
 |---|---|---|
@@ -366,7 +394,8 @@ Definition of development errors in module CanTrcv
 ⌋
 
 ### 30. Runtime 错误
-*原文标题：Runtime Errors*
+
+_原文标题：Runtime Errors_
 
 Definition of runtime errors in module CanTrcv
 ⌈
@@ -377,15 +406,17 @@ Definition of runtime errors in module CanTrcv
 ⌋
 
 ### 31. Production 错误
-*原文标题：Production Errors*
+
+_原文标题：Production Errors_
 
 There are no production errors.
 
 ### 32. Extended Production 错误
-*原文标题：Extended Production Errors*
+
+_原文标题：Extended Production Errors_
 
 A CAN bus error occured during communication
-  Upstream requirements: ,
+Upstream requirements: ,
 ⌈
 | Diagnostic Event (Error Name) | CANTRCV_E_BUS_ERROR |
 |---|---|
@@ -400,7 +431,8 @@ The extended production error `CANTRCV_E_BUS_ERROR` (value assigned by DEM) shal
 ⌋
 
 ### 33. Preconditions for 驱动初始化
-*原文标题：Preconditions for driver initialization*
+
+_原文标题：Preconditions for driver initialization_
 
 Upstream requirements:
 ⌈
@@ -414,7 +446,9 @@ The CAN transceiver driver may have timing requirements for the initialization s
 The timing requirements might be that
 
 # The call of the CAN bus transceiver driver initialization has to be performed very early after power up to be able to read all necessary information out of the transceiver hardware in time for all other users within the ECU.
+
 # The runtime of the used underlying services is very short and synchronous to enable the driver to keep his own timing requirements limited by the used hardware device.
+
 # The runtime of the driver may be enlarged due to some hardware devices configuring the port pin level to be valid for e.g.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
@@ -435,7 +469,8 @@ The CAN Tranceiver Driver shall use the Time service `Tm_BusyWait1us16bit` to re
 ⌋
 
 ### 36. Transceivers with selective 唤醒 functionality
-*原文标题：Transceivers with selective wakeup functionality*
+
+_原文标题：Transceivers with selective wakeup functionality_
 
 This section describes requirements for CAN transceivers with selective wakeup functionality.
 
@@ -450,12 +485,12 @@ If selective wakeup is supported by the transceiver hardware, it shall be indica
 ⌈
 The configuration container for selective wakeup functionality (CanTrcvPartialNetwork) and for the following APIs:
 
-* `CanTrcv_GetTrcvSystemData`,
-* `CanTrcv_ClearTrcvWufFlag`,
-* `CanTrcv_ReadTrcvTimeoutFlag`,
-* `CanTrcv_ClearTrcvTimeoutFlag`,
-* `CanTrcv_ReadTrcvSilenceFlag` and
-* `CanTrcv_CheckWakeFlag`
+- `CanTrcv_GetTrcvSystemData`,
+- `CanTrcv_ClearTrcvWufFlag`,
+- `CanTrcv_ReadTrcvTimeoutFlag`,
+- `CanTrcv_ClearTrcvTimeoutFlag`,
+- `CanTrcv_ReadTrcvSilenceFlag` and
+- `CanTrcv_CheckWakeFlag`
 
 shall exist only if CanTrcvHwPnSupport = TRUE.
 ⌋
@@ -466,22 +501,25 @@ shall exist only if CanTrcvHwPnSupport = TRUE.
 
 The CAN XL Transceiver Driver is implemented as an extension for the existing CAN Transceiver Driver (see ), non CAN XL hardware will still use basic CAN Transceiver Driver implementation.
 
-The CAN XL Transceiver Driver is an extension of CAN Transceiver Driver and introduces an additional API to support Ethernet interface and provides a mode interface to CAN XL Transceiver Driver (see  for further details).
+The CAN XL Transceiver Driver is an extension of CAN Transceiver Driver and introduces an additional API to support Ethernet interface and provides a mode interface to CAN XL Transceiver Driver (see for further details).
 
 ### 38. 安全事件
-*原文标题：Security Events*
+
+_原文标题：Security Events_
 
 The module does not report security events.
 
 ### 39. API 规范
-*原文标题：API specification*
+
+_原文标题：API specification_
 
 ### 40. Imported 类型
-*原文标题：Imported types*
+
+_原文标题：Imported types_
 
 In this chapter all types included from the following files are listed.
 
- Definition of imported datatypes of module CanTrcv
+Definition of imported datatypes of module CanTrcv
 ⌈
 | Module | Header File | Imported Type |
 |---|---|---|
@@ -504,7 +542,8 @@ In this chapter all types included from the following files are listed.
 ⌋
 
 ### 41. 类型定义
-*原文标题：Type definitions*
+
+_原文标题：Type definitions_
 
 Definition of datatype `CanTrcv_ConfigType`
 ⌈
@@ -519,7 +558,7 @@ Definition of datatype `CanTrcv_ConfigType`
 
 ⌋
 
- Definition of datatype `CanTrcv_PNActivationType`
+Definition of datatype `CanTrcv_PNActivationType`
 ⌈
 | Name | CanTrcv_PNActivationType | < | < |
 |---|---|---|---|
@@ -531,7 +570,7 @@ Definition of datatype `CanTrcv_ConfigType`
 
 ⌋
 
- Definition of datatype `CanTrcv_TrcvFlagStateType`
+Definition of datatype `CanTrcv_TrcvFlagStateType`
 ⌈
 | Name | CanTrcv_TrcvFlagStateType | < | < |
 |---|---|---|---|
@@ -541,19 +580,20 @@ Definition of datatype `CanTrcv_ConfigType`
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 42. 功能定义
-*原文标题：Function definitions*
+
+_原文标题：Function definitions_
 
 ### 43. CanTrcv_Init
 
 Definition of API function `CanTrcv_Init`
-  Upstream requirements: , , , , , , , , , ,
+Upstream requirements: , , , , , , , , , ,
 ⌈
 | Service Name | CanTrcv_Init | < |
 |---|---|---|
-| Syntax | void CanTrcv_Init ( |  |
+| Syntax | void CanTrcv_Init ( | |
 
-  const `CanTrcv_ConfigType`* ConfigPtr
-| ) | < |  |
+const `CanTrcv_ConfigType`\* ConfigPtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x00 | < |
 | Sync/Async | Synchronous | < |
@@ -584,15 +624,15 @@ See also requirement .
 ### 44. CanTrcv_SetOpMode
 
 Definition of API function `CanTrcv_SetOpMode`
-  Upstream requirements: , , , , , , , , , , ,
+Upstream requirements: , , , , , , , , , , ,
 ⌈
 | Service Name | CanTrcv_SetOpMode | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanTrcv_SetOpMode ( |  |
+| Syntax | Std_ReturnType CanTrcv_SetOpMode ( | |
 
-  uint8 Transceiver,
-  `CanTrcv_TrcvModeType` OpMode
-| ) | < |  |
+uint8 Transceiver,
+`CanTrcv_TrcvModeType` OpMode
+| ) | < | |
 |---|---|---|
 | Service ID | 0x01 | < |
 | Sync/Async | Asynchronous | < |
@@ -616,15 +656,15 @@ The function `CanTrcv_SetOpMode` shall switch the internal state of Transceiver 
 ### 45. CanTrcv_GetOpMode
 
 Definition of API function `CanTrcv_GetOpMode`
-  Upstream requirements: , , , , , , , ,
+Upstream requirements: , , , , , , , ,
 ⌈
 | Service Name | CanTrcv_GetOpMode | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanTrcv_GetOpMode ( |  |
+| Syntax | Std_ReturnType CanTrcv_GetOpMode ( | |
 
-  uint8 Transceiver,
-  `CanTrcv_TrcvModeType`* OpMode
-| ) | < |  |
+uint8 Transceiver,
+`CanTrcv_TrcvModeType`\* OpMode
+| ) | < | |
 |---|---|---|
 | Service ID | 0x02 | < |
 | Sync/Async | Synchronous | < |
@@ -651,15 +691,15 @@ The number of supported busses is statically set in the configuration phase.
 ### 46. CanTrcv_GetBusWuReason
 
 Definition of API function `CanTrcv_GetBusWuReason`
-  Upstream requirements: , , , , , , , , , , ,
+Upstream requirements: , , , , , , , , , , ,
 ⌈
 | Service Name | CanTrcv_GetBusWuReason | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanTrcv_GetBusWuReason ( |  |
+| Syntax | Std_ReturnType CanTrcv_GetBusWuReason ( | |
 
-  uint8 Transceiver,
-  `CanTrcv_TrcvWakeupReasonType`* reason
-| ) | < |  |
+uint8 Transceiver,
+`CanTrcv_TrcvWakeupReasonType`\* reason
+| ) | < | |
 |---|---|---|
 | Service ID | 0x03 | < |
 | Sync/Async | Synchronous | < |
@@ -681,18 +721,18 @@ The ability to detect and differentiate the possible wake up reasons depends str
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
-### 47. CanTrcv_ SetWakeupMode
+### 47. CanTrcv\_ SetWakeupMode
 
 Definition of API function `CanTrcv_SetWakeupMode`
-  Upstream requirements: , , , , , , ,
+Upstream requirements: , , , , , , ,
 ⌈
 | Service Name | CanTrcv_SetWakeupMode | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanTrcv_SetWakeupMode ( |  |
+| Syntax | Std_ReturnType CanTrcv_SetWakeupMode ( | |
 
-  uint8 Transceiver,
-  `CanTrcv_TrcvWakeupModeType` TrcvWakeupMode
-| ) | < |  |
+uint8 Transceiver,
+`CanTrcv_TrcvWakeupModeType` TrcvWakeupMode
+| ) | < | |
 |---|---|---|
 | Service ID | 0x05 | < |
 | Sync/Async | Synchronous | < |
@@ -715,11 +755,11 @@ Definition of API function `CanTrcv_GetTrcvSystemData`
 ⌈
 | Service Name | CanTrcv_GetTrcvSystemData | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanTrcv_GetTrcvSystemData ( |  |
+| Syntax | Std_ReturnType CanTrcv_GetTrcvSystemData ( | |
 
-  uint8 Transceiver,
-  uint32* TrcvSysData
-| ) | < |  |
+uint8 Transceiver,
+uint32\* TrcvSysData
+| ) | < | |
 |---|---|---|
 | Service ID | 0x09 | < |
 | Sync/Async | Synchronous | < |
@@ -793,20 +833,20 @@ Hint: This API can be invoked through diagnostic services or during initializati
 97. Added 规范 Items in R24-11
 98. Changed 规范 Items in R24-11
 99. Deleted 规范 Items in R24-11
-100. Added Constraints in R24-11
-101. Changed Constraints in R24-11
-102. Deleted Constraints in R24-11
-103. Change History of this document according to AUTOSAR Release R25-11
-104. Added 规范 Items in R25-11
-105. Changed 规范 Items in R25-11
-106. Deleted 规范 Items in R25-11
-107. Added Constraints in R25-11
-108. Changed Constraints in R25-11
-109. Deleted Constraints in R25-11
-110. Change History of this document according to AUTOSAR Release R26-11
-111. Added 规范 Items in R26-11
-112. Changed 规范 Items in R26-11
-113. Deleted 规范 Items in R26-11
-114. Added Constraints in R26-11
-115. Changed Constraints in R26-11
-116. Deleted Constraints in R26-11
+100.  Added Constraints in R24-11
+101.  Changed Constraints in R24-11
+102.  Deleted Constraints in R24-11
+103.  Change History of this document according to AUTOSAR Release R25-11
+104.  Added 规范 Items in R25-11
+105.  Changed 规范 Items in R25-11
+106.  Deleted 规范 Items in R25-11
+107.  Added Constraints in R25-11
+108.  Changed Constraints in R25-11
+109.  Deleted Constraints in R25-11
+110.  Change History of this document according to AUTOSAR Release R26-11
+111.  Added 规范 Items in R26-11
+112.  Changed 规范 Items in R26-11
+113.  Deleted 规范 Items in R26-11
+114.  Added Constraints in R26-11
+115.  Changed Constraints in R26-11
+116.  Deleted Constraints in R26-11

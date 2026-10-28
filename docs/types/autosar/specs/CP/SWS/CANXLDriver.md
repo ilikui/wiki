@@ -2,12 +2,12 @@
 
 > [返回本类索引](index.md)
 
-| 属性 | 值 |
-|---|---|
-| 平台 | CP |
-| 类别 | SWS — 软件模块规范（Software Specification） |
-| UID | 1014 |
-| 规范版本 | R25-11 |
+| 属性     | 值                                           |
+| -------- | -------------------------------------------- |
+| 平台     | CP                                           |
+| 类别     | SWS — 软件模块规范（Software Specification） |
+| UID      | 1014                                         |
+| 规范版本 | R25-11                                       |
 
 ## 本地文件
 
@@ -19,7 +19,7 @@
 
 This specification describes the functionality, API and the configuration for the AUTOSAR Basic Software module CAN XL Driver.
 
-The base for this document are  and . It is assumed that the reader is familiar with these specifications. This document will not describe CAN XL functionality again.
+The base for this document are and . It is assumed that the reader is familiar with these specifications. This document will not describe CAN XL functionality again.
 
 The CAN XL Driver is part of the lowest layer, performs the hardware access and offers a hardware independent API to the upper layer. The two upper layers that have access to the CAN XL Driver are the CanIf and EthIf modules.
 
@@ -31,16 +31,17 @@ Furthermore, it provides services to control CAN XL Controller specific hardware
 
 ## 模块依赖
 
-The CAN XL Driver module extends the CAN Driver  and has interfaces towards the , , the  and the .
+The CAN XL Driver module extends the CAN Driver and has interfaces towards the , , the and the .
 
 ## 章节详细内容
 
 ### 1. 简介与功能概述
-*原文标题：Introduction and functional overview*
+
+_原文标题：Introduction and functional overview_
 
 This specification describes the functionality, API and the configuration for the AUTOSAR Basic Software module CAN XL Driver.
 
-The base for this document are  and . It is assumed that the reader is familiar with these specifications. This document will not describe CAN XL functionality again.
+The base for this document are and . It is assumed that the reader is familiar with these specifications. This document will not describe CAN XL functionality again.
 
 The CAN XL Driver is part of the lowest layer, performs the hardware access and offers a hardware independent API to the upper layer. The two upper layers that have access to the CAN XL Driver are the CanIf and EthIf modules.
 
@@ -51,43 +52,51 @@ The CAN XL Driver provides services for initiating transmissions and calls the c
 Furthermore, it provides services to control CAN XL Controller specific hardware including e.g. the transmission and reception of generic CAN XL frames.
 
 ### 2. 缩略语
-*原文标题：Acronyms and Abbreviations*
+
+_原文标题：Acronyms and Abbreviations_
 
 The glossary below includes acronyms and abbreviations relevant to the CAN XL Driver module that are not included in the .
 
-| Abbreviation / Acronym: | Description: |
-|---|---|
-| XLFF | XL Frame Format |
-| SDU type | service data unit type |
-| retransmit counter | Feature of some CAN XL controllers that allows to send a CAN frame multiple times in a row in case the ACK slot is not set on the bus. The counter gives the maximum number of transmissions. |
+| Abbreviation / Acronym: | Description:                                                                                                                                                                                  |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| XLFF                    | XL Frame Format                                                                                                                                                                               |
+| SDU type                | service data unit type                                                                                                                                                                        |
+| retransmit counter      | Feature of some CAN XL controllers that allows to send a CAN frame multiple times in a row in case the ACK slot is not set on the bus. The counter gives the maximum number of transmissions. |
 
 ### 3. 相关文档
-*原文标题：Related documentation*
+
+_原文标题：Related documentation_
 
 ### 4. 输入文档与相关标准规范
-*原文标题：Input documents & related standards and norms*
+
+_原文标题：Input documents & related standards and norms_
 
 ### 5. 相关规范
-*原文标题：Related specification*
+
+_原文标题：Related specification_
 
 AUTOSAR provides a General Specification on Basic Software modules , which is also valid for CAN XL Driver.
 
 Thus, the specification SWS BSW General shall be considered as additional and required specification for CAN XL Driver.
 
 ### 6. 约束与假设
-*原文标题：Constraints and assumptions*
+
+_原文标题：Constraints and assumptions_
 
 The constraints and assumptions of the CAN XL Driver are the same as for the CAN Driver module.
 
 It is assumed, that all CAN XL Hardware supports out of the box both ingress and egress timestamping. Should this not be available, then it needs to be emulated in software.
 
 ### 7. 限制
-*原文标题：Limitations*
 
-In  there are several SDU Types specified which shall not directly supported by the AUTOSAR CAN XL stack. The solely directly in AUTOSAR communication stack supported SDU Types are as following:
+_原文标题：Limitations_
+
+In there are several SDU Types specified which shall not directly supported by the AUTOSAR CAN XL stack. The solely directly in AUTOSAR communication stack supported SDU Types are as following:
 
 # 01h (content based CAN XL frames)
+
 # 03h (tunneled CAN 2.0/FD frames)
+
 # 05h (mapped tunneled 802.3 Ethernet frames)
 
 Any other types like 02h (node addressing) and 04h (unmapped tunneled 802.3 Ethernet frames) shall not be directly supported. They still can be used with CDD, for details refer to `CanXL_Write`() and `CanIf_XLRxIndication`() API.
@@ -95,42 +104,48 @@ Any other types like 02h (node addressing) and 04h (unmapped tunneled 802.3 Ethe
 Furthermore, future extensions making use of SEC bit of CAN XL Frame header like Security and Multi-PDU are currently in development and therefore not supported yet.
 
 ### 8. 对其他模块的依赖
-*原文标题：Dependencies to other modules*
 
-The CAN XL Driver module extends the CAN Driver  and has interfaces towards the , , the  and the .
+_原文标题：Dependencies to other modules_
+
+The CAN XL Driver module extends the CAN Driver and has interfaces towards the , , the and the .
 
 ### 9. 文件结构
-*原文标题：File Structure*
+
+_原文标题：File Structure_
 
 This section explains the file structure of the CAN XL Driver module.
 
 ### 10. 代码文件结构
-*原文标题：Code File Structure*
+
+_原文标题：Code File Structure_
 
 For details, refer to the section 5.1.6 "Code file structure" in .
 
 ### 11. 需求追踪
-*原文标题：Requirements Tracing*
 
-The following tables reference the requirements specified in  as well as  and link to the fulfillment of these. Please note that if column "Satisfied by" is empty for a specific requirement this means that this requirement is not fulfilled by this document.
+_原文标题：Requirements Tracing_
 
-| Requirement | Description | Satisfied by |
-|---|---|---|
-| Shared code shall be reentrant |  |  |
-| All AUTOSAR Basic Software Modules shall check passed API parameters for validity |  |  |
-| All AUTOSAR Basic Software Modules shall not return specific development error codes via the API |  |  |
-| The CAN Driver shall offer a reception indication service. |  |  |
-| The CAN Driver shall provide a transmission confirmation service |  |  |
-| The CAN Driver shall support CAN XL |  |  |
-| Ethernet Driver hardware supported data transfer |  |  |
-| Ethernet Driver transmission requests with direct data provision |  |  |
-| Ethernet Driver transmission requests with indirect data provision |  |  |
+The following tables reference the requirements specified in as well as and link to the fulfillment of these. Please note that if column "Satisfied by" is empty for a specific requirement this means that this requirement is not fulfilled by this document.
+
+| Requirement                                                                                      | Description | Satisfied by |
+| ------------------------------------------------------------------------------------------------ | ----------- | ------------ |
+| Shared code shall be reentrant                                                                   |             |              |
+| All AUTOSAR Basic Software Modules shall check passed API parameters for validity                |             |              |
+| All AUTOSAR Basic Software Modules shall not return specific development error codes via the API |             |              |
+| The CAN Driver shall offer a reception indication service.                                       |             |              |
+| The CAN Driver shall provide a transmission confirmation service                                 |             |              |
+| The CAN Driver shall support CAN XL                                                              |             |              |
+| Ethernet Driver hardware supported data transfer                                                 |             |              |
+| Ethernet Driver transmission requests with direct data provision                                 |             |              |
+| Ethernet Driver transmission requests with indirect data provision                               |             |              |
 
 ### 12. 功能规范
-*原文标题：Functional specification*
+
+_原文标题：Functional specification_
 
 ### 13. 初始化
-*原文标题：Initialization*
+
+_原文标题：Initialization_
 
 Upstream requirements:
 ⌈
@@ -138,7 +153,8 @@ The `Can_Init`() shall be extended by all functionality necessary to properly in
 ⌋
 
 ### 14. 状态处理
-*原文标题：State Handling*
+
+_原文标题：State Handling_
 
 ### 15. Communication Request
 
@@ -148,39 +164,40 @@ The actual physical bus state is only controlled by the CAN stack. The CAN XL Tr
 
 The Ethernet controller mode is stored by the CAN XL Driver, and returned on request.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The Ethernet controller mode shall initially be set to `ETH_MODE_DOWN`.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 The controller mode requested by the Ethernet stack via `CanXL_SetControllerMode`() shall have no effect on the CAN XL controller hardware. The new mode shall be solely stored.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 `CanXL_GetControllerMode`() shall return the stored mode.
 ⌋
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 When the Ethernet controller mode changes, the CAN XL Driver shall report this change via `EthIf_CtrlModeIndication`().
 ⌋
 
 ### 16. BusOff 处理
-*原文标题：BusOff Handling*
+
+_原文标题：BusOff Handling_
 
 There always needs to be a CAN Stack configured even in case no native CAN communication is used and BusOff Handling is performed as defined in CAN Driver.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 Changes of the bus error state shall be notified to CAN XL Transceiver by a call to `CanIf_XLReportErrorState`().
 ⌋
 
 The parameter Transceiver of `CanIf_XLReportErrorState`() can be obtained by linking the CanXLController via CanIfCtrlCfg and CanSMManagerNetwork to CanIfTrcvCfg. All buffers of the affected CAN XL controller are flushed within CAN XL Driver if a BusOff occurs.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 In case an Ethernet stack is configured, also the buffers containing frames for Ethernet shall be flushed and `EthIf_TxConfirmation`() shall be called with result E_NOT_OK at the event of a BusOff.
 ⌋
@@ -190,11 +207,12 @@ EthIf is polling its hardware if the current mode and link state match the reque
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 17. BusOff 处理 without 错误 signaling
-*原文标题：BusOff Handling without error signaling*
+
+_原文标题：BusOff Handling without error signaling_
 
 In case transceiver mode switching is used, error signaling must be turned off for currently existing transceivers. Without error signaling, there also won't be any busoff handling by the controller hardware itself. Therefore, in this case, there shall be a simple implementation in CAN XL Driver to still perform babbling protection.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 If error signaling is disabled, a basic CAN busoff handling with TEC (Transmission Error Counter) and REC (Reception Error Counter) shall be emulated in software.
 ⌋
@@ -205,7 +223,7 @@ TEC is normally a counter initialized with 0 saturating in range of 0 to 256, an
 
 There would be a state machine following this basic rule set:
 
-* When a frame is transmitted but no ACK slot was set on the bus, TEC shall be increased by 8. TEC shall not be increased beyond 128 before at least one frame has been received on the bus since the last startup or bus-off recovery.
+- When a frame is transmitted but no ACK slot was set on the bus, TEC shall be increased by 8. TEC shall not be increased beyond 128 before at least one frame has been received on the bus since the last startup or bus-off recovery.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -213,7 +231,7 @@ There would be a state machine following this basic rule set:
 
 Basic wakeup handling does not change.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 There shall be no differentiation with regards to SDU-Type of the received frame triggering wakeup; any frame received by CAN XL Driver shall notify a CAN wakeup.
 ⌋
@@ -221,7 +239,8 @@ There shall be no differentiation with regards to SDU-Type of the received frame
 `EcuM_SetWakeupEvent`() is solely called for Can. It is never notified for Ethernet, the CAN XL Transceiver indicates the physical bus state through LinkState polling to the Ethernet stack instead.
 
 ### 19. Reception 处理
-*原文标题：Reception Handling*
+
+_原文标题：Reception Handling_
 
 Upstream requirements:
 ⌈
@@ -232,12 +251,12 @@ Reception queues will also be used for CAN 2.0 and CAN FD frames mapped to CAN H
 
 The reception mechanism of SDU Type shall be extended for XLFF, e.g. in polling mode `Can_MainFunction_Read`() shall be extended. See chapter "L-PDU reception" of CAN Driver for details.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 On L-PDU reception of XLFF, first any configured filtering shall be performed before other functionality is performed.
 ⌋
 
-  Upstream requirements: ,
+Upstream requirements: ,
 ⌈
 On L-PDU reception of XLFF, if SDU Type equals 05h (mapped tunneled 802.3 Ethernet frames) the CAN XL Driver shall extract payload and addressing information from the received frame and pass them to `EthIf_RxIndication`(); otherwise it shall pass the received frame directly to `CanIf_XLRxIndication`().
 ⌋
@@ -249,7 +268,8 @@ As this is highly hardware vendor specific, there shall be no details given here
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 20. Transmission 处理
-*原文标题：Transmission Handling*
+
+_原文标题：Transmission Handling_
 
 As CAN XL is designed to scale from small to big systems and the payload range goes up to 2048 bytes, the specific hardware implementations may differ.
 
@@ -257,7 +277,7 @@ The use of CAN XL HTH is similar to CAN HTHs. See chapter "L-PDU transmission" o
 
 The CAN HTH is used for mapping to logical transmission objects. Depending on available hardware features these might map to separate message objects or hardware supported queues.
 
-  Upstream requirements:
+Upstream requirements:
 ⌈
 All used transmission queues for CAN XL frames shall be mapped individually to CAN XL HTHs.
 ⌋
@@ -269,12 +289,14 @@ As the availability and behavior of hardware supported queues is is highly hardw
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
 ### 21. 错误分类
-*原文标题：Error Classification*
 
-Chapter  describes the error handling of the Basic Software in detail. Above all, it constitutes a classification scheme consisting of five error types which may occur in BSW modules. Based on this foundation, the following section specifies particular errors arranged in the respective subsections below.
+_原文标题：Error Classification_
+
+Chapter describes the error handling of the Basic Software in detail. Above all, it constitutes a classification scheme consisting of five error types which may occur in BSW modules. Based on this foundation, the following section specifies particular errors arranged in the respective subsections below.
 
 ### 22. Development 错误
-*原文标题：Development Errors*
+
+_原文标题：Development Errors_
 
 Definition of development errors in module CanXL
 ⌈
@@ -292,7 +314,8 @@ Definition of development errors in module CanXL
 ⌋
 
 ### 23. Runtime 错误
-*原文标题：Runtime Errors*
+
+_原文标题：Runtime Errors_
 
 Definition of runtime errors in module CanXL
 ⌈
@@ -303,26 +326,30 @@ Definition of runtime errors in module CanXL
 ⌋
 
 ### 24. Production 错误
-*原文标题：Production Errors*
+
+_原文标题：Production Errors_
 
 There are no addtional production errors.
 
 ### 25. Extended Production 错误
-*原文标题：Extended Production Errors*
+
+_原文标题：Extended Production Errors_
 
 There are no addtional extended production errors.
 
 ### 26. API 规范
-*原文标题：API specification*
 
-Please note, that the CAN XL Driver uses the MSN Can for parts that are shared with the  and the MSN CanXL for extensions defined in this document. Deviating from `SRS_BSW_00101` and `SRS_BSW_00407`, the CAN XL Driver does not provide separate Init and GetVersionInfo APIs with the MSN CanXL. Following `SWS_MemMap_00022`, memory sections associated with APIs defined in this document will use the MSN CanXL, and also symbolic name values referring to containers defined in this document will use the MSN CanXL to follow `TPS_ECUC_02108`.
+_原文标题：API specification_
+
+Please note, that the CAN XL Driver uses the MSN Can for parts that are shared with the and the MSN CanXL for extensions defined in this document. Deviating from `SRS_BSW_00101` and `SRS_BSW_00407`, the CAN XL Driver does not provide separate Init and GetVersionInfo APIs with the MSN CanXL. Following `SWS_MemMap_00022`, memory sections associated with APIs defined in this document will use the MSN CanXL, and also symbolic name values referring to containers defined in this document will use the MSN CanXL to follow `TPS_ECUC_02108`.
 
 ### 27. Imported 类型
-*原文标题：Imported types*
+
+_原文标题：Imported types_
 
 In this chapter all types included from the following files are listed.
 
- Definition of imported datatypes of module CanXL
+Definition of imported datatypes of module CanXL
 ⌈
 | Module | Header File | Imported Type |
 |---|---|---|
@@ -350,7 +377,8 @@ In this chapter all types included from the following files are listed.
 ⌋
 
 ### 28. 类型定义
-*原文标题：Type definitions*
+
+_原文标题：Type definitions_
 
 ### 29. CanXL_Params
 
@@ -411,7 +439,7 @@ Definition of datatype `CanXL_HwType`
 |---|---|---|
 | Kind | Structure | < |
 | Elements | XLParams | < |
-| ^ | Type | CanXL_Params* |
+| ^ | Type | CanXL_Params\* |
 | ^ | Comment | Pointer to CAN XL params. |
 | ^ | ControllerId | < |
 | ^ | Type | uint8 |
@@ -425,7 +453,8 @@ Definition of datatype `CanXL_HwType`
 ⌋
 
 ### 32. 功能定义
-*原文标题：Function definitions*
+
+_原文标题：Function definitions_
 
 ### 33. CanXL_EnableEgressTimeStamp
 
@@ -433,11 +462,11 @@ Definition of API function `CanXL_EnableEgressTimeStamp`
 ⌈
 | Service Name | CanXL_EnableEgressTimeStamp | < |
 |---|---|---|
-| Syntax | void CanXL_EnableEgressTimeStamp ( |  |
+| Syntax | void CanXL_EnableEgressTimeStamp ( | |
 
-  uint8 CtrlIdx,
-  `Eth_BufIdxType` BufIdx
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_BufIdxType` BufIdx
+| ) | < | |
 |---|---|---|
 | Service ID | 0x17 | < |
 | Sync/Async | Synchronous | < |
@@ -452,7 +481,7 @@ Definition of API function `CanXL_EnableEgressTimeStamp`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
 
 ⌈
 The service `CanXL_EnableEgressTimeStamp`() has no functionality and shall return without performing any action.
@@ -464,11 +493,11 @@ Definition of API function `CanXL_GetControllerMode`
 ⌈
 | Service Name | CanXL_GetControllerMode | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetControllerMode ( |  |
+| Syntax | Std_ReturnType CanXL_GetControllerMode ( | |
 
-  uint8 CtrlIdx,
-  `Eth_ModeType`* CtrlModePtr
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_ModeType`\* CtrlModePtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x1b | < |
 | Sync/Async | Synchronous | < |
@@ -485,13 +514,13 @@ Definition of API function `CanXL_GetControllerMode`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and .
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and .
 
 ⌈
 The function shall read the current communication state of the indexed controller.
 ⌋
 
-The current communication state is set as described in  and .
+The current communication state is set as described in and .
 
 ⌈
 If development error detection is enabled: `CanXL_GetControllerMode`() shall check the parameter CtrlIdx for being valid.
@@ -504,11 +533,11 @@ Definition of API function `CanXL_GetCounterValues`
 ⌈
 | Service Name | CanXL_GetCounterValues | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetCounterValues ( |  |
+| Syntax | Std_ReturnType CanXL_GetCounterValues ( | |
 
-  uint8 CtrlIdx,
-  `Eth_CounterType`* CounterPtr
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_CounterType`\* CounterPtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x14 | < |
 | Sync/Async | Synchronous | < |
@@ -522,7 +551,7 @@ Definition of API function `CanXL_GetCounterValues`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
 
 ⌈
 The service `CanXL_GetCounterValues`() has no functionality and shall always return E_NOT_OK without performing any action.
@@ -531,16 +560,16 @@ The service `CanXL_GetCounterValues`() has no functionality and shall always ret
 ### 36. CanXL_GetCurrentTimeTuple
 
 Definition of API function `CanXL_GetCurrentTimeTuple`
-  Status: DRAFT
+Status: DRAFT
 ⌈
 | Service Name | CanXL_GetCurrentTimeTuple (draft) | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetCurrentTimeTuple ( |  |
+| Syntax | Std_ReturnType CanXL_GetCurrentTimeTuple ( | |
 
-  uint8 CtrlIdx,
-  uint8 ClkUnitIdx,
-  TimeTupleType currentTimeTuplePtr
-| ) | < |  |
+uint8 CtrlIdx,
+uint8 ClkUnitIdx,
+TimeTupleType currentTimeTuplePtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x22 | < |
 | Sync/Async | Synchronous | < |
@@ -550,15 +579,15 @@ Definition of API function `CanXL_GetCurrentTimeTuple`
 | Parameters (inout) | None | < |
 | Parameters (out) | currentTimeTuplePtr | Current time provided as time tuple |
 | Return value | Std_ReturnType | E_OK: Current time successfully provided E_NOT_OK:Current time not available |
-| Description | Reads the time tuple of the current time of the timestamp clock and the current time of the PHC in an atomic operation. If no PHC is supported, the PHC value will be a copy of the timestamp clock value. |  |
+| Description | Reads the time tuple of the current time of the timestamp clock and the current time of the PHC in an atomic operation. If no PHC is supported, the PHC value will be a copy of the timestamp clock value. | |
 
-| Tags: atp.Status=draft | < |  |
-|---|---|---|
-| Available via | CanXL.h | < |
+| Tags: atp.Status=draft | <       |     |
+| ---------------------- | ------- | --- |
+| Available via          | CanXL.h | <   |
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and .
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and .
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -568,13 +597,13 @@ Definition of API function `CanXL_GetEgressTimeStamp`
 ⌈
 | Service Name | CanXL_GetEgressTimeStamp | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetEgressTimeStamp ( |  |
+| Syntax | Std_ReturnType CanXL_GetEgressTimeStamp ( | |
 
-  uint8 CtrlIdx,
-  `Eth_BufIdxType` BufIdx,
-  TimeStampQualType* timeQualPtr,
-  TimeStampType* timeStampPtr
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_BufIdxType` BufIdx,
+TimeStampQualType* timeQualPtr,
+TimeStampType* timeStampPtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x18 | < |
 | Sync/Async | Synchronous | < |
@@ -590,7 +619,7 @@ Definition of API function `CanXL_GetEgressTimeStamp`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and .
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and .
 
 ⌈
 If development error detection is enabled: the function shall check the parameter CtrlIdx for being valid.
@@ -603,13 +632,13 @@ Definition of API function `CanXL_GetIngressTimeStamp`
 ⌈
 | Service Name | CanXL_GetIngressTimeStamp | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetIngressTimeStamp ( |  |
+| Syntax | Std_ReturnType CanXL_GetIngressTimeStamp ( | |
 
-  uint8 CtrlIdx,
-  const uint8* DataPtr,
-  TimeStampQualType* timeQualPtr,
-  TimeStampType* timeStampPtr
-| ) | < |  |
+uint8 CtrlIdx,
+const uint8* DataPtr,
+TimeStampQualType* timeQualPtr,
+TimeStampType\* timeStampPtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x19 | < |
 | Sync/Async | Synchronous | < |
@@ -625,7 +654,7 @@ Definition of API function `CanXL_GetIngressTimeStamp`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and .
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and .
 
 ⌈
 If development error detection is enabled: the function shall check the parameter CtrlIdx for being valid.
@@ -638,11 +667,11 @@ Definition of API function `CanXL_GetPhysAddr`
 ⌈
 | Service Name | CanXL_GetPhysAddr | < |
 |---|---|---|
-| Syntax | void CanXL_GetPhysAddr ( |  |
+| Syntax | void CanXL_GetPhysAddr ( | |
 
-  uint8 CtrlIdx,
-  uint8* PhysAddrPtr
-| ) | < |  |
+uint8 CtrlIdx,
+uint8\* PhysAddrPtr
+| ) | < | |
 |---|---|---|
 | Service ID | 0x25 | < |
 | Sync/Async | Synchronous | < |
@@ -656,7 +685,7 @@ Definition of API function `CanXL_GetPhysAddr`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and .
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and .
 
 ⌈
 The function shall read the source address used by the indexed controller (see CanXLEthPhysAddress).
@@ -677,11 +706,11 @@ Definition of API function `CanXL_GetRxStats`
 ⌈
 | Service Name | CanXL_GetRxStats | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetRxStats ( |  |
+| Syntax | Std_ReturnType CanXL_GetRxStats ( | |
 
-  uint8 CtrlIdx,
-  `Eth_RxStatsType`* RxStats
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_RxStatsType`\* RxStats
+| ) | < | |
 |---|---|---|
 | Service ID | 0x15 | < |
 | Sync/Async | Synchronous | < |
@@ -690,7 +719,7 @@ Definition of API function `CanXL_GetRxStats`
 | Parameters (inout) | None | < |
 | Parameters (out) | RxStats | List of values according to IETF RFC 2819 (Remote Network Monitoring Management Information Base) |
 | Return value | Std_ReturnType | E_OK: success E_NOT_OK: drop counter could not be obtained |
-| Description | Returns the following list according to IETF RFC2819, where the maximal possible value shall denote an invalid value, e.g. if this counter is not available: 1. etherStatsDropEvents 2. etherStatsOctets 3. etherStatsPkts 4. etherStatsBroadcastPkts 5. etherStatsMulticastPkts 6. etherStatsCrcAlignErrors 7. etherStatsUndersizePkts 8. etherStatsOversizePkts 9. etherStatsFragments 10. etherStatsJabbers 11. etherStatsCollisions 12. etherStatsPkts64Octets 13. etherStatsPkts65to127Octets 14. etherStatsPkts128to255Octets 15. etherStatsPkts256to511Octets 16. etherStatsPkts512to1023Octets 17. |  |
+| Description | Returns the following list according to IETF RFC2819, where the maximal possible value shall denote an invalid value, e.g. if this counter is not available: 1. etherStatsDropEvents 2. etherStatsOctets 3. etherStatsPkts 4. etherStatsBroadcastPkts 5. etherStatsMulticastPkts 6. etherStatsCrcAlignErrors 7. etherStatsUndersizePkts 8. etherStatsOversizePkts 9. etherStatsFragments 10. etherStatsJabbers 11. etherStatsCollisions 12. etherStatsPkts64Octets 13. etherStatsPkts65to127Octets 14. etherStatsPkts128to255Octets 15. etherStatsPkts256to511Octets 16. etherStatsPkts512to1023Octets 17. | |
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -700,11 +729,11 @@ Definition of API function `CanXL_GetTxErrorCounterValues`
 ⌈
 | Service Name | CanXL_GetTxErrorCounterValues | < |
 |---|---|---|
-| Syntax | Std_ReturnType CanXL_GetTxErrorCounterValues ( |  |
+| Syntax | Std_ReturnType CanXL_GetTxErrorCounterValues ( | |
 
-  uint8 CtrlIdx,
-  `Eth_TxErrorCounterValuesType`* TxErrorCounterValues
-| ) | < |  |
+uint8 CtrlIdx,
+`Eth_TxErrorCounterValuesType`\* TxErrorCounterValues
+| ) | < | |
 |---|---|---|
 | Service ID | 0x1d | < |
 | Sync/Async | Synchronous | < |
@@ -718,7 +747,7 @@ Definition of API function `CanXL_GetTxErrorCounterValues`
 
 ⌋
 
-Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check  and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
+Note: This API is derived from Ethernet Driver (). For better understanding of the API's original intention you may check and . It is called by the AUTOSAR Ethernet Interface to achieve compatible CAN XL agnostic behavior.
 
 > ……本章内容较长已节选，完整内容见「本地文件」中的纯文本全文。
 
@@ -782,6 +811,6 @@ Note: This API is derived from Ethernet Driver (). For better understanding of t
 97. Added 规范 Items in R25-11
 98. Changed 规范 Items in R25-11
 99. Deleted 规范 Items in R25-11
-100. Added Constraints in R25-11
-101. Changed Constraints in R25-11
-102. Deleted Constraints in R25-11
+100.  Added Constraints in R25-11
+101.  Changed Constraints in R25-11
+102.  Deleted Constraints in R25-11
