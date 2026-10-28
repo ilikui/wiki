@@ -64,3 +64,7 @@
 ### 新增 RTE Buffer 专题
 
 - [Queued / Non-queued、数据一致性与新鲜度](rte-buffer-data-consistency-queued-nonqueued.md)
+
+## 新增通信栈专项指南
+
+- [COM / PduR / CanIf 发送与接收回调链排查](com-pdur-canif-tx-rx-callback-chain.md) — TxConfirmation、RxIndication、PDU ID 路由和分层观测点。
