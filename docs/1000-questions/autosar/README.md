@@ -621,3 +621,7 @@ Immediate（立即请求写入）和 Periodic（周期性写入）是策略选�
 - [AUTOSAR CP NvRAM Manager Specification（R24-11）](https://www.autosar.org/fileadmin/standards/R24-11/CP/AUTOSAR_CP_SWS_NVRAMManager.pdf)
 
 > 本页用于建立排查框架。NvM API、Block 配置字段、作业状态及底层 Fee/Ea 行为，请以项目实际采用的 AUTOSAR 版本和供应商文档为准。
+
+## CAN Bus-Off：检测、上报与恢复排查
+
+- [CAN Bus-Off：检测、上报与恢复排查](can-busoff-recovery.md)
