@@ -6,6 +6,7 @@
 > 本页忠实迁移问题清单；这是问题目录，不代表每题都已有答案。答案笔记需后续逐题关联补全。
 
 > **覆盖进度与缺口管理：** [逐题覆盖矩阵与补全队列](coverage-matrix.md)（按主题列出已有答案、待补缺口和后续优先级）。
+> **RTE 专题补充：** [RTE Event、Runnable 调度与跨核 IOC 实战](rte-events-runnable-scheduling-ioc.md)（事件触发、周期抖动、数据接收、Client-Server 与跨核通信排查）。
 
 记录AUTOSAR学习的1000个问题：
 
