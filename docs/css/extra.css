@@ -10,45 +10,45 @@
    1. 设计令牌
    -------------------------------------------------------------------------- */
 :root {
-  --wk-primary: #7c4dbe;
-  --wk-primary-strong: #66389f;
-  --wk-primary-soft: rgba(124, 77, 190, .07);
-  --wk-primary-line: rgba(124, 77, 190, .28);
+  --wk-primary: #765b80;
+  --wk-primary-strong: #5e4568;
+  --wk-primary-soft: rgba(118, 91, 128, .08);
+  --wk-primary-line: rgba(118, 91, 128, .26);
 
-  --wk-bg: #fcfcfd;
+  --wk-bg: #f5f5f6;
   --wk-surface: #ffffff;
-  --wk-ink: #15151a;
-  --wk-muted: #64636f;
-  --wk-faint: #9292a0;
-  --wk-border: #ebebf1;
-  --wk-border-strong: #dedee6;
-  --wk-soft: #f5f4f9;
+  --wk-ink: #252327;
+  --wk-muted: #66636a;
+  --wk-faint: #89868e;
+  --wk-border: #e7e5e9;
+  --wk-border-strong: #d8d5dc;
+  --wk-soft: #f0eff2;
 
   --wk-shadow-xs: 0 1px 2px rgba(21, 21, 26, .04);
-  --wk-shadow-sm: 0 1px 2px rgba(21, 21, 26, .04), 0 6px 20px -12px rgba(21, 21, 26, .18);
-  --wk-shadow-md: 0 2px 4px rgba(21, 21, 26, .04), 0 14px 32px -14px rgba(93, 52, 143, .22);
+  --wk-shadow-sm: 0 1px 2px rgba(21, 21, 26, .04), 0 6px 20px -12px rgba(21, 21, 26, .12);
+  --wk-shadow-md: 0 2px 4px rgba(21, 21, 26, .04), 0 14px 32px -14px rgba(60, 48, 65, .16);
 
   --wk-header-h: 3.75rem;
   --wk-tabs-h: 2.75rem;
-  --wk-radius: .875rem;
-  --wk-radius-lg: 1.25rem;
+  --wk-radius: .5rem;
+  --wk-radius-lg: .75rem;
   --wk-ease: cubic-bezier(.22, .78, .24, 1);
 }
 
 [data-md-color-scheme="slate"] {
-  --wk-primary: #b48ce8;
-  --wk-primary-strong: #cbaaef;
-  --wk-primary-soft: rgba(180, 140, 232, .11);
-  --wk-primary-line: rgba(180, 140, 232, .34);
+  --wk-primary: #c2a9ca;
+  --wk-primary-strong: #d8c5df;
+  --wk-primary-soft: rgba(194, 169, 202, .13);
+  --wk-primary-line: rgba(194, 169, 202, .32);
 
-  --wk-bg: #0e0e12;
-  --wk-surface: #16161c;
-  --wk-ink: #f2f1f6;
-  --wk-muted: #a3a2b0;
-  --wk-faint: #74737f;
-  --wk-border: rgba(255, 255, 255, .085);
-  --wk-border-strong: rgba(255, 255, 255, .16);
-  --wk-soft: #1b1b23;
+  --wk-bg: #19181b;
+  --wk-surface: #222124;
+  --wk-ink: #f1eff2;
+  --wk-muted: #b3afb6;
+  --wk-faint: #858089;
+  --wk-border: rgba(255, 255, 255, .09);
+  --wk-border-strong: rgba(255, 255, 255, .17);
+  --wk-soft: #29272b;
 
   --wk-shadow-xs: 0 1px 2px rgba(0, 0, 0, .3);
   --wk-shadow-sm: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px -12px rgba(0, 0, 0, .6);
@@ -115,9 +115,7 @@ code, pre, kbd, samp, .highlight, .md-typeset code, .md-typeset pre {
 .md-header {
   position: sticky; top: 0; z-index: 30;
   height: var(--wk-header-h);
-  background: color-mix(in srgb, var(--wk-bg) 86%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  background: var(--wk-surface);
   color: var(--wk-ink);
   border-bottom: 1px solid var(--wk-border);
   box-shadow: none;
@@ -187,6 +185,7 @@ code, pre, kbd, samp, .highlight, .md-typeset code, .md-typeset pre {
    4. 顶部一级导航（tabs）
    -------------------------------------------------------------------------- */
 .md-tabs {
+  display: none;
   height: var(--wk-tabs-h);
   background: color-mix(in srgb, var(--wk-bg) 86%, transparent);
   backdrop-filter: saturate(180%) blur(14px);
@@ -226,14 +225,14 @@ code, pre, kbd, samp, .highlight, .md-typeset code, .md-typeset pre {
 .md-container { background: var(--wk-bg); }
 .md-main { background: var(--wk-bg); }
 .md-main__inner {
-  max-width: 96rem;
+  max-width: 92rem;
   margin-inline: auto;
   padding-top: 0;
   gap: 0;
 }
 .md-content { min-width: 0; }
 .md-content__inner {
-  max-width: 54rem;
+  max-width: 56rem;
   margin-inline: auto;
   padding: 2rem 2.5rem 4rem;
 }
@@ -247,8 +246,9 @@ body.wk-no-sidebar .md-content__inner { max-width: 58rem; margin-inline: 0; }
 
 /* 左侧导航 */
 .md-sidebar--primary {
-  width: 16rem;
+  width: 17rem;
   padding-top: .5rem;
+  border-right: 1px solid var(--wk-border);
 }
 .md-sidebar--primary .md-sidebar__scrollwrap { padding-right: .5rem; }
 .md-nav--primary .md-nav__title { display: none; }
@@ -401,13 +401,15 @@ body.wk-no-sidebar .md-content__inner { max-width: 58rem; margin-inline: 0; }
 .md-typeset strong { font-weight: 650; color: var(--wk-ink); }
 .md-typeset a {
   color: var(--wk-primary);
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--wk-primary) 32%, transparent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--wk-primary) 32%, transparent);
+  text-underline-offset: .18em;
+  border-bottom: 0;
   transition: border-color .16s var(--wk-ease), color .16s var(--wk-ease);
 }
 .md-typeset a:hover {
   color: var(--wk-primary-strong);
-  border-bottom-color: var(--wk-primary);
+  text-decoration-color: var(--wk-primary);
 }
 .md-typeset .headerlink {
   color: var(--wk-border-strong);
@@ -558,12 +560,17 @@ dd { margin-left: 0; padding-left: 1.25rem; }
   border: 1px solid var(--wk-border);
   border-radius: var(--wk-radius-lg);
   background:
-    radial-gradient(60rem 22rem at 12% -10%, color-mix(in srgb, var(--wk-primary) 12%, transparent), transparent 70%),
-    radial-gradient(40rem 20rem at 88% 120%, rgba(93, 160, 226, .12), transparent 72%),
-    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--wk-ink) 7%, transparent) 1px, transparent 0),
-    var(--wk-surface);
-  background-size: auto, auto, 22px 22px, auto;
+    linear-gradient(112deg,
+      color-mix(in srgb, var(--wk-primary) 15%, var(--wk-surface)) 0%,
+      color-mix(in srgb, #d9b8d7 26%, var(--wk-surface)) 56%,
+      color-mix(in srgb, #a9c7c2 22%, var(--wk-surface)) 100%);
   box-shadow: var(--wk-shadow-sm);
+}
+[data-md-color-scheme="slate"] .md-typeset .wiki-hero {
+  background: linear-gradient(112deg,
+    color-mix(in srgb, var(--wk-primary) 16%, var(--wk-surface)),
+    color-mix(in srgb, #765a76 34%, var(--wk-surface)) 56%,
+    color-mix(in srgb, #456b69 28%, var(--wk-surface)));
 }
 .md-typeset .wiki-hero::after {
   content: "";
@@ -1006,7 +1013,11 @@ h5.doc-heading { font-size: 1rem; }
 }
 @media screen and (max-width: 44.9375em) {
   .md-typeset .wiki-hero { padding: 1.7rem 1.2rem 1.6rem; }
+  .md-typeset .wiki-hero-badge { margin-bottom: .75rem; }
   .md-typeset .wiki-hero h1 { font-size: 1.7rem; }
-  .md-typeset .wiki-hero-meta { gap: .6rem; font-size: .72rem; }
-  .md-typeset .wiki-btn { padding: .55rem 1rem; font-size: .78rem; }
+  .md-typeset .wiki-hero h1 { margin-bottom: .65rem; }
+  .md-typeset .wiki-hero p { margin-bottom: .9rem; }
+  .md-typeset .wiki-hero-meta { gap: .35rem; margin-bottom: 1rem; font-size: .68rem; }
+  .md-typeset .wiki-hero-actions { gap: .45rem; }
+  .md-typeset .wiki-btn { padding: .48rem .7rem; font-size: .74rem; }
 }

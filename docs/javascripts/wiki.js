@@ -47,12 +47,7 @@
 
   // 板块下只有一个可见条目（如首页）时，左侧栏是空的，隐藏它让内容居中
   function markEmptySidebar() {
-    if (window.innerWidth < 1220) { document.body.classList.remove("wk-no-sidebar"); return; }
-    const primary = document.querySelector(".md-nav--primary");
-    if (!primary) return;
-    const links = Array.from(primary.querySelectorAll("a.md-nav__link, label.md-nav__link"))
-      .filter(el => el.offsetParent !== null);
-    document.body.classList.toggle("wk-no-sidebar", links.length <= 1);
+    document.body.classList.remove("wk-no-sidebar");
   }
 
   // 面包屑：Material 的 navigation.path 在 lifted 模式下不输出，这里按 URL 生成
