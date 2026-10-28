@@ -9,6 +9,9 @@ theme:
   name: material
   language: zh
   features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.tracking
@@ -170,6 +173,7 @@ plugins:
         utm_medium: "RSS"
         utm_campaign: "feed-syndication"
   - blogging:
+      paging: false
       dirs: # The directories to be included
         - blog
   - mermaid2:

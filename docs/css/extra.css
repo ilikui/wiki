@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* ==========================================================================
    知识 Wiki — 设计系统 v3
    现代无衬线 · 顶部一级导航 + 原生左栏 + 居中正文 + 右侧目录
@@ -76,8 +78,6 @@
 /* --------------------------------------------------------------------------
    2. 字体
    -------------------------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
   --md-text-font: "Inter", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
   --md-code-font: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;

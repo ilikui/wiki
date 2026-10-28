@@ -4,10 +4,11 @@
      侧栏已改用 Material 原生导航（配合 navigation.tabs），
      这里只保留首页标记与轻量交互。 */
 
-  // 首页：隐藏「编辑此页」入口，并标记 body 便于首页专属样式
-  const path = location.pathname;
-  if (path === "/" || path.endsWith("/index.html") || path.endsWith("/wiki/")) {
-    document.body.classList.add("wiki-home");
+  // 首页标记需在即时导航切页后同步更新
+  function markHomePage() {
+    const path = location.pathname;
+    const isHome = path === "/" || path.endsWith("/index.html") || path.endsWith("/wiki/");
+    document.body.classList.toggle("wiki-home", isHome);
   }
 
   // 外链在新标签页打开（站内锚点/相对链接不动）
@@ -33,11 +34,14 @@
       tabs.classList.toggle("wk-scrolled", scrolled);
       ticking = false;
     };
-    window.addEventListener("scroll", () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    }, { passive: true });
+    if (!header.dataset.wkScrollBound) {
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      }, { passive: true });
+      header.dataset.wkScrollBound = "true";
+    }
     update();
   }
 
@@ -112,6 +116,7 @@
   }
 
   function init() {
+    markHomePage();
     markExternalLinks();
     initTabsScroll();
     markEmptySidebar();
@@ -131,6 +136,7 @@
   // Material 的即时导航（instant loading）会在切页后重新渲染内容
   if (typeof document$ !== "undefined" && document$.subscribe) {
     document$.subscribe(() => {
+      markHomePage();
       markExternalLinks();
       initTabsScroll();
       markEmptySidebar();
