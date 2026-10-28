@@ -539,3 +539,5 @@
 2. 标明适用的 AUTOSAR 版本、供应商工具/实现差异、复现步骤与验证证据。
 3. “调用 API”“配置已生成”或“编译成功”不能单独作为运行时行为正确的证据。
 4. 原始 Flomo 仅在副本和索引核验完成后再考虑标记归档；不得自动删除原始笔记。
+
+- [RTE Event、Runnable 调度与跨核 IOC 实战](../../1000-questions/autosar/rte-events-runnable-scheduling-ioc.md) — 事件触发、周期抖动、数据接收、Client-Server 与跨核通信排查。
