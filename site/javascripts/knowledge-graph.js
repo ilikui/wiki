@@ -78,7 +78,7 @@
       const len = Math.max(32, Math.min(160, 165 / Math.sqrt(1 + m / 8)));
       return {
         id: i, from: rawNodes[a].id, to: rawNodes[b].id, length: Math.round(len),
-        color: { color: "#8a8aa8", opacity: m >= 40 ? 0.14 : 0.32, highlight: "#4E79A7", hover: "#4E79A7" },
+        color: { color: "#77818e", opacity: m >= 40 ? 0.12 : 0.27, highlight: "#8db4ff", hover: "#8db4ff" },
       };
     }));
 
@@ -111,14 +111,74 @@
 
     window.__net = network; /* 供调试/自动化检查（无副作用） */
 
+    let showAllLabels = false;
+    const graphToolbar = document.getElementById("graph-toolbar");
+    const labelsButton = graphToolbar.querySelector('[data-graph-action="labels"]');
+    const sidebarButton = graphToolbar.querySelector('[data-graph-action="sidebar"]');
+    const isMobile = () => window.matchMedia("(max-width: 760px)").matches;
+
+    function setSidebarOpen(open) {
+      const mobile = isMobile();
+      document.body.classList.toggle("sidebar-open", mobile && open);
+      document.body.classList.toggle("sidebar-collapsed", !mobile && !open);
+      sidebarButton.setAttribute("aria-expanded", String(open));
+      sidebarButton.title = open ? "隐藏详情面板" : "显示详情面板";
+      sidebarButton.setAttribute("aria-label", sidebarButton.title);
+      network.redraw();
+    }
+    function updateLabelsButton() {
+      labelsButton.setAttribute("aria-pressed", String(showAllLabels));
+      labelsButton.title = showAllLabels ? "按缩放自动显示标签" : "显示全部标签";
+      labelsButton.setAttribute("aria-label", labelsButton.title);
+    }
+    graphToolbar.addEventListener("click", event => {
+      const button = event.target.closest("[data-graph-action]");
+      if (!button) return;
+      const action = button.dataset.graphAction;
+      if (action === "zoom-in" || action === "zoom-out") {
+        const factor = action === "zoom-in" ? 1.25 : 0.8;
+        network.moveTo({
+          position: network.getViewPosition(),
+          scale: Math.max(0.08, Math.min(4, network.getScale() * factor)),
+          animation: { duration: 160, easingFunction: "easeInOutQuad" },
+        });
+      } else if (action === "fit") {
+        network.fit({ animation: { duration: 220, easingFunction: "easeInOutQuad" } });
+      } else if (action === "labels") {
+        showAllLabels = !showAllLabels;
+        updateLabelsButton();
+        network.redraw();
+      } else if (action === "sidebar") {
+        const open = isMobile()
+          ? !document.body.classList.contains("sidebar-open")
+          : document.body.classList.contains("sidebar-collapsed");
+        setSidebarOpen(open);
+      }
+    });
+    document.getElementById("sidebar-close").addEventListener("click", () => setSidebarOpen(false));
+    document.getElementById("sidebar-scrim").addEventListener("click", () => setSidebarOpen(false));
+    if (isMobile()) setSidebarOpen(false);
+    window.addEventListener("resize", () => {
+      if (isMobile()) {
+        document.body.classList.remove("sidebar-collapsed");
+        sidebarButton.setAttribute("aria-expanded", String(document.body.classList.contains("sidebar-open")));
+      } else {
+        document.body.classList.remove("sidebar-open");
+        document.body.classList.remove("sidebar-collapsed");
+        sidebarButton.setAttribute("aria-expanded", "true");
+      }
+      network.redraw();
+    });
+
     /* ---- 自绘标签层 ----
        vis 逐节点绘制且顺序不可控，hub 的标签会被周围叶子节点盖住；
        这里关掉内置标签（font.size=0），在 afterDrawing 里用画布坐标重绘，
        标签永远浮在最上层，且屏幕字号天然恒定。 */
     let labelColor2 = "#ffffff";
-    let labelBgRgba = "rgba(14,16,24,0.92)";
+    let labelBgRgba = "rgba(23, 25, 29, .92)";
     /* 度数分布是断崖式的（1:59 / 2:314 / 3+:45 / 24+:10），按可见密度分档 */
     function tierDeg(scale) {
+      if (showAllLabels) return 1;
       if (scale < 0.45) return 24;
       if (scale < 1.9) return 3;
       return 1;
@@ -141,7 +201,8 @@
 
       const ids = [], idxs = [];
       for (let i = 0; i < rawNodes.length; i++) {
-        if (degOf[i] >= degMin) { ids.push(rawNodes[i].id); idxs.push(i); }
+        const node = nodesDS.get(rawNodes[i].id);
+        if (degOf[i] >= degMin && node && !node.hidden) { ids.push(rawNodes[i].id); idxs.push(i); }
       }
       if (!ids.length) return;
       const posMap = network.getPositions(ids);
@@ -191,19 +252,20 @@
     function themePref() {
       let p = null;
       try { p = localStorage.getItem(THEME_KEY); } catch (e) {}
-      return (p === "light" || p === "dark" || p === "system") ? p : null;
+      return (p === "light" || p === "dark" || p === "system") ? p : "system";
     }
     function applyTheme(pref) {
-      const t = pref === "light" ? "light" : (pref === "system" && themeMQ && themeMQ.matches) ? "light" : "dark";
+      const t = pref === "light" || (pref === "system" && themeMQ && themeMQ.matches) ? "light" : "dark";
       const root = document.documentElement;
       if (!root) return;
       root.setAttribute("data-theme", t);
       document.querySelectorAll("[data-theme-choice]").forEach(b => {
-        b.setAttribute("aria-pressed", String(b.dataset.themeChoice === (pref || "dark")));
+        b.setAttribute("aria-pressed", String(b.dataset.themeChoice === (pref || "system")));
       });
       const c = getComputedStyle(root).getPropertyValue("--node-label").trim();
       if (c) labelColor2 = c;
-      labelBgRgba = t === "light" ? "rgba(255,255,255,0.92)" : "rgba(14,16,24,0.92)";
+      const labelBg = getComputedStyle(root).getPropertyValue("--node-label-bg").trim();
+      if (labelBg) labelBgRgba = labelBg;
       network.redraw(); /* 自绘标签层随主题重绘 */
     }
     document.querySelectorAll("[data-theme-choice]").forEach(b => {
@@ -225,6 +287,26 @@
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
         .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
+    function groupLabel(name) {
+      const fixed = {
+        "1000-questions": "1000 问总览",
+        about: "关于",
+        cs: "计算机科学",
+        "dev-guide": "开发指南",
+        ppt: "演示文稿",
+        read: "阅读",
+        types: "知识体系",
+        "user-guide": "用户手册",
+        "首页与指南": "首页与指南",
+      };
+      if (fixed[name]) return fixed[name];
+      const parts = name.split("/");
+      const leaf = parts[parts.length - 1].replace(/-/g, " ");
+      if (name.startsWith("types/autosar/")) return "AUTOSAR · " + leaf.toUpperCase();
+      if (name.startsWith("types/")) return "专题 · " + leaf;
+      if (name.startsWith("1000-questions/")) return "1000 问 · " + leaf;
+      return leaf;
+    }
     function showInfo(nodeId) {
       const n = nodesDS.get(nodeId);
       if (!n) return;
@@ -235,7 +317,7 @@
         return `<span class="neighbor-link" style="border-left-color:${esc(color)}" data-nid="${esc(nid)}">${esc(nb ? (nb.fullTitle || nb.label) : nid)}</span>`;
       }).join("");
       let html = `<div class="field"><b>${esc(n.fullTitle || n.label)}</b></div>`;
-      html += `<div class="field">分组：${esc(n.group_name || "-")}</div>`;
+      html += `<div class="field">分组：${esc(groupLabel(n.group_name || "-"))}</div>`;
       html += `<div class="field">路径：${esc(n.path || "-")}</div>`;
       html += `<div class="field">关联：${n.degree} 篇</div>`;
       if (n.url) html += `<a class="open-link" href="${esc(n.url)}">打开文章 →</a>`;
@@ -248,6 +330,7 @@
       network.focus(nodeId, { scale: 1.4, animation: true });
       network.selectNodes([nodeId]);
       showInfo(nodeId);
+      if (isMobile()) setSidebarOpen(true);
     }
     document.addEventListener("click", e => {
       const el = e.target.closest(".neighbor-link");
@@ -258,7 +341,10 @@
     network.on("hoverNode", p => { hoveredNodeId = p.node; container.style.cursor = "pointer"; });
     network.on("blurNode", () => { hoveredNodeId = null; container.style.cursor = "default"; });
     network.on("click", params => {
-      if (params.nodes.length > 0) showInfo(params.nodes[0]);
+      if (params.nodes.length > 0) {
+        showInfo(params.nodes[0]);
+        if (isMobile()) setSidebarOpen(true);
+      }
       else if (hoveredNodeId === null) {
         document.getElementById("info-content").innerHTML = '<span class="empty">点击节点查看详情</span>';
       }
@@ -274,6 +360,24 @@
     /* ---- 搜索 ---- */
     const searchInput = document.getElementById("search");
     const searchResults = document.getElementById("search-results");
+    document.addEventListener("keydown", event => {
+      const key = event.key.toLowerCase();
+      if ((event.ctrlKey || event.metaKey) && key === "k") {
+        event.preventDefault();
+        if (isMobile()) setSidebarOpen(true);
+        searchInput.focus();
+        return;
+      }
+      if (event.target.matches("input, textarea, [contenteditable='true']")) return;
+      if (key === "0") network.fit({ animation: { duration: 180, easingFunction: "easeInOutQuad" } });
+      else if (key === "+" || key === "=") graphToolbar.querySelector('[data-graph-action="zoom-in"]').click();
+      else if (key === "-") graphToolbar.querySelector('[data-graph-action="zoom-out"]').click();
+      else if (key === "escape") {
+        searchResults.style.display = "none";
+        network.unselectAll();
+        if (isMobile()) setSidebarOpen(false);
+      }
+    });
     searchInput.addEventListener("input", () => {
       const q = searchInput.value.toLowerCase().trim();
       searchResults.innerHTML = "";
@@ -340,9 +444,19 @@
       selectAllCb.indeterminate = hidden > 0 && hidden < total;
     }
     const legendEl = document.getElementById("legend");
+    const groupFilter = document.getElementById("group-filter");
+    groupFilter.addEventListener("input", () => {
+      const query = groupFilter.value.trim().toLowerCase();
+      document.querySelectorAll(".legend-item").forEach(item => {
+        item.hidden = query.length > 0 && !item.dataset.search.includes(query);
+      });
+    });
+    selectAllCb.addEventListener("change", () => window.toggleAllGroups(!selectAllCb.checked));
     LEGEND.forEach(c => {
       const item = document.createElement("div");
       item.className = "legend-item";
+      const label = groupLabel(c.label);
+      item.dataset.search = (c.label + " " + label).toLowerCase();
       const cb = document.createElement("input");
       cb.type = "checkbox";
       cb.className = "legend-cb";
@@ -362,7 +476,7 @@
         updateSelectAllState();
       });
       item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>` +
-        `<span class="legend-label">${esc(c.label)}</span>` +
+        `<span class="legend-label" title="${esc(c.label)}">${esc(label)}</span>` +
         `<span class="legend-count">${c.count}</span>`;
       item.prepend(cb);
       item.onclick = e => {
@@ -376,6 +490,8 @@
     /* ---- 统计 ---- */
     document.getElementById("stats").textContent =
       `${rawNodes.length} 篇文档 · ${(data.links || []).length} 条关联 · ${groups.length} 个分组`;
+    document.getElementById("graph-summary").textContent =
+      `${rawNodes.length} 篇笔记 · ${(data.links || []).length} 条站内关联`;
   }).catch(err => {
     const el = document.getElementById("stats");
     if (!el) return;
