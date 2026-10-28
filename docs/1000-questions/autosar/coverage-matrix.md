@@ -59,3 +59,8 @@
 - [Classic Platform R25-11 Release Overview](https://www.autosar.org/fileadmin/standards/R25-11/CP/AUTOSAR_CP_TR_ReleaseOverview.pdf)
 
 > 当前 AUTOSAR 官方页面列出的 Classic Platform 当前发布版为 R25-11。项目实际适用版本仍应以项目基线为准；不能把较新版本的规范描述直接套用到旧版项目。
+
+
+### 新增 RTE Buffer 专题
+
+- [Queued / Non-queued、数据一致性与新鲜度](rte-buffer-data-consistency-queued-nonqueued.md)
