@@ -1021,3 +1021,123 @@ h5.doc-heading { font-size: 1rem; }
   .md-typeset .wiki-hero-actions { gap: .45rem; }
   .md-typeset .wiki-btn { padding: .48rem .7rem; font-size: .74rem; }
 }
+
+/* Help-center reading layout */
+:root {
+  --wk-primary: #7658bd;
+  --wk-primary-strong: #5f439f;
+  --wk-primary-soft: rgba(118, 88, 189, .08);
+  --wk-primary-line: rgba(118, 88, 189, .24);
+  --wk-bg: #ffffff;
+  --wk-surface: #ffffff;
+  --wk-ink: #26252a;
+  --wk-muted: #66636b;
+  --wk-faint: #89868e;
+  --wk-border: #e5e3e8;
+  --wk-border-strong: #d3d0d8;
+  --wk-soft: #f7f6f8;
+  --wk-radius: .25rem;
+  --wk-radius-lg: .375rem;
+}
+
+[data-md-color-scheme="slate"] {
+  --wk-primary: #b6a0ec;
+  --wk-primary-strong: #cbbbf3;
+  --wk-primary-soft: rgba(182, 160, 236, .12);
+  --wk-primary-line: rgba(182, 160, 236, .3);
+  --wk-bg: #1d1d1f;
+  --wk-surface: #222224;
+  --wk-ink: #eeedf0;
+  --wk-muted: #bbb8c0;
+  --wk-faint: #89868e;
+  --wk-border: rgba(255, 255, 255, .1);
+  --wk-border-strong: rgba(255, 255, 255, .2);
+  --wk-soft: #29282b;
+}
+
+.md-container,
+.md-main,
+.md-main__inner { background: var(--wk-bg); }
+
+.md-main__inner {
+  max-width: 100rem;
+  gap: 0;
+}
+
+.md-content__inner {
+  max-width: 48rem;
+  padding: 2rem 2.25rem 4rem;
+}
+
+.md-header {
+  background: var(--wk-surface);
+  border-bottom-color: var(--wk-border);
+}
+
+.md-sidebar--primary {
+  width: 17rem;
+  padding-top: .75rem;
+  border-right: 1px solid var(--wk-border);
+  background: var(--wk-surface);
+}
+
+.md-sidebar--primary .md-sidebar__scrollwrap {
+  padding: 0 .6rem;
+}
+
+.md-nav {
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.md-nav__link {
+  border-radius: .25rem;
+  padding: .32rem .55rem;
+}
+
+.md-typeset {
+  font-size: .98rem;
+  line-height: 1.75;
+}
+
+.md-typeset h1 {
+  margin-bottom: 1.25rem;
+  font-size: 2.15rem;
+  letter-spacing: 0;
+}
+
+.md-typeset h2 {
+  margin-top: 2.4rem;
+  padding: 0 0 .45rem;
+  border-bottom: 1px solid var(--wk-border);
+  font-size: 1.3rem;
+  letter-spacing: 0;
+}
+
+.md-typeset h2::before { display: none; }
+
+.md-content__inner > * { animation: none; }
+
+@media screen and (min-width: 60.0625em) {
+  .md-sidebar--primary {
+    position: sticky;
+    top: var(--wk-header-h);
+    align-self: flex-start;
+    height: calc(100vh - var(--wk-header-h));
+    overflow: hidden;
+    transform: none !important;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .md-overlay { display: none; }
+}
+
+@media screen and (max-width: 60em) {
+  .md-content__inner { padding: 1.35rem 1rem 3rem; }
+  .md-typeset h1 { font-size: 1.8rem; }
+  .md-sidebar--primary { background: var(--wk-surface); }
+}

@@ -1,0 +1,6285 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="个人知识库与技术文档中心，覆盖 AUTOSAR、嵌入式、编程、人工智能与计算机科学" name="description"/>
+<link href="https://wk.likui.info/1000-questions/autosar/rte-events-runnable-scheduling-ioc/" rel="canonical"/>
+<link href="../../../feed_rss_created.xml" rel="alternate" title="RSS 订阅" type="application/rss+xml"/>
+<link href="../../../feed_rss_updated.xml" rel="alternate" title="已更新内容的 RSS 订阅" type="application/rss+xml"/>
+<link href="../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.8.0" name="generator"/>
+<title>AUTOSAR 1000 问｜RTE Event、Runnable 调度与跨核 IOC 实战 - 知识 Wiki</title>
+<link href="../../../assets/stylesheets/main.57a0d79d.min.css" rel="stylesheet"/>
+<link href="../../../assets/stylesheets/palette.fb2fffe2.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../css/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="custom" data-md-color-primary="custom" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#autosar-1000-rte-eventrunnable-ioc">
+          跳转至
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="页眉" class="md-header__inner md-grid">
+<a aria-label="知识 Wiki" class="md-header__button md-logo" data-md-component="logo" href="../../.." title="知识 Wiki">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            知识 Wiki
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              AUTOSAR 1000 问｜RTE Event、Runnable 调度与跨核 IOC 实战
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="切换到深色模式" class="md-option" data-md-color-accent="custom" data-md-color-media="(prefers-color-scheme: light)" data-md-color-primary="custom" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="切换到深色模式">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+</label>
+<input aria-label="切换到浅色模式" class="md-option" data-md-color-accent="custom" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-primary="custom" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="切换到浅色模式">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="搜索" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="搜索" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="查找" class="md-search__options">
+<a aria-label="分享" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="分享">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="清空当前内容" class="md-search__icon md-icon" tabindex="-1" title="清空当前内容" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ilikui/wiki" title="前往仓库">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    ilikui/wiki
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="导航栏" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="知识 Wiki" class="md-nav__button md-logo" data-md-component="logo" href="../../.." title="知识 Wiki">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    知识 Wiki
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/ilikui/wiki" title="前往仓库">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    ilikui/wiki
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../..">
+<span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/">
+<span class="md-ellipsis">
+    
+  
+    知识体系
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    知识体系
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/embedded/">
+<span class="md-ellipsis">
+    
+  
+    嵌入式
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/c-language/">
+<span class="md-ellipsis">
+    
+  
+    C 语言
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/ai/">
+<span class="md-ellipsis">
+    
+  
+    AI 与大模型
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/math/">
+<span class="md-ellipsis">
+    
+  
+    考研数学
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/probability/">
+<span class="md-ellipsis">
+    
+  
+    概率论与数理统计
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/soft-exam/">
+<span class="md-ellipsis">
+    
+  
+    软考与系统架构
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/history/">
+<span class="md-ellipsis">
+    
+  
+    历史
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/child-education/">
+<span class="md-ellipsis">
+    
+  
+    儿童教育
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/matlab/">
+<span class="md-ellipsis">
+    
+  
+    MATLAB / Simulink
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/electrical/">
+<span class="md-ellipsis">
+    
+  
+    电气工程
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/electrical-overview/">
+<span class="md-ellipsis">
+    
+  
+    电气工程学习入口
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../ppt/matlab/">
+<span class="md-ellipsis">
+    
+  
+    演示文稿
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    AUTOSAR
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/">
+<span class="md-ellipsis">
+    
+  
+    笔记库总览
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/HELP/">
+<span class="md-ellipsis">
+    
+  
+    使用指南
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    AP
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    AP
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/">
+<span class="md-ellipsis">
+    
+  
+    EXP
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_1" id="__nav_3_4_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    EXP
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/ARAComAPI/">
+<span class="md-ellipsis">
+    
+  
+    ara::com API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/ARARustApplications/">
+<span class="md-ellipsis">
+    
+  
+    ARA Applications in Rust
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/AutomotiveAPI/">
+<span class="md-ellipsis">
+    
+  
+    Automotive API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/IdentityAndAccessManagement/">
+<span class="md-ellipsis">
+    
+  
+    Identity and Access Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/InterfacesGuidelines/">
+<span class="md-ellipsis">
+    
+  
+    Guidelines for using Adaptive Platform interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/IPsecImplementationGuidelines/">
+<span class="md-ellipsis">
+    
+  
+    IPsec Implementation Guidelines
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/MACsec/">
+<span class="md-ellipsis">
+    
+  
+    MACsec and MKA Protocols implementation and configuration guidelines
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/ParallelProcessingGuidelines/">
+<span class="md-ellipsis">
+    
+  
+    Design guidelines for using parallel processing technologies on Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/PlatformDesign/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Design
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/SafeHardwareAccelerationAPI/">
+<span class="md-ellipsis">
+    
+  
+    Safe API for hardware accelerators
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/SensorInterfaces/">
+<span class="md-ellipsis">
+    
+  
+    Sensor Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/SOVD/">
+<span class="md-ellipsis">
+    
+  
+    Service-Oriented Vehicle Diagnostics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/EXP/SWArchitecture/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Software Architecture
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/MOD/">
+<span class="md-ellipsis">
+    
+  
+    MOD
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_2" id="__nav_3_4_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_2_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    MOD
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/MOD/GeneralBlueprints/">
+<span class="md-ellipsis">
+    
+  
+    Collection of blueprints for AUTOSAR Adaptive Platform M1 models
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/MOD/MachineConfigurationParameters/">
+<span class="md-ellipsis">
+    
+  
+    Machine Configuration Parameters
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/MOD/SpecificationsARXML/">
+<span class="md-ellipsis">
+    
+  
+    Specifications in ARXML format
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/">
+<span class="md-ellipsis">
+    
+  
+    RS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_3" id="__nav_3_4_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_3_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    RS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/AutomatedDrivingInterfaces/">
+<span class="md-ellipsis">
+    
+  
+    Automated Driving Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/AutomotiveAPIGateway/">
+<span class="md-ellipsis">
+    
+  
+    Automotive API Gateway
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/CommunicationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Communication Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/Cryptography/">
+<span class="md-ellipsis">
+    
+  
+    Cryptography
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/ExecutionManagement/">
+<span class="md-ellipsis">
+    
+  
+    Execution Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/General/">
+<span class="md-ellipsis">
+    
+  
+    General Requirements specific to Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/HWTestManager/">
+<span class="md-ellipsis">
+    
+  
+    HWTestManager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/OperatingSystemInterface/">
+<span class="md-ellipsis">
+    
+  
+    Operating System Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/Persistency/">
+<span class="md-ellipsis">
+    
+  
+    Persistency
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/PlatformHealthManagement/">
+<span class="md-ellipsis">
+    
+  
+    Platform Health Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/SafeHardwareAcceleration/">
+<span class="md-ellipsis">
+    
+  
+    Safe Hardware Acceleration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/StateManagement/">
+<span class="md-ellipsis">
+    
+  
+    Requirements of State Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/UpdateAndConfigurationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Update and Configuration Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/RS/VehicleUpdateAndConfigurationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle Update and Configuration Management
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SRC/">
+<span class="md-ellipsis">
+    
+  
+    SRC
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_4" id="__nav_3_4_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    SRC
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SRC/ARAHeaderFiles/">
+<span class="md-ellipsis">
+    
+  
+    Source of Adaptive Platform ARAHeaderFiles
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/">
+<span class="md-ellipsis">
+    
+  
+    SWS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_5" id="__nav_3_4_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_5_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    SWS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/AutomotiveAPIGateway/">
+<span class="md-ellipsis">
+    
+  
+    Automotive API Gateway
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/CommunicationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Communication Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/Core/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Core
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/Cryptography/">
+<span class="md-ellipsis">
+    
+  
+    Cryptography
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/DemandsConstraintsBaseSW/">
+<span class="md-ellipsis">
+    
+  
+    Demands and Constraints on Base Software
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/Diagnostics/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/ExecutionManagement/">
+<span class="md-ellipsis">
+    
+  
+    Execution Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/Firewall/">
+<span class="md-ellipsis">
+    
+  
+    Firewall for Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/General/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/IntrusionDetectionSystemManager/">
+<span class="md-ellipsis">
+    
+  
+    Intrusion Detection System Manager for Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/LanguageBindingForModeledAPdatatypes/">
+<span class="md-ellipsis">
+    
+  
+    Language Binding for modeled AP data types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/LogAndTrace/">
+<span class="md-ellipsis">
+    
+  
+    Log and Trace
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/NetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    Network Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/OperatingSystemInterface/">
+<span class="md-ellipsis">
+    
+  
+    Operating System Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/Persistency/">
+<span class="md-ellipsis">
+    
+  
+    Persistency
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/PlatformHealthManagement/">
+<span class="md-ellipsis">
+    
+  
+    Platform Health Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/PlatformTypes/">
+<span class="md-ellipsis">
+    
+  
+    Platform Types for Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/RawDataStream/">
+<span class="md-ellipsis">
+    
+  
+    Raw Data Stream
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/RemotePersistency/">
+<span class="md-ellipsis">
+    
+  
+    Remote Persistency
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/SafeHardwareAcceleration/">
+<span class="md-ellipsis">
+    
+  
+    Safe Hardware Acceleration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/SensorInterfaces/">
+<span class="md-ellipsis">
+    
+  
+    Sensor Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/StateManagement/">
+<span class="md-ellipsis">
+    
+  
+    State Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/TimeSynchronization/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/UpdateAndConfigurationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Update and Configuration Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/SWS/VehicleUpdateAndConfigurationManagement/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle Update and Configuration Management
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TPS/">
+<span class="md-ellipsis">
+    
+  
+    TPS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_6" id="__nav_3_4_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_6_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TPS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TPS/MachineConfiguration/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Machine Configuration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TPS/ManifestSpecification/">
+<span class="md-ellipsis">
+    
+  
+    Manifest
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TPS/TimingExtensions/">
+<span class="md-ellipsis">
+    
+  
+    Timing Extensions for Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_4_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/">
+<span class="md-ellipsis">
+    
+  
+    TR
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_4_7" id="__nav_3_4_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_4_7_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_4_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TR
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/ChangeDocumentation/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Change Documentation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/DDSSecurityIntegration/">
+<span class="md-ellipsis">
+    
+  
+    Integration of DDS Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/Methodology/">
+<span class="md-ellipsis">
+    
+  
+    Methodology for Adaptive Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/OperatingSystemTracingInterface/">
+<span class="md-ellipsis">
+    
+  
+    Operating System Tracing Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/ReleaseOverview/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive Platform Release Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/AP/TR/VSSRepresentation/">
+<span class="md-ellipsis">
+    
+  
+    VSS Representation
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    CP
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    CP
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/ASWS/">
+<span class="md-ellipsis">
+    
+  
+    ASWS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_1" id="__nav_3_5_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    ASWS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/ASWS/TransformerGeneral/">
+<span class="md-ellipsis">
+    
+  
+    Transformers
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/">
+<span class="md-ellipsis">
+    
+  
+    EXP
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_2" id="__nav_3_5_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_2_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    EXP
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIADASAndVMC/">
+<span class="md-ellipsis">
+    
+  
+    Application Interface of AD/ADAS vehicle motion control
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIBodyAndComfort/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces of the Body and Comfort Domain
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIChassis/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces of the Chassis Domain
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIHMIMultimediaAndTelematics/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces of the HMI, Multimedia and Telematics Domain
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIOccupantAndPedestrianSafety/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces of Occupant and Pedestrian Safety Systems Domain
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIPowertrain/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces of the Powertrain Engine Domain
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/AIUserGuide/">
+<span class="md-ellipsis">
+    
+  
+    Application Interfaces User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/ApplicationLevelErrorHandling/">
+<span class="md-ellipsis">
+    
+  
+    Error Handling on Application Level
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/ARTI/">
+<span class="md-ellipsis">
+    
+  
+    Explanatory Document for Usage of AUTOSAR Run-Time Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/BSWDistributionGuide/">
+<span class="md-ellipsis">
+    
+  
+    Guide to BSW Distribution
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/CDDDesignAndIntegrationGuideline/">
+<span class="md-ellipsis">
+    
+  
+    Complex Driver design and integration guideline
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/ErrorDescription/">
+<span class="md-ellipsis">
+    
+  
+    Description of the AUTOSAR standard errors
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/FirmwareOverTheAir/">
+<span class="md-ellipsis">
+    
+  
+    Firmware Over-The-Air
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/FunctionalSafetyMeasures/">
+<span class="md-ellipsis">
+    
+  
+    Overview of Functional Safety Measures in AUTOSAR
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/LayeredSoftwareArchitecture/">
+<span class="md-ellipsis">
+    
+  
+    Layered Software Architecture
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/MacroEncapsulationofInterpolationCalls/">
+<span class="md-ellipsis">
+    
+  
+    Macro Encapsulation of Interpolation Calls
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/ModelingShowCases/">
+<span class="md-ellipsis">
+    
+  
+    Modeling Show Cases Examples
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/ModeManagementGuide/">
+<span class="md-ellipsis">
+    
+  
+    Guide to Mode Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/NVDataHandling/">
+<span class="md-ellipsis">
+    
+  
+    NV Data Handling Guideline
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/SafetyUseCase/">
+<span class="md-ellipsis">
+    
+  
+    Safety Use Case Example
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/SwClusterDesignAndIntegrationGuideline/">
+<span class="md-ellipsis">
+    
+  
+    Software Cluster Design And Integration Guideline for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/EXP/UtilizationOfCryptoServices/">
+<span class="md-ellipsis">
+    
+  
+    Utilization of Crypto Services
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/">
+<span class="md-ellipsis">
+    
+  
+    MOD
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_3" id="__nav_3_5_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_3_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    MOD
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/AISpecification/">
+<span class="md-ellipsis">
+    
+  
+    XML Specification of Application Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/AISpecificationExamples/">
+<span class="md-ellipsis">
+    
+  
+    Application Interface Examples
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/BSWUMLModel/">
+<span class="md-ellipsis">
+    
+  
+    Basic Software UML Model
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/ECUConfigurationParameters/">
+<span class="md-ellipsis">
+    
+  
+    ECU Configuration Parameters (XML)
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/MOD/SpecificationsARXML/">
+<span class="md-ellipsis">
+    
+  
+    Specifications in ARXML format
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/">
+<span class="md-ellipsis">
+    
+  
+    RS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_4" id="__nav_3_5_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    RS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/ADCDriver/">
+<span class="md-ellipsis">
+    
+  
+    ADC Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/BSWGeneral/">
+<span class="md-ellipsis">
+    
+  
+    General Requirements on Basic Software Modules
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/BusMirroring/">
+<span class="md-ellipsis">
+    
+  
+    Bus Mirroring
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/CAN/">
+<span class="md-ellipsis">
+    
+  
+    CAN
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/ChargingManager/">
+<span class="md-ellipsis">
+    
+  
+    Charging Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/ChineseV2XCommunication/">
+<span class="md-ellipsis">
+    
+  
+    Chinese Vehicle-2-X Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/COM/">
+<span class="md-ellipsis">
+    
+  
+    Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/CoreTest/">
+<span class="md-ellipsis">
+    
+  
+    Core Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/CryptoStack/">
+<span class="md-ellipsis">
+    
+  
+    Crypto Stack
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/DebugTraceProfile/">
+<span class="md-ellipsis">
+    
+  
+    Debugging, Tracing and Profiling support of AUTOSAR Components
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/DIODriver/">
+<span class="md-ellipsis">
+    
+  
+    DIO Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/Ethernet/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet Support in AUTOSAR
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/FirmwareOverTheAir/">
+<span class="md-ellipsis">
+    
+  
+    Firmware Over-The-Air
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/FlashTest/">
+<span class="md-ellipsis">
+    
+  
+    Flash Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/FlexRay/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/FunctionInhibitionManager/">
+<span class="md-ellipsis">
+    
+  
+    Function Inhibition Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/Gateway/">
+<span class="md-ellipsis">
+    
+  
+    Gateway
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/GPTDriver/">
+<span class="md-ellipsis">
+    
+  
+    GPT Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/HWTestManager/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Test Manager on start up and shutdown
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/I2CDriver/">
+<span class="md-ellipsis">
+    
+  
+    I2C Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/ICUDriver/">
+<span class="md-ellipsis">
+    
+  
+    ICU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/IOHWAbstraction/">
+<span class="md-ellipsis">
+    
+  
+    I/O Hardware Abstraction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/IPDUMultiplexer/">
+<span class="md-ellipsis">
+    
+  
+    I-PDU Multiplexer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/Libraries/">
+<span class="md-ellipsis">
+    
+  
+    Libraries
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/LIN/">
+<span class="md-ellipsis">
+    
+  
+    LIN
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/MCUDriver/">
+<span class="md-ellipsis">
+    
+  
+    MCU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/MemoryHWAbstractionLayer/">
+<span class="md-ellipsis">
+    
+  
+    Memory Hardware Abstraction Layer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/MemoryServices/">
+<span class="md-ellipsis">
+    
+  
+    Memory Services
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/ModeManagement/">
+<span class="md-ellipsis">
+    
+  
+    Mode Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/OCUDriver/">
+<span class="md-ellipsis">
+    
+  
+    OCU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/OS/">
+<span class="md-ellipsis">
+    
+  
+    Operating System
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/PortDriver/">
+<span class="md-ellipsis">
+    
+  
+    Port Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/PWMDriver/">
+<span class="md-ellipsis">
+    
+  
+    PWM Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/RAMTest/">
+<span class="md-ellipsis">
+    
+  
+    RAM Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/RTE/">
+<span class="md-ellipsis">
+    
+  
+    Runtime Environment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/SAEJ1939/">
+<span class="md-ellipsis">
+    
+  
+    BSW Modules for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/SoftwareClusterConnection/">
+<span class="md-ellipsis">
+    
+  
+    Software Cluster Connection module
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/SPALGeneral/">
+<span class="md-ellipsis">
+    
+  
+    General Requirements on SPAL
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/SPIHandlerDriver/">
+<span class="md-ellipsis">
+    
+  
+    SPI Handler/Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/SWCModeling/">
+<span class="md-ellipsis">
+    
+  
+    SW-C and System Modeling
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/TimeService/">
+<span class="md-ellipsis">
+    
+  
+    Time Service
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/Transformer/">
+<span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/V2XCommunication/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/WatchdogDriver/">
+<span class="md-ellipsis">
+    
+  
+    Watchdog Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/RS/XCP/">
+<span class="md-ellipsis">
+    
+  
+    Module XCP
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/">
+<span class="md-ellipsis">
+    
+  
+    SWS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_5" id="__nav_3_5_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_5_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    SWS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ADCDriver/">
+<span class="md-ellipsis">
+    
+  
+    ADC Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ARTI/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Run-Time Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BFXLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Bit Handling Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BSWGeneral/">
+<span class="md-ellipsis">
+    
+  
+    Basic Software Modules
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BSWModeManager/">
+<span class="md-ellipsis">
+    
+  
+    Basic Software Mode Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BSWMulticoreLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Basic Software Multicore Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BulkNvDataManager/">
+<span class="md-ellipsis">
+    
+  
+    Bulk NvData Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/BusMirroring/">
+<span class="md-ellipsis">
+    
+  
+    Bus Mirroring
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANDriver/">
+<span class="md-ellipsis">
+    
+  
+    CAN Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANInterface/">
+<span class="md-ellipsis">
+    
+  
+    CAN Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANNetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    CAN Network Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANStateManager/">
+<span class="md-ellipsis">
+    
+  
+    CAN State Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    CAN Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANTransportLayer/">
+<span class="md-ellipsis">
+    
+  
+    CAN Transport Layer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANXLDriver/">
+<span class="md-ellipsis">
+    
+  
+    Specification for CAN XL Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CANXLTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    CAN XL Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CellularV2XDriver/">
+<span class="md-ellipsis">
+    
+  
+    Cellular Vehicle-2-X Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ChineseV2XManagement/">
+<span class="md-ellipsis">
+    
+  
+    Chinese Vehicle-2-X Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ChineseV2XSecurity/">
+<span class="md-ellipsis">
+    
+  
+    Chinese Vehicle-2-X Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/COM/">
+<span class="md-ellipsis">
+    
+  
+    Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/COMBasedTransformer/">
+<span class="md-ellipsis">
+    
+  
+    COM Based Transformer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/COMManager/">
+<span class="md-ellipsis">
+    
+  
+    Communication Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CommunicationStackTypes/">
+<span class="md-ellipsis">
+    
+  
+    Communication Stack Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CoreTest/">
+<span class="md-ellipsis">
+    
+  
+    Core Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CRCLibrary/">
+<span class="md-ellipsis">
+    
+  
+    CRC Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CryptoDriver/">
+<span class="md-ellipsis">
+    
+  
+    Crypto Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CryptoInterface/">
+<span class="md-ellipsis">
+    
+  
+    Crypto Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/CryptoServiceManager/">
+<span class="md-ellipsis">
+    
+  
+    Crypto Service Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DataDistributionService/">
+<span class="md-ellipsis">
+    
+  
+    Data Distribution Service for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DataDistributionServiceTransformer/">
+<span class="md-ellipsis">
+    
+  
+    Data Distribution Service Transformer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DefaultErrorTracer/">
+<span class="md-ellipsis">
+    
+  
+    Default Error Tracer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DiagnosticCommunicationManager/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostic Communication Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DiagnosticEventManager/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostic Event Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DiagnosticLogAndTrace/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostic Log and Trace
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DiagnosticOverIP/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostic over IP
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/DIODriver/">
+<span class="md-ellipsis">
+    
+  
+    DIO Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/E2ELibrary/">
+<span class="md-ellipsis">
+    
+  
+    SW-C End-to-End Communication Protection Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/E2ETransformer/">
+<span class="md-ellipsis">
+    
+  
+    Module E2E Transformer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ECUStateManager/">
+<span class="md-ellipsis">
+    
+  
+    ECU State Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EEPROMAbstraction/">
+<span class="md-ellipsis">
+    
+  
+    EEPROM Abstraction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EFXLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Extended Fixed Point Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EthernetDriver/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EthernetInterface/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EthernetStateManager/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet State Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EthernetSwitchDriver/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet Switch Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/EthernetTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    Ethernet Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/Firewall/">
+<span class="md-ellipsis">
+    
+  
+    Firewall for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlashEEPROMEmulation/">
+<span class="md-ellipsis">
+    
+  
+    Flash EEPROM Emulation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlashTest/">
+<span class="md-ellipsis">
+    
+  
+    Flash Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayDriver/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayInterface/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayISOTransportLayer/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay ISO Transport Layer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayNetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay Network Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayStateManager/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay State Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FlexRayTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    FlexRay Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/FunctionInhibitionManager/">
+<span class="md-ellipsis">
+    
+  
+    Function Inhibition Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/GPTDriver/">
+<span class="md-ellipsis">
+    
+  
+    GPT Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/HWTestManager/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Test Manager on start up and shutdown
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/I2CDriver/">
+<span class="md-ellipsis">
+    
+  
+    I2C Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ICUDriver/">
+<span class="md-ellipsis">
+    
+  
+    ICU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IEEE1722TransportLayer/">
+<span class="md-ellipsis">
+    
+  
+    IEEE1722 Transport Protocol Module
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IFLLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Floating Point Interpolation Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IFXLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Fixed Point Interpolation Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IntrusionDetectionSystemManager/">
+<span class="md-ellipsis">
+    
+  
+    Intrusion Detection System Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IOHardwareAbstraction/">
+<span class="md-ellipsis">
+    
+  
+    I/O Hardware Abstraction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/IPDUMultiplexer/">
+<span class="md-ellipsis">
+    
+  
+    I-PDU Multiplexer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ISO15118Charging/">
+<span class="md-ellipsis">
+    
+  
+    ISO15118 Charging
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/KeyManager/">
+<span class="md-ellipsis">
+    
+  
+    Key Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/LINDriver/">
+<span class="md-ellipsis">
+    
+  
+    LIN Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/LINInterface/">
+<span class="md-ellipsis">
+    
+  
+    LIN Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/LINStateManager/">
+<span class="md-ellipsis">
+    
+  
+    LIN State Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/LINTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    LIN Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/LSduRouter/">
+<span class="md-ellipsis">
+    
+  
+    Linklayer Sdu Routing Module
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MACsecKeyAgreement/">
+<span class="md-ellipsis">
+    
+  
+    MACsec Key Agreement
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MCUDriver/">
+<span class="md-ellipsis">
+    
+  
+    MCU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MemoryAbstractionInterface/">
+<span class="md-ellipsis">
+    
+  
+    Memory Abstraction Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MemoryAccess/">
+<span class="md-ellipsis">
+    
+  
+    Memory Access
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MemoryDriver/">
+<span class="md-ellipsis">
+    
+  
+    Memory Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MemoryMapping/">
+<span class="md-ellipsis">
+    
+  
+    Memory Mapping
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MFLLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Floating Point Math Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MFXLibrary/">
+<span class="md-ellipsis">
+    
+  
+    Fixed Point Math Library
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/MSFLibrary/">
+<span class="md-ellipsis">
+    
+  
+    MSFLibrary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/NetworkManagementInterface/">
+<span class="md-ellipsis">
+    
+  
+    Network Management Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/NVRAMManager/">
+<span class="md-ellipsis">
+    
+  
+    NVRAM Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/OCUDriver/">
+<span class="md-ellipsis">
+    
+  
+    OCU Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/OS/">
+<span class="md-ellipsis">
+    
+  
+    Operating System
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/PDURouter/">
+<span class="md-ellipsis">
+    
+  
+    PDU Router
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/PlatformTypes/">
+<span class="md-ellipsis">
+    
+  
+    Platform Types for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/PortDriver/">
+<span class="md-ellipsis">
+    
+  
+    Port Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/PWMDriver/">
+<span class="md-ellipsis">
+    
+  
+    PWM Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/RAMTest/">
+<span class="md-ellipsis">
+    
+  
+    RAM Test
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/RTE/">
+<span class="md-ellipsis">
+    
+  
+    RTE Software
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SAEJ1939DiagnosticCommunicationManager/">
+<span class="md-ellipsis">
+    
+  
+    a Diagnostic Communication Manager for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SAEJ1939FunctionalSafetyCommProtocol/">
+<span class="md-ellipsis">
+    
+  
+    a Functional Safety Communication Protocol Handler for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SAEJ1939NetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    Network Management for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SAEJ1939RequestManager/">
+<span class="md-ellipsis">
+    
+  
+    a Request Manager for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SAEJ1939TransportLayer/">
+<span class="md-ellipsis">
+    
+  
+    a Transport Layer for SAE J1939
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SecureOnboardCommunication/">
+<span class="md-ellipsis">
+    
+  
+    Secure Onboard Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/ServiceDiscovery/">
+<span class="md-ellipsis">
+    
+  
+    Service Discovery
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SocketAdaptor/">
+<span class="md-ellipsis">
+    
+  
+    Socket Adaptor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SoftwareClusterConnection/">
+<span class="md-ellipsis">
+    
+  
+    Software Cluster Connection module
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SOMEIPTransformer/">
+<span class="md-ellipsis">
+    
+  
+    SOME/IP Transformer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SOMEIPTransportProtocol/">
+<span class="md-ellipsis">
+    
+  
+    Specification on SOME/IP Transport Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SPIHandlerDriver/">
+<span class="md-ellipsis">
+    
+  
+    SPI Handler/Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/StandardTypes/">
+<span class="md-ellipsis">
+    
+  
+    Standard Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/SynchronizedTimeBaseManager/">
+<span class="md-ellipsis">
+    
+  
+    Synchronized Time-Base Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TcpIp/">
+<span class="md-ellipsis">
+    
+  
+    TCP/IP Stack
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TimeService/">
+<span class="md-ellipsis">
+    
+  
+    Time Service
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TimeSyncOverCAN/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization over CAN
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TimeSyncOverEthernet/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization over Ethernet
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TimeSyncOverFlexRay/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization over FlexRay
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/TransformerGeneral/">
+<span class="md-ellipsis">
+    
+  
+    Transformers
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/UDPNetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    UDP Network Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/V2XBasicTransport/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Basic Transport
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/V2XDataManager/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Data Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/V2XFacilities/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Facilities
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/V2XManagement/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/VDPCMRemote/">
+<span class="md-ellipsis">
+    
+  
+    VDP Communication Module Remote
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/WatchdogDriver/">
+<span class="md-ellipsis">
+    
+  
+    Watchdog Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/WatchdogInterface/">
+<span class="md-ellipsis">
+    
+  
+    Watchdog Interface
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/WatchdogManager/">
+<span class="md-ellipsis">
+    
+  
+    Watchdog Manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/WirelessEthernetDriver/">
+<span class="md-ellipsis">
+    
+  
+    Wireless Ethernet Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/WirelessEthernetTransceiverDriver/">
+<span class="md-ellipsis">
+    
+  
+    Wireless Ethernet Transceiver Driver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/SWS/XCP/">
+<span class="md-ellipsis">
+    
+  
+    Module XCP
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/">
+<span class="md-ellipsis">
+    
+  
+    TPS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_6" id="__nav_3_5_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_6_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TPS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/BSWModuleDescriptionTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Basic Software Module Description Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/DiagnosticExtractTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostic Extract Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/ECUConfiguration/">
+<span class="md-ellipsis">
+    
+  
+    ECU Configuration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/ECUResourceTemplate/">
+<span class="md-ellipsis">
+    
+  
+    ECU Resource Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/SoftwareComponentTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Software Component Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/SystemTemplate/">
+<span class="md-ellipsis">
+    
+  
+    System Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TPS/TimingExtensions/">
+<span class="md-ellipsis">
+    
+  
+    Timing Extensions for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_5_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/">
+<span class="md-ellipsis">
+    
+  
+    TR
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_5_7" id="__nav_3_5_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_5_7_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_5_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TR
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/AIDesignPatternsCatalogue/">
+<span class="md-ellipsis">
+    
+  
+    Application Design Patterns Catalogue
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/AIMeasurementCalibrationDiagnostics/">
+<span class="md-ellipsis">
+    
+  
+    Modeling and Naming Aspects for Documentation, Measurement, and Calibration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/BSWUMLModelModelingGuide/">
+<span class="md-ellipsis">
+    
+  
+    Modeling Guidelines of Basic Software EA UML Model
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/ChangeDocumentation/">
+<span class="md-ellipsis">
+    
+  
+    Classic Platform Change Documentation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/GeneralBlueprintsSupplement/">
+<span class="md-ellipsis">
+    
+  
+    Supplementary material of general blueprints for AUTOSAR
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/HWTestManagementIntegrationGuide/">
+<span class="md-ellipsis">
+    
+  
+    Specification and Integration of Hardware Test Management at start up and shutdown
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/Methodology/">
+<span class="md-ellipsis">
+    
+  
+    Methodology for Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/ModelingShowCases/">
+<span class="md-ellipsis">
+    
+  
+    Modeling Show Cases Report
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/ReleaseOverview/">
+<span class="md-ellipsis">
+    
+  
+    Classic Platform Release Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/SWCModelingGuide/">
+<span class="md-ellipsis">
+    
+  
+    SW-C and System Modeling Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/VFB/">
+<span class="md-ellipsis">
+    
+  
+    Virtual Functional Bus
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/CP/TR/WorkflowExample/">
+<span class="md-ellipsis">
+    
+  
+    Supplementary Material of Workflow Example
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    FO
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_3_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    FO
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/ASWS/">
+<span class="md-ellipsis">
+    
+  
+    ASWS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_1" id="__nav_3_6_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    ASWS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/ASWS/HealthMonitoring/">
+<span class="md-ellipsis">
+    
+  
+    Health Monitoring
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/">
+<span class="md-ellipsis">
+    
+  
+    EXP
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_2" id="__nav_3_6_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_2_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    EXP
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/DiagramSource/">
+<span class="md-ellipsis">
+    
+  
+    Diagram Source
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/QoSPoliciesInTheScopeOfSOMEIP/">
+<span class="md-ellipsis">
+    
+  
+    QoS Policies in the scope of SOME/IP
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/SafetyOverview/">
+<span class="md-ellipsis">
+    
+  
+    Safety Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/SecurityOverview/">
+<span class="md-ellipsis">
+    
+  
+    Security Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/SWArchitecturalDecisions/">
+<span class="md-ellipsis">
+    
+  
+    Adaptive and Classic Platform Software Architectural Decisions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/SystemHealthMonitoring/">
+<span class="md-ellipsis">
+    
+  
+    System Health Monitoring
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/EXP/TimeSensitiveNetworkFeatures/">
+<span class="md-ellipsis">
+    
+  
+    Time Sensitive Network features
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MMOD/">
+<span class="md-ellipsis">
+    
+  
+    MMOD
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_3" id="__nav_3_6_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_3_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    MMOD
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MMOD/MetaModel/">
+<span class="md-ellipsis">
+    
+  
+    Meta Model
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MMOD/XMLSchema/">
+<span class="md-ellipsis">
+    
+  
+    Meta Model-generated XML Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/">
+<span class="md-ellipsis">
+    
+  
+    MOD
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_4" id="__nav_3_6_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    MOD
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/Features/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Feature Model
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/GeneralBlueprints/">
+<span class="md-ellipsis">
+    
+  
+    Collection of blueprints for AUTOSAR M1 models
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/GeneralDefinitions/">
+<span class="md-ellipsis">
+    
+  
+    Standardized M1 Models used for the Definition of AUTOSAR
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/MiscSupport/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Miscellaneous Support Files
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/MOD/SpecificationsARXML/">
+<span class="md-ellipsis">
+    
+  
+    Specifications in ARXML format
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/">
+<span class="md-ellipsis">
+    
+  
+    PRS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_5" id="__nav_3_6_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_5_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    PRS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/DDSCommunicationProtocol/">
+<span class="md-ellipsis">
+    
+  
+    DDS Service Communication Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/DDSServiceDiscoveryProtocol/">
+<span class="md-ellipsis">
+    
+  
+    DDS Service Discovery Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/E2EProtocol/">
+<span class="md-ellipsis">
+    
+  
+    E2E Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/IntrusionDetectionSystem/">
+<span class="md-ellipsis">
+    
+  
+    Intrusion Detection System Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/LogAndTraceProtocol/">
+<span class="md-ellipsis">
+    
+  
+    Log and Trace Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/NetworkManagementProtocol/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Network Management Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/SecOCProtocol/">
+<span class="md-ellipsis">
+    
+  
+    Secure Onboard Communication Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/SOMEIPProtocol/">
+<span class="md-ellipsis">
+    
+  
+    SOME/IP Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/SOMEIPServiceDiscoveryProtocol/">
+<span class="md-ellipsis">
+    
+  
+    SOME/IP Service Discovery Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/TimeSyncOverCANProtocol/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization over CAN Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/TimeSyncOverEthernetProtocol/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization over Ethernet Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/V2XRemoteAccessLayer/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle-2-X Remote Access Layer Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/PRS/VDP/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle Data Protocol Specification
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/">
+<span class="md-ellipsis">
+    
+  
+    RS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_6" id="__nav_3_6_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_6_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    RS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/DataDistributionService/">
+<span class="md-ellipsis">
+    
+  
+    Data Distribution Service
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/DebugTraceProfile/">
+<span class="md-ellipsis">
+    
+  
+    Debugging, Tracing and Profiling support of AUTOSAR Components
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/Diagnostics/">
+<span class="md-ellipsis">
+    
+  
+    Diagnostics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/E2E/">
+<span class="md-ellipsis">
+    
+  
+    E2E
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/Firewall/">
+<span class="md-ellipsis">
+    
+  
+    Firewall
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/HealthMonitoring/">
+<span class="md-ellipsis">
+    
+  
+    Health Monitoring
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/IEEE1722/">
+<span class="md-ellipsis">
+    
+  
+    IEEE1722
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/IntrusionDetectionSystem/">
+<span class="md-ellipsis">
+    
+  
+    Intrusion Detection System
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/IPsecProtocol/">
+<span class="md-ellipsis">
+    
+  
+    IPsec Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/LogAndTrace/">
+<span class="md-ellipsis">
+    
+  
+    Log and Trace
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/MACsec/">
+<span class="md-ellipsis">
+    
+  
+    MACsec
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/NetworkManagement/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Network Management
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/ProjectObjectives/">
+<span class="md-ellipsis">
+    
+  
+    Project Objectives
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/Safety/">
+<span class="md-ellipsis">
+    
+  
+    Safety Requirements for AUTOSAR Adaptive Platform and AUTOSAR Classic Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/SecureOnboardCommunication/">
+<span class="md-ellipsis">
+    
+  
+    Secure Onboard Communication
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/SOMEIPProtocol/">
+<span class="md-ellipsis">
+    
+  
+    SOME/IP Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/SOMEIPServiceDiscoveryProtocol/">
+<span class="md-ellipsis">
+    
+  
+    SOME/IP Service Discovery Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/TimeSync/">
+<span class="md-ellipsis">
+    
+  
+    Time Synchronization
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/RS/VDP/">
+<span class="md-ellipsis">
+    
+  
+    Vehicle Data Protocol
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/">
+<span class="md-ellipsis">
+    
+  
+    TPS
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_7" id="__nav_3_6_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_7_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TPS
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/AbstractPlatformSpecification/">
+<span class="md-ellipsis">
+    
+  
+    Abstract Platform
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/ARXMLSerializationRules/">
+<span class="md-ellipsis">
+    
+  
+    ARXML Serialization Rules
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/FeatureModelExchangeFormat/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Feature Model Exchange Format
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/GenericStructureTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Generic Structure Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/LogAndTrace/">
+<span class="md-ellipsis">
+    
+  
+    Log And Trace Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/SecurityExtractTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Security Extract Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/StandardizationTemplate/">
+<span class="md-ellipsis">
+    
+  
+    Standardization Template
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TPS/XMLSchemaProductionRules/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR XML Schema Production Rules
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3_6_8" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/">
+<span class="md-ellipsis">
+    
+  
+    TR
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3_6_8" id="__nav_3_6_8_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_6_8_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_3_6_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    TR
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/AutosarModelConstraints/">
+<span class="md-ellipsis">
+    
+  
+    Collection of constraints on AUTOSAR M1 models
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/ChangeDocumentation/">
+<span class="md-ellipsis">
+    
+  
+    Foundation Change Documentation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/Features/">
+<span class="md-ellipsis">
+    
+  
+    AUTOSAR Features
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/Glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/ListOfKnownIssuesSecureHardwareExtensions/">
+<span class="md-ellipsis">
+    
+  
+    List of known Issues of Secure Hardware Extensions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/ReleaseOverview/">
+<span class="md-ellipsis">
+    
+  
+    Foundation Release Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/SecureHardwareExtensions/">
+<span class="md-ellipsis">
+    
+  
+    Secure Hardware Extensions
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/SecurityEventsSpecification/">
+<span class="md-ellipsis">
+    
+  
+    Security Events Specification
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/TimingAnalysis/">
+<span class="md-ellipsis">
+    
+  
+    Timing Analysis and Design
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../types/autosar/specs/FO/TR/XMLSchemaSupplement/">
+<span class="md-ellipsis">
+    
+  
+    Supplementary material of the AUTOSAR XML Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    计算机科学
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    计算机科学
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E7%9B%AE%E5%BD%95/">
+<span class="md-ellipsis">
+    
+  
+    目录
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E5%BF%85%E5%AD%A6%E5%B7%A5%E5%85%B7/">
+<span class="md-ellipsis">
+    
+  
+    必学工具
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E5%A5%BD%E4%B9%A6%E6%8E%A8%E8%8D%90/">
+<span class="md-ellipsis">
+    
+  
+    好书推荐
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/">
+<span class="md-ellipsis">
+    
+  
+    数学基础
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%95%B0%E5%AD%A6%E8%BF%9B%E9%98%B6/">
+<span class="md-ellipsis">
+    
+  
+    数学进阶
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/">
+<span class="md-ellipsis">
+    
+  
+    编程入门
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E7%94%B5%E5%AD%90%E5%9F%BA%E7%A1%80/">
+<span class="md-ellipsis">
+    
+  
+    电子基础
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
+<span class="md-ellipsis">
+    
+  
+    数据结构与算法
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/">
+<span class="md-ellipsis">
+    
+  
+    软件工程
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/">
+<span class="md-ellipsis">
+    
+  
+    体系结构
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+<span class="md-ellipsis">
+    
+  
+    操作系统
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/">
+<span class="md-ellipsis">
+    
+  
+    并行与分布式系统
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/">
+<span class="md-ellipsis">
+    
+  
+    计算机系统安全
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+<span class="md-ellipsis">
+    
+  
+    计算机网络
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F/">
+<span class="md-ellipsis">
+    
+  
+    数据库系统
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">
+<span class="md-ellipsis">
+    
+  
+    编译原理
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+<span class="md-ellipsis">
+    
+  
+    计算机图形学
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/Web%E5%BC%80%E5%8F%91/">
+<span class="md-ellipsis">
+    
+  
+    Web 开发
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/">
+<span class="md-ellipsis">
+    
+  
+    数据科学
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+<span class="md-ellipsis">
+    
+  
+    人工智能
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+<span class="md-ellipsis">
+    
+  
+    机器学习
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/">
+<span class="md-ellipsis">
+    
+  
+    机器学习系统
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+<span class="md-ellipsis">
+    
+  
+    深度学习
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../cs/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%BF%9B%E9%98%B6/">
+<span class="md-ellipsis">
+    
+  
+    机器学习进阶
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    阅读
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    阅读
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../read/Reading/">
+<span class="md-ellipsis">
+    
+  
+    阅读记录
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../read/Books/">
+<span class="md-ellipsis">
+    
+  
+    书籍索引
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="https://wk.likui.info/graph/">
+<span class="md-ellipsis">
+    
+  
+    知识图谱
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../user-guide/">
+<span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    关于
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../about/about/">
+<span class="md-ellipsis">
+    
+  
+    关于知识库
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../getting-started/">
+<span class="md-ellipsis">
+    
+  
+    快速开始
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    用户手册
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    用户手册
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/installation/">
+<span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/choosing-your-theme/">
+<span class="md-ellipsis">
+    
+  
+    Theme
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/customizing-your-theme/">
+<span class="md-ellipsis">
+    
+  
+    Customizing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/localizing-your-theme/">
+<span class="md-ellipsis">
+    
+  
+    Localizing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/configuration/">
+<span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/cli/">
+<span class="md-ellipsis">
+    
+  
+    Cli
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/deploying-your-docs/">
+<span class="md-ellipsis">
+    
+  
+    Deploying
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../user-guide/writing-your-docs/">
+<span class="md-ellipsis">
+    
+  
+    Writing
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../../dev-guide/">
+<span class="md-ellipsis">
+    
+  
+    开发指南
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_7_5_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    开发指南
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../dev-guide/api/">
+<span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../dev-guide/plugins/">
+<span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../dev-guide/themes/">
+<span class="md-ellipsis">
+    
+  
+    Themes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../dev-guide/translations/">
+<span class="md-ellipsis">
+    
+  
+    Translations
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="目录" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1">
+<span class="md-ellipsis">
+      
+        1. 先区分三个概念
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-rteevent">
+<span class="md-ellipsis">
+      
+        2. 常见 RTEEvent 的含义与检查点
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-timingevent">
+<span class="md-ellipsis">
+      
+        3. TimingEvent：周期配置不等于真实周期
+      
+    </span>
+</a>
+<nav aria-label="3. TimingEvent：周期配置不等于真实周期" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      
+        实测建议
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-datareceivedevent">
+<span class="md-ellipsis">
+      
+        4. DataReceivedEvent：收到数据后为什么没有触发？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-operationinvokedeventclient-server">
+<span class="md-ellipsis">
+      
+        5. OperationInvokedEvent：Client-Server 调用链
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-ioc">
+<span class="md-ellipsis">
+      
+        6. 跨核通信与 IOC：何时出现、怎么排查？
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-runnable">
+<span class="md-ellipsis">
+      
+        7. Runnable 顺序、并发与数据一致性
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8">
+<span class="md-ellipsis">
+      
+        8. 故障定位决策表
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#9">
+<span class="md-ellipsis">
+      
+        9. 验收清单
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#10">
+<span class="md-ellipsis">
+      
+        10. 官方参考
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/ilikui/wiki/edit/master/docs/1000-questions/autosar/rte-events-runnable-scheduling-ioc.md" rel="edit" title="编辑此页">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
+</a>
+<h1 id="autosar-1000-rte-eventrunnable-ioc">AUTOSAR 1000 问｜RTE Event、Runnable 调度与跨核 IOC 实战<a class="headerlink" href="#autosar-1000-rte-eventrunnable-ioc" title="Permanent link">¶</a></h1>
+<blockquote>
+<p>适用范围：AUTOSAR Classic Platform。本文解释通用模型与常见生成路径；具体事件类型、API、调度约束和生成代码以项目采用的 Release、RTE/OS 生成器及供应商实现为准。</p>
+</blockquote>
+<h2 id="1">1. 先区分三个概念<a class="headerlink" href="#1" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>RunnableEntity</strong>：SW-C 内部的执行单元，最终由生成的入口函数实现。</li>
+<li><strong>RTEEvent</strong>：描述什么条件触发 Runnable，例如周期到期、接收数据、服务操作被调用或模式切换。</li>
+<li><strong>OS Task / ISR2</strong>：承载执行的 OS 上下文。Runnable 通常不是独立线程；RTE 根据映射和生成策略把它连接到任务或中断上下文。</li>
+</ul>
+<pre class="mermaid"><code>flowchart TD
+  Model[SW-C InternalBehavior] --&gt; Event[RTEEvent / 触发条件]
+  Event --&gt; Runnable[RunnableEntity]
+  Runnable --&gt; Mapping[RTE 生成与 Runnable-to-Task/ISR 映射]
+  Mapping --&gt; Context[OS Task / ISR2 执行上下文]
+  Context --&gt; Code[生成入口函数 + 应用实现]
+  Config[ARXML / OS 配置 / 连接与部署] --&gt; Mapping</code></pre>
+<p>排查 Runnable 没有执行时，不要一开始只盯着 C 函数。沿着 <strong>事件配置 → 端口/接口与连接 → Runnable → 任务映射 → OS 激活/调度 → 生成代码 → 运行时观测</strong> 逐层核对。</p>
+<h2 id="2-rteevent">2. 常见 RTEEvent 的含义与检查点<a class="headerlink" href="#2-rteevent" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>事件类型</th>
+<th>典型触发条件</th>
+<th>关键检查点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TimingEvent</td>
+<td>周期/时间条件到达</td>
+<td>周期值、单位、映射的 OS Task、Alarm/Counter、任务优先级与 WCET</td>
+</tr>
+<tr>
+<td>DataReceivedEvent</td>
+<td>Sender-Receiver 接收端满足接收事件条件</td>
+<td>Receiver Port、DataElement、连接关系、数据更新语义、接收缓冲/队列和事件映射</td>
+</tr>
+<tr>
+<td>OperationInvokedEvent</td>
+<td>Client-Server 操作调用到达服务器侧</td>
+<td>Client/Server Interface、Operation、Server Runnable、同步/异步语义、参数与返回值</td>
+</tr>
+<tr>
+<td>SwcModeSwitchEvent</td>
+<td>相关模式切换满足配置条件</td>
+<td>ModeDeclarationGroup、ModeSwitchPoint、模式来源、切换条件与重入行为</td>
+</tr>
+<tr>
+<td>InitEvent</td>
+<td>SW-C/RTE 初始化阶段的配置条件</td>
+<td>初始化顺序、初始化 Runnable、所依赖 BSW 服务是否已可用</td>
+</tr>
+<tr>
+<td>InternalTriggerOccurredEvent</td>
+<td>组件内部触发条件被触发</td>
+<td>InternalTriggeringPoint 与目标事件的配对、重触发/排队语义和生成器限制</td>
+</tr>
+<tr>
+<td>BackgroundEvent</td>
+<td>后台执行条件（是否支持及具体语义依版本/工具）</td>
+<td>工具支持情况、执行上下文、是否可能被其他高优先级活动抢占</td>
+</tr>
+</tbody>
+</table>
+<p>不是每一种事件在每个工具、每个版本或每个 SW-C 模型里都以完全相同方式支持。先检查项目采用的 AUTOSAR Release 与生成器限制，再依据生成的 RTE/OS 配置确认实际机制。</p>
+<h2 id="3-timingevent">3. TimingEvent：周期配置不等于真实周期<a class="headerlink" href="#3-timingevent" title="Permanent link">¶</a></h2>
+<p>周期 Runnable 的实际启动时间通常受以下因素共同影响：</p>
+<ol>
+<li>TimingEvent 周期及相位配置；</li>
+<li>RTE Generator 生成的周期触发机制；</li>
+<li>OS Counter、Alarm 或等效调度机制；</li>
+<li>任务优先级、抢占关系、资源锁与临界区；</li>
+<li>同一任务内其他 Runnable 的执行时间与执行顺序；</li>
+<li>中断负载、跨核通信和运行时负载。</li>
+</ol>
+<pre class="mermaid"><code>sequenceDiagram
+  participant C as OS Counter/Alarm
+  participant T as OS Task
+  participant R as RTE 生成调度代码
+  participant A as Runnable A
+  participant B as Runnable B
+  C-&gt;&gt;T: 到期后激活/置事件
+  T-&gt;&gt;R: 调度进入任务上下文
+  R-&gt;&gt;A: 按映射与执行顺序调用
+  A--&gt;&gt;R: 返回
+  R-&gt;&gt;B: 调用下一个已映射 Runnable
+  B--&gt;&gt;R: 返回</code></pre>
+<h3 id="_1">实测建议<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>用 Trace 或 GPIO 翻转测量 Runnable 的启动时刻与执行时间；避免只用 printf，因为日志本身会改变时序。</li>
+<li>同时记录预期周期、实际启动间隔、最大执行时间、抖动、任务激活次数和 deadline miss。</li>
+<li>如果同一 OS Task 内有多个 Runnable，检查组件/模型层执行顺序约束；不要假设它们必然按 ARXML 文件顺序执行。</li>
+<li>如果多个 Runnable 映射到不同任务，继续检查任务优先级、抢占和共享资源保护。</li>
+</ul>
+<h2 id="4-datareceivedevent">4. DataReceivedEvent：收到数据后为什么没有触发？<a class="headerlink" href="#4-datareceivedevent" title="Permanent link">¶</a></h2>
+<p>建议按顺序核对：</p>
+<ol>
+<li><strong>接口建模</strong>：Receiver Port、Sender-Receiver Interface、DataElement 是否一致。</li>
+<li><strong>系统连接</strong>：Sender 与 Receiver 是否通过正确的 Assembly/Delegation Connector 连接。</li>
+<li><strong>部署与映射</strong>：组件是否部署到目标 ECU，RTE 是否为对应连接生成了实现。</li>
+<li><strong>数据语义</strong>：检查 implicit/explicit receive、数据有效性、更新标志、超时和队列配置。</li>
+<li><strong>事件关联</strong>：DataReceivedEvent 是否关联到预期 Runnable，相关 DataElement 是否满足事件条件。</li>
+<li><strong>任务映射</strong>：Runnable 是否映射到有效任务，任务是否被激活并获得运行机会。</li>
+<li><strong>生成代码与运行时证据</strong>：检查 RTE 接收 API、回调/事件置位代码、OS Task 入口和实际接收数据。</li>
+</ol>
+<p>注意：<strong>数据可读、数据发生更新、Runnable 被触发是三个不同的判断</strong>。在非排队通信中，多次更新可能被最新值覆盖；排队通信则需要关注队列深度、溢出和读取策略。具体语义需查对应 API 与配置。</p>
+<h2 id="5-operationinvokedeventclient-server">5. OperationInvokedEvent：Client-Server 调用链<a class="headerlink" href="#5-operationinvokedeventclient-server" title="Permanent link">¶</a></h2>
+<p>典型概念路径如下：</p>
+<pre class="mermaid"><code>flowchart LR
+  Client[Client Runnable] --&gt; Call[Rte_Call API]
+  Call --&gt; Route{同核/跨核/跨 ECU}
+  Route --&gt;|本地| Local[本地 RTE 调用路径]
+  Route --&gt;|跨核| IOC[IOC 或生成的跨核机制]
+  Route --&gt;|跨 ECU| Comm[通信栈 / 传输路径]
+  Local --&gt; Server[Server Runnable]
+  IOC --&gt; Server
+  Comm --&gt; Server
+  Server --&gt; Result[返回结果 / 异步完成通知]</code></pre>
+<p>检查点：</p>
+<ul>
+<li>Client/Server Port 与 Operation 是否一致，参数类型、方向和返回值是否匹配；</li>
+<li>服务端 Runnable 是否关联 OperationInvokedEvent；</li>
+<li>同步调用是否可能阻塞调用方，是否符合实时性预算；</li>
+<li>异步调用是否正确配置完成事件、结果读取和超时处理；</li>
+<li>是否允许服务器 Runnable 并发调用；如果允许，应用数据与共享资源是否线程安全；</li>
+<li>对跨核/跨 ECU 调用，检查生成的通信机制和错误/超时路径。</li>
+</ul>
+<h2 id="6-ioc">6. 跨核通信与 IOC：何时出现、怎么排查？<a class="headerlink" href="#6-ioc" title="Permanent link">¶</a></h2>
+<p>当 SW-C 分布在不同 OS-Application 或不同 Core 上时，RTE 需要遵循系统映射和 OS 配置来实现数据传递。跨核 client-server 或相关通信场景中，生成代码可能使用 IOC（Inter-OS-Application Communication）传递参数/数据并通知接收侧；实际采用的路径依赖具体映射、通信语义和生成器。</p>
+<pre class="mermaid"><code>sequenceDiagram
+  participant C0 as Core 0 / Client
+  participant R0 as RTE Core 0
+  participant I as IOC
+  participant R1 as RTE Core 1
+  participant C1 as Core 1 / Server
+  C0-&gt;&gt;R0: Rte_Call / 写入数据
+  R0-&gt;&gt;I: IOC Send（若该映射使用 IOC）
+  I--&gt;&gt;R1: 数据可接收 / 通知
+  R1-&gt;&gt;C1: 激活或调度接收侧 Runnable
+  C1--&gt;&gt;R1: 处理结果
+  R1--&gt;&gt;I: 结果数据（适用时）
+  I--&gt;&gt;R0: 结果可读取（适用时）
+  R0--&gt;&gt;C0: 返回/完成通知</code></pre>
+<p>跨核排查清单：</p>
+<ul>
+<li>检查 SW-C 到 Core、OS-Application、Task 的映射是否一致；</li>
+<li>检查 OS IOC 配置、队列/缓冲区、接收侧通知和错误返回处理；</li>
+<li>确认跨核数据是否需要复制、是否存在一致性/同步约束，以及队列满时的处理策略；</li>
+<li>检查两个核的任务优先级、激活条件、时钟/Trace 时间基准和负载；</li>
+<li>在生成代码中搜索项目实际的 IocSend、IocReceive 或相应供应商封装，不要假设所有 RTE 都使用相同函数名；</li>
+<li>对 client-server 调用，检查调用参数、返回数据、超时与错误传播是否完整；</li>
+<li>做压力测试和边界测试：高频调用、队列满、接收侧暂时不运行、超时及错误恢复。</li>
+</ul>
+<p>IOC 是 OS 层面的跨 OS-Application 通信机制，不应简单等同于所有 RTE 通信。普通同核 SW-C 通信可能使用直接调用、共享数据或其他生成方式；跨 ECU 通信则通常涉及通信栈。</p>
+<h2 id="7-runnable">7. Runnable 顺序、并发与数据一致性<a class="headerlink" href="#7-runnable" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>顺序约束</strong>：同一组件中的 Runnable 可能有执行顺序约束；要同时检查模型、Timing Extensions/ARXML、工具调度设置和最终生成结果。</li>
+<li><strong>并发调用</strong>：Server Runnable 的并发调用能力受配置和实现限制。若同一 Runnable 可能并发执行，不要默认静态局部变量、共享缓冲区或全局状态安全。</li>
+<li><strong>Inter-Runnable Variables（IRV）</strong>：用于同一 SW-C 内 Runnable 之间交换数据；需检查访问顺序、读写时刻和数据一致性。</li>
+<li><strong>Exclusive Area / OS Resource</strong>：可能用于保护共享数据，但锁的范围、优先级影响和死锁风险需要验证。</li>
+<li><strong>多核可见性</strong>：跨核通信不能只靠 volatile 解决。应使用配置的通信/同步机制，并遵守平台内存模型与 OS/MCAL 约束。</li>
+</ul>
+<h2 id="8">8. 故障定位决策表<a class="headerlink" href="#8" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>首要检查</th>
+<th>进一步证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>周期 Runnable 从不执行</td>
+<td>TimingEvent、任务映射、OS 激活配置</td>
+<td>生成的任务入口、Alarm/Counter、OS Trace</td>
+</tr>
+<tr>
+<td>Runnable 周期漂移</td>
+<td>任务优先级、执行时间、抢占和临界区</td>
+<td>启动间隔直方图、WCET、ISR 负载</td>
+</tr>
+<tr>
+<td>数据更新但事件不触发</td>
+<td>DataReceivedEvent、连接、更新语义、事件映射</td>
+<td>RTE 生成代码、接收状态、OS 事件/任务激活</td>
+</tr>
+<tr>
+<td>Client 调用后服务端不执行</td>
+<td>OperationInvokedEvent、Server Runnable、路由映射</td>
+<td>Rte_Call 返回值、跨核 IOC、服务端任务 Trace</td>
+</tr>
+<tr>
+<td>跨核调用偶发失败</td>
+<td>IOC 缓冲/队列、通知、并发和超时配置</td>
+<td>队列错误码、双核 Trace、负载压力测试</td>
+</tr>
+<tr>
+<td>同一 Runnable 数据偶发错乱</td>
+<td>并发调用、共享变量、IRV 与保护区</td>
+<td>任务/核映射、访问时序、竞态复现测试</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9">9. 验收清单<a class="headerlink" href="#9" title="Permanent link">¶</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 每个 Runnable 的触发条件、接口依赖和映射都有明确记录。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> TimingEvent 的周期、相位、启动间隔和执行时间经过测量。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> DataReceivedEvent 与 OperationInvokedEvent 都有正向和负向测试。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 同核、跨核或跨 ECU 的实际路径已通过生成代码/配置确认。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 并发、超时、队列满、数据无效和接收侧延迟均有测试结果。</li>
+<li class="task-list-item"><label class="task-list-control"><input disabled="" type="checkbox"><span class="task-list-indicator"></span></input></label> 记录项目 AUTOSAR Release、RTE/OS 工具版本、生成配置和测试证据。</li>
+</ul>
+<h2 id="10">10. 官方参考<a class="headerlink" href="#10" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://www.autosar.org/standards/classic-platform">AUTOSAR Classic Platform</a></li>
+<li><a href="https://www.autosar.org/fileadmin/standards/R24-11/CP/AUTOSAR_CP_SWS_RTE.pdf">AUTOSAR Specification of RTE Software（R24-11）</a></li>
+<li><a href="https://www.autosar.org/fileadmin/standards/R24-11/CP/AUTOSAR_CP_SWS_OS.pdf">AUTOSAR Specification of Operating System（R24-11）</a></li>
+</ul>
+<blockquote>
+<p>规范文件可用于核对标准语义，但项目调试结论还应结合实际 ARXML、工具版本、生成代码、OS 配置和可复现测试记录。</p>
+</blockquote>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2023 <a href="https://www.mkdocs.org/">MkDocs</a> <a class="fa fa-rss-square" href="https://www.likui.info/wiki/site/feed_rss_created.xml" target="_blank"></a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<div class="md-progress" data-md-component="progress" role="progressbar"></div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.sections", "navigation.tracking", "navigation.path", "navigation.top", "navigation.footer", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.select", "content.action.edit", "content.tabs.link"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+<script src="../../../assets/javascripts/bundle.c21346df.min.js"></script>
+<script src="../../../javascripts/wiki.js"></script>
+</body>
+</html>

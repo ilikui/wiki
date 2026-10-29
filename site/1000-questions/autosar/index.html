@@ -5919,6 +5919,8 @@
 <p>来源：Flomo 原始笔记（12857 字）
 原始链接：<a href="https://v.flomoapp.com/mine/?memo_id=MjMxMTQ2NDk4">AUTOSAR 1000问总表</a></p>
 <p>本页忠实迁移问题清单；这是问题目录，不代表每题都已有答案。答案笔记需后续逐题关联补全。</p>
+<p><strong>覆盖进度与缺口管理：</strong> <a href="coverage-matrix/">逐题覆盖矩阵与补全队列</a>（按主题列出已有答案、待补缺口和后续优先级）。
+<strong>RTE 专题补充：</strong> <a href="rte-events-runnable-scheduling-ioc/">RTE Event、Runnable 调度与跨核 IOC 实战</a>（事件触发、周期抖动、数据接收、Client-Server 与跨核通信排查）。</p>
 </blockquote>
 <p>记录AUTOSAR学习的1000个问题：</p>
 <p><strong>基础概念</strong></p>
@@ -6805,6 +6807,18 @@
 <blockquote>
 <p>本页用于建立排查框架。NvM API、Block 配置字段、作业状态及底层 Fee/Ea 行为，请以项目实际采用的 AUTOSAR 版本和供应商文档为准。</p>
 </blockquote>
+<h2 id="can-bus-off">CAN Bus-Off：检测、上报与恢复排查<a class="headerlink" href="#can-bus-off" title="Permanent link">¶</a></h2>
+<ul>
+<li>
+<p><a href="can-busoff-recovery/">CAN Bus-Off：检测、上报与恢复排查</a></p>
+</li>
+<li>
+<p><strong>RTE Buffer 与数据一致性：Queued / Non-queued 选择、数据快照、新鲜度与队列溢出</strong>：<a href="rte-buffer-data-consistency-queued-nonqueued/">工程指南</a>。</p>
+</li>
+<li>
+<p><strong>COM / PduR / CanIf 发送与接收回调链</strong>：<a href="com-pdur-canif-tx-rx-callback-chain/">分层排查指南</a>，覆盖 TxConfirmation、RxIndication、PDU ID 映射与总线无报文/接收旧值定位。</p>
+</li>
+</ul>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
