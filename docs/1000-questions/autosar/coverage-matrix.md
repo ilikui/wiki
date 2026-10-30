@@ -72,3 +72,7 @@
 - [ComM / CanNm / BswM / EcuM 通信模式、唤醒与 Bus-Sleep 联动](comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md) — 用户请求汇总、网络状态、唤醒验证、PDU Group 与关机时序。
 
 - [PduR 网关路由：Routing Path、PDU ID 映射与转发排查](pdur-gateway-routing-path-mapping.md) — 普通 I-PDU 与 TP 网关区别、跨 CAN 转发、路径组和故障定位。
+
+
+- [COM Tx Mode：PERIODIC / DIRECT / MIXED、TMS 与发送抖动](com-tx-mode-periodic-direct-mixed-jitter.md) — 区分信号更新、COM 请求和总线实际发送时刻，排查 MainFunction、MDT 与仲裁抖动。
+- [CanSM / CanIf / CAN Driver：Bus-Off 恢复状态机与端到端验证](cansm-canif-driver-busoff-recovery-state-machine.md) — 模块职责、恢复时序、状态确认、故障分支与回归用例。
