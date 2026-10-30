@@ -549,3 +549,7 @@
 - [ComM / CanNm / BswM / EcuM：通信模式、唤醒与 Bus-Sleep 联动](../../1000-questions/autosar/comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md)。
 
 - [PduR 网关路由：Routing Path、PDU ID 映射与转发排查](../../1000-questions/autosar/pdur-gateway-routing-path-mapping.md) — PDU ID 映射、Routing Path Group、TP 网关缓冲和回调排查。
+
+
+- [COM Tx Mode：PERIODIC / DIRECT / MIXED、TMS 与发送抖动](../../1000-questions/autosar/com-tx-mode-periodic-direct-mixed-jitter.md)。
+- [CanSM / CanIf / CAN Driver：Bus-Off 恢复状态机与端到端验证](../../1000-questions/autosar/cansm-canif-driver-busoff-recovery-state-machine.md)。
