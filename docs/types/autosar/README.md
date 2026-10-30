@@ -545,3 +545,5 @@
 - [RTE Buffer 与数据一致性：Queued / Non-queued、数据快照、新鲜度与队列溢出](../../1000-questions/autosar/rte-buffer-data-consistency-queued-nonqueued.md)。
 
 - [COM / PduR / CanIf 发送与接收回调链：TxConfirmation、RxIndication 与分层排查](../../1000-questions/autosar/com-pdur-canif-tx-rx-callback-chain.md)。
+
+- [ComM / CanNm / BswM / EcuM：通信模式、唤醒与 Bus-Sleep 联动](../../1000-questions/autosar/comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md)。
