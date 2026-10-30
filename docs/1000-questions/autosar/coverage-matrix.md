@@ -68,3 +68,5 @@
 ## 新增通信栈专项指南
 
 - [COM / PduR / CanIf 发送与接收回调链排查](com-pdur-canif-tx-rx-callback-chain.md) — TxConfirmation、RxIndication、PDU ID 路由和分层观测点。
+
+- [ComM / CanNm / BswM / EcuM 通信模式、唤醒与 Bus-Sleep 联动](comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md) — 用户请求汇总、网络状态、唤醒验证、PDU Group 与关机时序。
