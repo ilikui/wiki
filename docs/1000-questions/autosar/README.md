@@ -638,3 +638,6 @@ Immediate（立即请求写入）和 Periodic（周期性写入）是策略选�
 - [PduR 网关路由：Routing Path、PDU ID 映射与转发排查](pdur-gateway-routing-path-mapping.md) — 路由路径、跨 CAN 网关、TP 缓冲与验证清单。
 
 - [COM 周期发送与时序抖动：Direct / Periodic / Mixed / MDT](com-tx-mode-periodic-direct-mixed-jitter.md) — 发送模式、最小延迟时间、MainFunction 与 CAN 总线时序排查。
+
+
+- [CanSM / CanIf / CAN Driver：Bus-Off 恢复状态机与端到端验证](cansm-canif-driver-busoff-recovery-state-machine.md) — Bus-Off 通知、恢复计时、控制器重启、PDU 路径恢复和回归验证。
