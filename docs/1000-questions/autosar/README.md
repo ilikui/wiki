@@ -632,3 +632,5 @@ Immediate（立即请求写入）和 Periodic（周期性写入）是策略选�
 - **RTE Buffer 与数据一致性：Queued / Non-queued 选择、数据快照、新鲜度与队列溢出**：[工程指南](rte-buffer-data-consistency-queued-nonqueued.md)。
 
 - **COM / PduR / CanIf 发送与接收回调链**：[分层排查指南](com-pdur-canif-tx-rx-callback-chain.md)，覆盖 TxConfirmation、RxIndication、PDU ID 映射与总线无报文/接收旧值定位。
+
+- **ComM / CanNm / BswM / EcuM：通信模式、唤醒与 Bus-Sleep 联动**：[工程排查指南](comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md)。
