@@ -547,3 +547,5 @@
 - [COM / PduR / CanIf 发送与接收回调链：TxConfirmation、RxIndication 与分层排查](../../1000-questions/autosar/com-pdur-canif-tx-rx-callback-chain.md)。
 
 - [ComM / CanNm / BswM / EcuM：通信模式、唤醒与 Bus-Sleep 联动](../../1000-questions/autosar/comm-cannm-bswm-ecum-network-mode-wakeup-shutdown.md)。
+
+- [PduR 网关路由：Routing Path、PDU ID 映射与转发排查](../../1000-questions/autosar/pdur-gateway-routing-path-mapping.md) — PDU ID 映射、Routing Path Group、TP 网关缓冲和回调排查。
