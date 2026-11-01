@@ -112,13 +112,13 @@ nav:
           - README: dev-guide/README.md
 
 extra_css:
-    - css/extra.css
+  - css/extra.css
 
 extra_javascript:
-    - javascripts/wiki.js
+  - javascripts/wiki.js
 
 hooks:
-    - hooks/nav.py
+  - hooks/nav.py
 
 markdown_extensions:
   - toc:
@@ -157,23 +157,26 @@ markdown_extensions:
 plugins:
   - search
   - rss:
+      # Cloudflare Builds 的 Git checkout 可能没有可供插件遍历的 refs；
+      # 使用页面 front matter 日期生成 feed，避免依赖 git log。
+      use_git: false
       date_from_meta:
         as_creation: "date"
         datetime_format: "%Y-%m-%d %H:%M"
         default_timezone: "Europe/Paris"
         default_time: "22:00"
-        abstract_chars_count: 160
-        abstract_delimiter: <!-- more -->
-        image: https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/128px-Feed-icon.svg.png
-        match_path: ".*"
-        pretty_print: false
+      abstract_chars_count: 160
+      abstract_delimiter: <!-- more -->
+      image: https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Feed-icon.svg/128px-Feed-icon.svg.png
+      match_path: ".*"
+      pretty_print: false
       url_parameters:
         utm_source: "documentation"
         utm_medium: "RSS"
         utm_campaign: "feed-syndication"
   - blogging:
       paging: false
-      dirs: # The directories to be included
+      dirs:
         - blog
   - mermaid2:
   - build_plantuml:
